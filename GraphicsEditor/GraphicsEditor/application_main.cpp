@@ -8,6 +8,7 @@ DrawingBoard drawingBoard;
 void display(void);
 void myinit(void);
 void handleMouseEvent(int,int,int,int);
+void handleMouseClickMotion(int x, int y);
 
 int main(int argc, char **argv)
 {
@@ -18,6 +19,7 @@ int main(int argc, char **argv)
 	glutCreateWindow("Jinkchak Paint Package");
 	glutDisplayFunc(display);
 	glutMouseFunc(handleMouseEvent);
+	glutMotionFunc(handleMouseClickMotion);
 	myinit();
 	glutMainLoop();
 }
@@ -33,31 +35,43 @@ void myinit(void)
 
 	glMatrixMode(GL_MODELVIEW);
 }
+
 void handleMouseEvent(int button, int state, int x, int y)
 {
 	y = APPLICATION_WINDOW_HEIGHT - y;
+	glColor3f(1, 0, 0);
+		glBegin(GL_LINE_LOOP);
+			glVertex2f(10, 10);
+			glVertex2f(200, 200);
+		glEnd();
 	drawingBoard.handleMouseClick(button, state, x, y);
 
-	/*switch(button)
-	{
-	case GLUT_LEFT_BUTTON: 
-		if(state == GLUT_DOWN)
-			cout << "Mouse Click ("<<x<<","<<y<<")"<<endl;
-
-		break;
-	}*/
-
-	
+	glutPostRedisplay();
 }
+
+void handleMouseClickMotion(int x, int y)
+{
+	y = APPLICATION_WINDOW_HEIGHT - y;
+	
+	drawingBoard.handleMouseClickMotion(x, y);
+
+	glutPostRedisplay();
+}
+
 void display(void)
 {
-
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(0,0,0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	drawingBoard.initBoard();
+	glColor3f(1, 0, 0);
 	glBegin(GL_LINES);
-	glVertex2d(10,10);
-	glVertex2d(30,30);
+		glVertex2d(10,10);
+		glVertex2d(200,200);	
 	glEnd();
+	
 	glFlush();
 }

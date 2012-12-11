@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="ColorPanel.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Coordinates.h" />

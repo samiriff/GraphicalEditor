@@ -8,9 +8,21 @@ enum AxisType
 	Z_AXIS
 };
 
+enum ColorType
+{
+	BLACK,
+	RED,
+	GREEN,
+	BLUE,
+	CYAN,
+	MAGENTA,
+	YELLOW,
+	WHITE
+};
 
-#define APPLICATION_WINDOW_HEIGHT 1080
-#define APPLICATION_WINDOW_WIDTH 1920
+
+#define APPLICATION_WINDOW_HEIGHT 800
+#define APPLICATION_WINDOW_WIDTH 800
 
 
 #define CANVAS_LEFT 10
@@ -35,5 +47,8 @@ enum AxisType
 
 #define GAP 4
 #define COLOR_SQUARE_SIDE 30
+#define COLOR_PANEL_NUM_ROWS 5
+#define COLOR_PANEL_NUM_COLS 3
+
 
 #endif

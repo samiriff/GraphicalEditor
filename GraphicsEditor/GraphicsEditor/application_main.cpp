@@ -1,14 +1,19 @@
 #include "Constants.h"
 #include "DrawingBoard.h"
+#include "Coordinates.h"
 #include<gl/glut.h>
 #include<iostream>
 using namespace std;
 
 DrawingBoard drawingBoard;
+int reshapeWidth = APPLICATION_WINDOW_WIDTH, reshapeHeight = APPLICATION_WINDOW_HEIGHT;
+
+
 void display(void);
 void myinit(void);
 void handleMouseEvent(int,int,int,int);
 void handleMouseClickMotion(int x, int y);
+void reshape(int, int);
 
 int main(int argc, char **argv)
 {
@@ -18,6 +23,7 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(700,100);
 	glutCreateWindow("Jinkchak Paint Package");
 	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
 	glutMouseFunc(handleMouseEvent);
 	glutMotionFunc(handleMouseClickMotion);
 	myinit();
@@ -26,6 +32,9 @@ int main(int argc, char **argv)
 
 void myinit(void)
 {
+	glEnable(GL_BLEND); //Enable blending.
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set blending function.
+
 	glClearColor(0.8784,0.8784,0.8784,0.8784);
 	glColor3f(1,1,1);
 	glPointSize(1.0);
@@ -38,7 +47,12 @@ void myinit(void)
 
 void handleMouseEvent(int button, int state, int x, int y)
 {
+	float scaleFactorWidth = (float)reshapeWidth / APPLICATION_WINDOW_WIDTH;
+	float scaleFactorHeight = (float)reshapeHeight / APPLICATION_WINDOW_HEIGHT;
+
+	x *= scaleFactorWidth;
 	y = APPLICATION_WINDOW_HEIGHT - y;
+	y *= scaleFactorHeight;
 	glColor3f(1, 0, 0);
 		glBegin(GL_LINE_LOOP);
 			glVertex2f(10, 10);
@@ -74,4 +88,10 @@ void display(void)
 	glEnd();
 	
 	glFlush();
+}
+
+void reshape(int w, int h)
+{
+	reshapeWidth = w;
+	reshapeHeight = h;
 }

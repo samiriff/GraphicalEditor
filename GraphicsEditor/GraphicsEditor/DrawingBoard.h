@@ -48,11 +48,13 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 		if(color_panel->isClickInside(x,y))
 		{
 			cout << "  Inside Color Panel"<<endl;
-			color_panel->selectClickedColorFromGrid(x, y);			
+			color_panel->selectClickedColorFromGrid(x, y);	
+			color_panel->selectClickedColorFromTriangle(x, y);		
 		}
 		if(drawingToolBar->isClickInside(x,y))
 		{
 			cout << "  Inside Drawing Toolbar"<<endl;
+			drawingToolBar->selectClickedToolFromGrid(x, y);
 		}		
 	}
 }

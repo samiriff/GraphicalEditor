@@ -111,9 +111,9 @@ void ColorPanel::addColorSquares()
 	begin_x = bottom_left->get(X_AXIS) + 15;	
 	begin_y -= (COLOR_SQUARE_SIDE+GAP);  	
 
-	selectedColor->setGLColor();
+	selectedColor->setGLColor();	
 	glRectf(begin_x, begin_y-50, begin_x+50, begin_y);
-	
+
 	//For the triangle you told about
 	glColor3f(0.23,0.432,0.567);  
 

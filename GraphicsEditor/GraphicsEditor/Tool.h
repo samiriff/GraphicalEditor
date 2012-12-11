@@ -1,12 +1,17 @@
 #ifndef _TOOL_H
 #define _TOOL_H
 
+#include <iostream>
+
 #include "Coordinates.h"
 #include "Canvas.h"
 
-#include <iostream>
 
+
+#include <GL/glut.h>
 using namespace std;
+
+class Canvas;
 
 class Tool
 {
@@ -82,7 +87,15 @@ void Pencil::render()
 }
 
 void Pencil::drawOnCanvas(Canvas *canvas, int mouseX, int mouseY)
-{}
+{
+	cout << "Pencil Drawing";
+	glBegin(GL_POLYGON);
+		glVertex2f(mouseX, mouseY);
+		glVertex2f(mouseX, mouseY + 1.8);
+		glVertex2f(mouseX + 1.8, mouseY + 1.8);
+		glVertex2f(mouseX + 1.8, mouseY);
+	glEnd();	
+}
 
 
 

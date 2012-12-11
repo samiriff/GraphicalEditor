@@ -26,6 +26,8 @@ public:
 	void handleMouseClickMotion(int, int);
 	~DrawingBoard();
 	
+	Canvas *getCanvas();
+	
 };
 
 DrawingBoard::DrawingBoard()
@@ -43,7 +45,8 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 		cout<< endl << "Mouse Click ("<<x<<","<<y<<")";
 		if(canvas_board->isClickInside(x,y))
 		{
-			cout << "  Inside CanvasBoard" <<endl;			
+			cout << "  Inside CanvasBoard" <<endl;		
+			canvas_board->drawWithTool(drawingToolBar->getSelectedTool(), x, y);
 		}
 		if(color_panel->isClickInside(x,y))
 		{

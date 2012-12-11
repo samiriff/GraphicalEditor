@@ -1,8 +1,13 @@
+#include<iostream>
+
 #include "Constants.h"
 #include "DrawingBoard.h"
 #include "Coordinates.h"
+
+#include "Tool.h"
+#include "Canvas.h"
 #include<gl/glut.h>
-#include<iostream>
+
 using namespace std;
 
 DrawingBoard drawingBoard;
@@ -23,7 +28,7 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(700,100);
 	glutCreateWindow("Jinkchak Paint Package");
 	glutDisplayFunc(display);
-	glutReshapeFunc(reshape);
+	//glutReshapeFunc(reshape);
 	glutMouseFunc(handleMouseEvent);
 	glutMotionFunc(handleMouseClickMotion);
 	myinit();

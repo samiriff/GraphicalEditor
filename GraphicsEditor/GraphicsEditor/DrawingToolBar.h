@@ -24,6 +24,8 @@ public:
 	bool isClickInside(int , int);
 	bool isClickInsideGrid(int x, int y);
 	void selectClickedToolFromGrid(int x, int y);
+
+	Tool *getSelectedTool();
 };
 
 bool DrawingToolBar::isClickInside(int x, int y)
@@ -111,6 +113,11 @@ void DrawingToolBar::selectClickedToolFromGrid(int x, int y)
 		cout << "Row = " << row << "\tCol = " << col << endl;		
 		selectedTool = tools[row][col];		
 	}	
+}
+
+Tool *DrawingToolBar::getSelectedTool()
+{
+	return selectedTool;
 }
 
 

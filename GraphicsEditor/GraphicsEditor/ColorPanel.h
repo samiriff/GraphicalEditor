@@ -159,7 +159,7 @@ bool ColorPanel::isClickInsideGrid(int x, int y)
 bool ColorPanel::isClickInsideTriangle(int x, int y)
 {
 	if((x >= bottom_left->get(X_AXIS))&&(x <= top_right->get(X_AXIS)))
-		return (y < bottom_left->get(Y_AXIS) + 360) && (y > bottom_left->get(Y_AXIS) + 30);
+		return (y < bottom_left->get(Y_AXIS) + 360) && (y > bottom_left->get(Y_AXIS));
 	else
 		return false;	
 }

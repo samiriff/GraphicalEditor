@@ -46,7 +46,8 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 		if(canvas_board->isClickInside(x,y))
 		{
 			cout << "  Inside CanvasBoard" <<endl;		
-			canvas_board->drawWithTool(drawingToolBar->getSelectedTool(), x, y);
+			drawingToolBar->getSelectedTool()->start();
+			canvas_board->drawWithTool(drawingToolBar->getSelectedTool(), color_panel->getSelectedColor(), x, y);
 		}
 		if(color_panel->isClickInside(x,y))
 		{
@@ -60,6 +61,12 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 			drawingToolBar->selectClickedToolFromGrid(x, y);
 		}		
 	}
+
+
+	if(button==GLUT_LEFT_BUTTON && state==GLUT_UP)
+	{
+		drawingToolBar->getSelectedTool()->stop();
+	}
 }
 
 void DrawingBoard::handleMouseClickMotion(int x, int y)
@@ -67,6 +74,13 @@ void DrawingBoard::handleMouseClickMotion(int x, int y)
 	if(color_panel->isClickInside(x,y))
 	{			
 		color_panel->selectClickedColorFromTriangle(x, y);			
+	}
+
+
+	if(canvas_board->isClickInside(x,y))
+	{
+		cout << "  Inside CanvasBoard" <<endl;		
+		canvas_board->drawWithTool(drawingToolBar->getSelectedTool(), color_panel->getSelectedColor(), x, y);
 	}
 }
 

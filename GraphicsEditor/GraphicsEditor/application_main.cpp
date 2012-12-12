@@ -2,10 +2,10 @@
 
 #include "Constants.h"
 #include "DrawingBoard.h"
-#include "Coordinates.h"
+//#include "Coordinates.h"
 
-#include "Tool.h"
-#include "Canvas.h"
+//#include "Canvas.h"
+//#include "Tool.h"
 #include<gl/glut.h>
 
 using namespace std;

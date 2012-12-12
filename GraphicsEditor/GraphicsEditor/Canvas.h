@@ -65,7 +65,7 @@ void Canvas::drawWithTool(Tool *tool, Color color, int x, int y)
 	firstPoint.set(Y_AXIS, y);
 
 	color.setGLColor();	
-	tool->drawOnCanvas(this, imageData, x, y);		
+	tool->drawOnCanvas(this, imageData, x, y);			
 
 	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, imageData);	
 }

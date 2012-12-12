@@ -25,9 +25,9 @@ protected:
 	Canvas *canvas;
 	Coordinates *bottom_left, *top_right;
 
+	//These variables are required for tools that render items as the user moves the mouse
 	Coordinates firstPoint;
 	bool isFirstPointSelected;
-
 	GLfloat imageDataBefore[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR];
 
 	void drawText(char *info, float x, float y);
@@ -39,8 +39,8 @@ public:
 
 	virtual void render() = 0;
 	virtual void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY) = 0;	
-	virtual void start(){}
-	virtual void stop(){}
+	virtual void start();
+	virtual void stop();
 	virtual void select();
 };
 
@@ -52,7 +52,6 @@ public:
 	Pencil(float x1, float y1, float x2, float y2);
 
 	void render();
-
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
 
@@ -64,7 +63,6 @@ public:
 	Spray(float x1, float y1, float x2, float y2);
 
 	void render();
-
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
 
@@ -79,10 +77,7 @@ public:
 	Line(float x1, float y1, float x2, float y2);
 
 	void render();
-
-	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-	void start();
-	void stop();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);		
 };
 
 //**********************************************************************************************************************//
@@ -93,7 +88,6 @@ public:
 	Rectangle(float x1, float y1, float x2, float y2);
 
 	void render();
-
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
 
@@ -105,7 +99,6 @@ public:
 	Circle(float x1, float y1, float x2, float y2);
 
 	void render();
-
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
 
@@ -117,7 +110,6 @@ public:
 	Eraser(float x1, float y1, float x2, float y2);
 
 	void render();
-
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
 
@@ -139,6 +131,7 @@ Tool::Tool(float x1, float y1, float x2, float y2)
 	cout << "Tool Class";
 	bottom_left = new Coordinates(x1, y1, 0);
 	top_right = new Coordinates(x2, y2, 0);
+	isFirstPointSelected = false;
 }
 
 void Tool::select()
@@ -170,8 +163,15 @@ void Tool::copyFromTo(GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_W
 }
 
 
+void Tool::start()
+{
+	isFirstPointSelected = true;
+}
 
-
+void Tool::stop()
+{
+	isFirstPointSelected = false;
+}
 
 
 
@@ -256,10 +256,7 @@ void Spray::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][
 
 
 Line::Line(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
-{
-	isFirstPointSelected = false;
-	//imageDataBefore = NULL;
-}
+{}
 
 void Line::render()
 {
@@ -274,8 +271,7 @@ void Line::render()
 }
 
 void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{
-	//cout << "Line: " << firstPoint << "\t" << isFirstPointSelected << endl;
+{	
 	if(isFirstPointSelected)
 	{
 		firstPoint.set(X_AXIS, mouseX);
@@ -287,9 +283,7 @@ void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 		glEnd();
 
 		isFirstPointSelected = false;
-		copyFromTo(img, imageDataBefore);		
-
-		
+		copyFromTo(img, imageDataBefore);				
 	}
 	else
 	{		
@@ -315,18 +309,8 @@ void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 			glVertex2f(mouseX, mouseY);
 		glEnd();	
 
-		glutPostRedisplay();
+		//glutPostRedisplay();
 	}
-}
-
-void Line::start()
-{
-	isFirstPointSelected = true;
-}
-
-void Line::stop()
-{
-	isFirstPointSelected = false;
 }
 
 
@@ -353,7 +337,23 @@ void Rectangle::render()
 }
 
 void Rectangle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{}
+{	
+	if(isFirstPointSelected)
+	{		
+		firstPoint.set(X_AXIS, mouseX);
+		firstPoint.set(Y_AXIS, mouseY);
+
+		isFirstPointSelected = false;
+		copyFromTo(img, imageDataBefore);				
+	}
+	else
+	{			
+		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+
+		glRectf(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS), mouseX, mouseY);		
+	}	
+}
 
 
 

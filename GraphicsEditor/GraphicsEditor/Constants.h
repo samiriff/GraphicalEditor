@@ -61,8 +61,8 @@ enum ColorType
 
 #define GAP 4
 #define TOOLBAR_NUM_ROWS 2
-#define TOOLBAR_NUM_COLS 3
-#define TOOL_BORDER_WIDTH 100
+#define TOOLBAR_NUM_COLS 8
+#define TOOL_BORDER_WIDTH 90
 #define TOOL_BORDER_HEIGHT 30
 
 #define COLOR_SQUARE_SIDE 30

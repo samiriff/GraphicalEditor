@@ -91,6 +91,7 @@
     <ClInclude Include="DrawingBoard.h" />
     <ClInclude Include="DrawingToolBar.h" />
     <ClInclude Include="MenuBar.h" />
+    <ClInclude Include="Special_Tools.h" />
     <ClInclude Include="Tool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

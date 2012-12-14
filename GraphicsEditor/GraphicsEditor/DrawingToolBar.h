@@ -4,6 +4,7 @@
 #include "Coordinates.h"
 #include "Constants.h"
 #include "Tool.h"
+#include "Special_Tools.h"
 #include<gl/glut.h>
 
 
@@ -43,7 +44,6 @@ DrawingToolBar::DrawingToolBar(float x1, float y1, float x2, float y2)
 	top_right = new Coordinates(x2,y2,0);
 
 	initTools();
-	selectedTool->IncreasePointSize();
 }
 
 void DrawingToolBar::initTools()
@@ -57,14 +57,46 @@ void DrawingToolBar::initTools()
 	tools[0][2] = new Line(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
+	tools[0][3] = new WireCube(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[0][4] = new WireCone(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[0][5] = new WireCone(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[0][6] = new WireCone(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[0][7] = new WireCone(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
 	begin_x = bottom_left->get(X_AXIS)+GAP;
 	begin_y -= (TOOL_BORDER_HEIGHT+GAP);
 
 	tools[1][0] = new Rect(begin_x, begin_y-TOOL_BORDER_HEIGHT,begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
+	
 	tools[1][1] = new Circle(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
+	
 	tools[1][2] = new Eraser(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[1][3] = new Teapot(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[1][4] = new Teapot(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[1][5] = new Teapot(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[1][6] = new Teapot(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[1][7] = new Teapot(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
 
@@ -94,7 +126,8 @@ void DrawingToolBar::drawTools()
 		}
 	}
 	
-	selectedTool->select();		
+	selectedTool->select();	
+	selectedTool->drawPointSizeInfo();
 }
 void DrawingToolBar::IncreasePointSize()
 {

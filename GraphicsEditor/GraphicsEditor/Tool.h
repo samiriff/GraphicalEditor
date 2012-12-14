@@ -38,6 +38,7 @@ public:
 	Tool(float x1, float y1, float x2, float y2);
 	void IncreasePointSize();
 	void DecreasePointSize();
+	void drawPointSizeInfo();
 	virtual void render() = 0;
 	virtual void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY) = 0;	
 	virtual void start();
@@ -115,6 +116,7 @@ public:
 };
 
 
+//**********************************************************************************************************************//
 Tool::Tool(float x1, float y1, float x2, float y2)
 {
 	LOG("Tool Class");
@@ -126,23 +128,26 @@ Tool::Tool(float x1, float y1, float x2, float y2)
 }
 void Tool::IncreasePointSize()
 {
-	glColor3f(0,0,0);
+
 	pointSize += 0.05;
-	glPointSize(pointSize);
-    stringstream ss;
-    ss << pointSize;
-    string valueString = "Point Size " + ss.str();
-	drawText((const char *)valueString.c_str(),POINT_INFO_X, POINT_INFO_Y);
+	 drawPointSizeInfo();
 }
 void Tool::DecreasePointSize()
 {
 	pointSize -= 0.05;
-    stringstream ss;
+    drawPointSizeInfo();
+	
+}
+void Tool::drawPointSizeInfo()
+{
+	stringstream ss;
     glPointSize(pointSize);
 	ss << pointSize;
     string valueString = "Point Size " + ss.str();
 	glColor3f(0,0,0);
-	drawText(valueString.c_str(),POINT_INFO_X, POINT_INFO_Y);
+	/*for(int i=0; i<valueString.length(); i++)
+	   glutStrokeCharacter(GLUT_STROKE_ROMAN, valueString[i]);*/
+	drawText(valueString.c_str(),POINT_INFO_X,POINT_INFO_Y);
 }
 void Tool::select()
 {
@@ -183,14 +188,6 @@ void Tool::stop()
 	isFirstPointSelected = false;
 }
 
-
-
-
-
-//**********************************************************************************************************************//
-
-
-
 Pencil::Pencil(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
@@ -213,25 +210,6 @@ void Pencil::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 		glVertex2f(mouseX + 1.8, mouseY);
 	glEnd();		
 }
-
-
-
-
-
-
-
-
-
-//**********************************************************************************************************************//
-
-
-
-
-
-
-
-
-
 
 Spray::Spray(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
@@ -263,25 +241,6 @@ void Spray::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][
 	}
 
 }
-
-
-
-
-
-
-//**********************************************************************************************************************//
-
-
-
-
-
-
-
-
-
-
-
-
 
 Line::Line(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
@@ -342,18 +301,6 @@ void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 	}
 }
 
-
-
-
-
-
-//**********************************************************************************************************************//
-
-
-
-
-
-
 Rect::Rect(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
@@ -384,8 +331,6 @@ void Rect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 		glRectf(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS), mouseX, mouseY);		
 	}	
 }
-
-//**********************************************************************************************************************//
 
 Circle::Circle(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
@@ -430,8 +375,6 @@ void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 		}
 				
 	}	
-
-
 }
 
 Eraser::Eraser(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
@@ -453,5 +396,34 @@ void Eraser::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	glRectf(mouseX-width,mouseY-height,mouseX+width, mouseY+height);
 }
 
+
+class WireCube :public Tool
+{
+public:
+	WireCube(float x1, float y1, float x2, float y2);
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
+};
+
+WireCube::WireCube(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+{}
+void WireCube::render()
+{
+	glColor3f(1, 1, 1);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+	glColor3f(0, 0, 0);
+	/*glRasterPos2f((top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0);
+	glutSolidCube(50);*/
+	drawText("Cube", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 30, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+}
+void WireCube::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	//glRasterPos2i(mouseX,mouseY);
+	//glutWireCube(10);
+	glBegin(GL_LINES);
+	glVertex2i(mouseX, mouseY);
+	glVertex2i(mouseY, mouseX);
+	glEnd();
+}
 
 #endif

@@ -1,13 +1,26 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
-
+#define DEBUG 0
+#if DEBUG
+#define LOG(s) cout<<s<<endl;
+#else
+#define LOG(s) 
+#endif
 enum AxisType
 {
 	X_AXIS = 0,
 	Y_AXIS,
 	Z_AXIS
 };
-
+enum MenuOps
+{
+	NEW = 1,
+	OPEN,
+	SAVE,
+	EXIT,
+	CUT_PASTE,
+	COPY_PASTE
+};
 enum ColorType
 {
 	BLACK,
@@ -24,7 +37,7 @@ enum ColorType
 #define APPLICATION_WINDOW_HEIGHT 800
 #define APPLICATION_WINDOW_WIDTH 800
 #define MULT_FACTOR 3
-
+#define NAMSIZE 25
 
 #define CANVAS_LEFT 10
 #define CANVAS_RIGHT APPLICATION_WINDOW_WIDTH / 1.15
@@ -56,5 +69,10 @@ enum ColorType
 #define COLOR_PANEL_NUM_ROWS 5
 #define COLOR_PANEL_NUM_COLS 3
 
-
+#define OP_NEW_X 20
+#define OP_OPEN_X 60
+#define OP_SAVE_X 100
+#define OP_EXIT_X 140
+#define OP_CUPASTE_X 170
+#define OP_COPY_X 230
 #endif

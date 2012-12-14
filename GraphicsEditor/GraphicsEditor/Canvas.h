@@ -3,6 +3,7 @@
 #include "Coordinates.h"
 #include "Constants.h"
 #include "Tool.h"
+#include<string.h>
 #include "ColorPanel.h"
 #include<gl/glut.h>
 
@@ -12,10 +13,10 @@ class Canvas
 private:
 	Coordinates bottom_left;
 	Coordinates top_right;	
-
+	char *fileName;
 	Coordinates firstPoint;			//The first point clicked by the user
 	bool isFirstEntry;
-
+	inline void readFileName();
 	GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR]; //An array to hold the drawn data same as our my_package.cpp
 public:
 	
@@ -23,12 +24,17 @@ public:
 	Canvas(float, float , float , float);
 	void drawBoard();
 	bool isClickInside(int , int);
-
+	void saveToFile();
 	void drawWithTool(Tool *tool, Color color, int x, int y);
 	Coordinates getFirstPoint();	
+	void LoadFromFile();
+	~Canvas();
 	
 };
-
+Canvas::~Canvas()
+{
+	delete fileName;
+}
 
 Canvas::Canvas(float x1, float y1, float x2, float y2)
 {
@@ -38,8 +44,13 @@ Canvas::Canvas(float x1, float y1, float x2, float y2)
 	top_right.set(X_AXIS, x2);
 	top_right.set(Y_AXIS, y2);
 
-	isFirstEntry = false;
+	for(int i=0;i<APPLICATION_WINDOW_HEIGHT;i++)
+		for(int j=0;j<(APPLICATION_WINDOW_WIDTH*MULT_FACTOR);j++)
+			imageData[i][j] = 1;
 
+	isFirstEntry = false;
+	fileName = new char[NAMSIZE];
+	fileName[0] = '\0';
 	//glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT, CANVAS_TOP, GL_RGB, GL_FLOAT, imageData);	
 }
 
@@ -79,6 +90,45 @@ Coordinates Canvas::getFirstPoint()
 {
 	return imageData;
 }*/
+void Canvas::readFileName()
+{
+	cout<<"Enter the file name"<<endl;
+	cin >> fileName;
 
+}
+void Canvas::LoadFromFile()
+{
+	ifstream ifile;
+	do
+	{
+		readFileName();
+		ifile.open(fileName, ios::in);
+		LOG(fileName);
+		if(ifile.is_open())
+			break;
+		else
+			cout<<"Unable to read the File"<<endl;
+	}while(1);
+	ifile.read((char *)imageData, sizeof(imageData));
+	drawBoard();
+}
+void Canvas::saveToFile()
+{
+	ofstream outFile;
+	if(strlen(fileName)==0)
+	{
+		do
+		{
+			readFileName();
+			outFile.open(fileName, ios::out);
+			if(outFile.is_open())
+			{break;
+			}
+			else
+			 cout<<"File Not Found :P "<<endl;
+		}while(1);
+	}
+	outFile.write((char *) imageData, sizeof(imageData));
+}
 
 #endif

@@ -24,7 +24,7 @@ private:
 protected:
 	Canvas *canvas;
 	Coordinates *bottom_left, *top_right;
-
+	GLfloat pointSize;
 	//These variables are required for tools that render items as the user moves the mouse
 	Coordinates firstPoint;
 	bool isFirstPointSelected;
@@ -128,7 +128,9 @@ public:
 
 Tool::Tool(float x1, float y1, float x2, float y2)
 {
-	cout << "Tool Class";
+#if DEBUG
+	LOG("Tool Class");
+#endif
 	bottom_left = new Coordinates(x1, y1, 0);
 	top_right = new Coordinates(x2, y2, 0);
 	isFirstPointSelected = false;
@@ -194,7 +196,9 @@ void Pencil::render()
 
 void Pencil::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
+#if DEBUG
 	cout << "Pencil Drawing";
+#endif
 	glBegin(GL_POLYGON);
 		glVertex2f(mouseX, mouseY);
 		glVertex2f(mouseX, mouseY + 1.8);
@@ -355,20 +359,7 @@ void Rectangle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIG
 	}	
 }
 
-
-
-
-
-
-
-
 //**********************************************************************************************************************//
-
-
-
-
-
-
 
 Circle::Circle(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
@@ -382,7 +373,10 @@ void Circle::render()
 }
 
 void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{}
+{
+
+
+}
 
 
 
@@ -406,7 +400,7 @@ void Eraser::render()
 	glColor3f(1, 1, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
-	drawText("E", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Er", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
 }
 
 void Eraser::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)

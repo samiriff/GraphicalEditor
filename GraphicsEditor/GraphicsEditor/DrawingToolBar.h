@@ -58,7 +58,7 @@ void DrawingToolBar::initTools()
 	begin_x = bottom_left->get(X_AXIS)+GAP;
 	begin_y -= (TOOL_BORDER_HEIGHT+GAP);
 
-	tools[1][0] = new Rectangle(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[1][0] = new Pencil(begin_x, begin_y-TOOL_BORDER_HEIGHT,begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 	tools[1][1] = new Circle(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;

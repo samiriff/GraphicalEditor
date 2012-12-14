@@ -7,6 +7,7 @@
 #include<gl/glut.h>
 #include<iostream>
 using namespace std;
+
 /*
  *This is the main drawing board class.
  * supposed to contain the object of other classes like toolbar, colorpanel, menubar, and the drawing canvas on which everything is drawn.
@@ -42,24 +43,31 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 {	
 	if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN)
 	{
-		cout<< endl << "Mouse Click ("<<x<<","<<y<<")";
+
+		LOG("Mouse Click (x,y) = ");
+		LOG(x<<' '<<y);
 		if(canvas_board->isClickInside(x,y))
 		{
-			cout << "  Inside CanvasBoard" <<endl;		
+			LOG("  Inside CanvasBoard");		
 			drawingToolBar->getSelectedTool()->start();
 			canvas_board->drawWithTool(drawingToolBar->getSelectedTool(), color_panel->getSelectedColor(), x, y);
 		}
 		if(color_panel->isClickInside(x,y))
 		{
-			cout << "  Inside Color Panel"<<endl;
+			LOG("  Inside Color Panel");
 			color_panel->selectClickedColorFromGrid(x, y);	
 			color_panel->selectClickedColorFromTriangle(x, y);		
 		}
 		if(drawingToolBar->isClickInside(x,y))
 		{
-			cout << "  Inside Drawing Toolbar"<<endl;
+			LOG("  Inside Drawing Toolbar");	
 			drawingToolBar->selectClickedToolFromGrid(x, y);
-		}		
+		}
+		if(menu_bar->isClickInsideMenu(x,y))
+		{
+			LOG("Inside Menu Bar");
+			menu_bar->performMenuOperation(canvas_board);
+		}
 	}
 
 
@@ -79,7 +87,7 @@ void DrawingBoard::handleMouseClickMotion(int x, int y)
 
 	if(canvas_board->isClickInside(x,y))
 	{
-		cout << "  Inside CanvasBoard" <<endl;		
+		LOG("  Inside CanvasBoard");		
 		canvas_board->drawWithTool(drawingToolBar->getSelectedTool(), color_panel->getSelectedColor(), x, y);
 	}
 }

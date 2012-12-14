@@ -33,8 +33,15 @@ public:
 	void selectClickedColorFromTriangle(int x, int y);
 		
 	Color getSelectedColor();
+	~ColorPanel();
 };
-
+ColorPanel::~ColorPanel()
+{
+	/*delete bottom_left;
+	delete top_right;
+	delete selectedColor;
+	delete gridColors;*/
+}
 ColorPanel::ColorPanel(float x1, float y1, float x2, float y2)
 {
 	bottom_left = new Coordinates(x1,y1,0);
@@ -114,9 +121,6 @@ void ColorPanel::addColorSquares()
 	selectedColor->setGLColor();	
 	glRectf(begin_x, begin_y-50, begin_x+50, begin_y);
 
-	//For the triangle you told about
-	glColor3f(0.23,0.432,0.567);  
-
 	glPushMatrix();
 	
 	//glScalef(1, 4.5, 1);	
@@ -170,7 +174,9 @@ void ColorPanel::selectClickedColorFromGrid(int x, int y)
 	{
 		int row = (top_right->get(Y_AXIS) - y) / COLOR_SQUARE_SIDE;
 		int col = (x - bottom_left->get(X_AXIS)) / COLOR_SQUARE_SIDE;
+#if DEBUG
 		cout << "Row = " << row << "\tCol = " << col << endl;		
+#endif
 		selectedColor = gridColors[row][col];		
 	}	
 }
@@ -181,8 +187,9 @@ void ColorPanel::selectClickedColorFromTriangle(int x, int y)
 	{		
 		GLfloat rgbValues[3];
 		glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
+#if DEBUG
 		cout << rgbValues[0];
-
+#endif
 		delete selectedColor;
 		selectedColor = new Color(rgbValues[0], rgbValues[1], rgbValues[2]);
 	}

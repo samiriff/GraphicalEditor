@@ -96,7 +96,7 @@ void MenuBar::drawText(char *info , float i, float j)
 	glRasterPos2f(i,j);
 	while(*info)
 	{
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*info++);
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,*info++);
 	}
 }
 void MenuBar::addMenuItems()

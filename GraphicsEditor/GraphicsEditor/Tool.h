@@ -3,7 +3,7 @@
 
 #include <cmath>
 #include <iostream>
-
+#include <sstream>
 
 #include "Coordinates.h"
 #include "Canvas.h"
@@ -30,13 +30,14 @@ protected:
 	bool isFirstPointSelected;
 	GLfloat imageDataBefore[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR];
 
-	void drawText(char *info, float x, float y);
+	void drawText(const char *info, float x, float y);
 	void copyFromTo(GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], GLfloat buffer[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR]);
 	
 
 public:	
 	Tool(float x1, float y1, float x2, float y2);
-
+	void IncreasePointSize();
+	void DecreasePointSize();
 	virtual void render() = 0;
 	virtual void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY) = 0;	
 	virtual void start();
@@ -82,10 +83,10 @@ public:
 
 //**********************************************************************************************************************//
 
-class Rectangle : public Tool
+class Rect : public Tool
 {
 public:
-	Rectangle(float x1, float y1, float x2, float y2);
+	Rect(float x1, float y1, float x2, float y2);
 
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
@@ -114,35 +115,42 @@ public:
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 Tool::Tool(float x1, float y1, float x2, float y2)
 {
-#if DEBUG
 	LOG("Tool Class");
-#endif
 	bottom_left = new Coordinates(x1, y1, 0);
 	top_right = new Coordinates(x2, y2, 0);
 	isFirstPointSelected = false;
+	pointSize = 0.95;
+	IncreasePointSize();
 }
-
+void Tool::IncreasePointSize()
+{
+	glColor3f(0,0,0);
+	pointSize += 0.05;
+	glPointSize(pointSize);
+    stringstream ss;
+    ss << pointSize;
+    string valueString = "Point Size " + ss.str();
+	drawText((const char *)valueString.c_str(),POINT_INFO_X, POINT_INFO_Y);
+}
+void Tool::DecreasePointSize()
+{
+	pointSize -= 0.05;
+    stringstream ss;
+    glPointSize(pointSize);
+	ss << pointSize;
+    string valueString = "Point Size " + ss.str();
+	glColor3f(0,0,0);
+	drawText(valueString.c_str(),POINT_INFO_X, POINT_INFO_Y);
+}
 void Tool::select()
 {
 	glColor4f(0, 0, 0, 0.1);			//Using a tranlucent polygon
 	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 }
 
-void Tool::drawText(char *info, float x, float y)
+void Tool::drawText(const char *info, float x, float y)
 {
 	glRasterPos2f(x, y);
 	while(*info)
@@ -196,9 +204,8 @@ void Pencil::render()
 
 void Pencil::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
-#if DEBUG
-	cout << "Pencil Drawing";
-#endif
+	LOG("Pencil Drawing");
+
 	glBegin(GL_POLYGON);
 		glVertex2f(mouseX, mouseY);
 		glVertex2f(mouseX, mouseY + 1.8);
@@ -238,7 +245,24 @@ void Spray::render()
 }
 
 void Spray::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{}
+{
+	glPointSize(pointSize);
+	glLineWidth(pointSize);
+	float theta = 0.0;
+	float x = 0, y=0;
+	float r = 5;
+	while(theta <= 360)
+	{
+		x = r*cos(theta);
+		y = r*sin(theta);
+
+		glBegin(GL_POINTS);
+		glVertex2f(x+mouseX,y+mouseY);
+		glEnd();
+		theta += 0.5;
+	}
+
+}
 
 
 
@@ -275,7 +299,8 @@ void Line::render()
 }
 
 void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{	
+{	glPointSize(pointSize);
+	glLineWidth(pointSize);
 	if(isFirstPointSelected)
 	{
 		firstPoint.set(X_AXIS, mouseX);
@@ -329,10 +354,10 @@ void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 
 
 
-Rectangle::Rectangle(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
+Rect::Rect(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
-void Rectangle::render()
+void Rect::render()
 {	
 	glColor3f(1, 0, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
@@ -340,8 +365,9 @@ void Rectangle::render()
 	drawText("R", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
 }
 
-void Rectangle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{	
+void Rect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{	glPointSize(pointSize);
+	glLineWidth(pointSize);
 	if(isFirstPointSelected)
 	{		
 		firstPoint.set(X_AXIS, mouseX);
@@ -369,28 +395,44 @@ void Circle::render()
 	glColor3f(1, 1, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
-	drawText("C", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Ring", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 16, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
 }
 
 void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
+	if(isFirstPointSelected)
+	{		
+		firstPoint.set(X_AXIS, mouseX);
+		firstPoint.set(Y_AXIS, mouseY);
+
+		isFirstPointSelected = false;
+		copyFromTo(img, imageDataBefore);				
+	}
+	else
+	{			
+		//glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		//glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+		float xc = (firstPoint.get(X_AXIS) + mouseX)/2;
+		float yc = (firstPoint.get(Y_AXIS)+mouseY)/2;
+		float theta = 0;
+		float x = xc-mouseX, y=yc-mouseY;
+		float r = sqrt(x*x + y*y)/2;
+		x=0,y=0;
+		while(theta <= 360)
+		{
+			x = r*cos(theta);
+			y = r*sin(theta);
+
+			glBegin(GL_POINTS);
+			glVertex2f(x+xc,y+yc);
+			glEnd();
+			theta += 0.1;
+		}
+				
+	}	
 
 
 }
-
-
-
-
-
-
-
-//**********************************************************************************************************************//
-
-
-
-
-
-
 
 Eraser::Eraser(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
@@ -404,14 +446,12 @@ void Eraser::render()
 }
 
 void Eraser::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{}
-
-
-
-
-//**********************************************************************************************************************//
-
-
+{
+	float width = 25;
+	float height = 25;
+	glColor3f(1,1,1);
+	glRectf(mouseX-width,mouseY-height,mouseX+width, mouseY+height);
+}
 
 
 #endif

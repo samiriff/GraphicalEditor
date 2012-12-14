@@ -1,6 +1,6 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
-#define DEBUG 0
+#define DEBUG 1
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
 #else
@@ -68,6 +68,9 @@ enum ColorType
 #define COLOR_SQUARE_SIDE 30
 #define COLOR_PANEL_NUM_ROWS 5
 #define COLOR_PANEL_NUM_COLS 3
+
+#define POINT_INFO_X 10
+#define POINT_INFO_Y 20
 
 #define OP_NEW_X 20
 #define OP_OPEN_X 60

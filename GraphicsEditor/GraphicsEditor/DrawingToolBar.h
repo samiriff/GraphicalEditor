@@ -20,7 +20,8 @@ private:
 public:
 	DrawingToolBar(float, float , float , float);
 	void drawToolBar();
-
+	void IncreasePointSize();
+	void DecreasePointSize();
 	bool isClickInside(int , int);
 	bool isClickInsideGrid(int x, int y);
 	void selectClickedToolFromGrid(int x, int y);
@@ -42,6 +43,7 @@ DrawingToolBar::DrawingToolBar(float x1, float y1, float x2, float y2)
 	top_right = new Coordinates(x2,y2,0);
 
 	initTools();
+	selectedTool->IncreasePointSize();
 }
 
 void DrawingToolBar::initTools()
@@ -58,7 +60,7 @@ void DrawingToolBar::initTools()
 	begin_x = bottom_left->get(X_AXIS)+GAP;
 	begin_y -= (TOOL_BORDER_HEIGHT+GAP);
 
-	tools[1][0] = new Pencil(begin_x, begin_y-TOOL_BORDER_HEIGHT,begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[1][0] = new Rect(begin_x, begin_y-TOOL_BORDER_HEIGHT,begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 	tools[1][1] = new Circle(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
@@ -94,7 +96,20 @@ void DrawingToolBar::drawTools()
 	
 	selectedTool->select();		
 }
-
+void DrawingToolBar::IncreasePointSize()
+{
+	if(selectedTool)
+	{
+		selectedTool->IncreasePointSize();
+	}
+}
+void DrawingToolBar::DecreasePointSize()
+{
+	if(selectedTool)
+	{
+		selectedTool->DecreasePointSize();
+	}
+}
 
 bool DrawingToolBar::isClickInsideGrid(int x, int y)
 {

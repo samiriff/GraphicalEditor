@@ -37,6 +37,7 @@ int main(int argc, char **argv)
 }
 void handleKeyPress(unsigned char key, int x, int y)
 {
+	drawingBoard.handleKeyPress(key, x, y);
 }
 void myinit(void)
 {

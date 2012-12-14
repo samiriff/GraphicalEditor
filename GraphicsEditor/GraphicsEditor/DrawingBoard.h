@@ -25,6 +25,7 @@ public:
 	void initBoard();
 	void handleMouseClick(int, int, int, int);
 	void handleMouseClickMotion(int, int);
+	void handleKeyPress(unsigned char, int, int);
 	~DrawingBoard();
 	
 	Canvas *getCanvas();
@@ -38,7 +39,19 @@ DrawingBoard::DrawingBoard()
 	menu_bar = new MenuBar(MENUBAR_LEFT, MENUBAR_BOTTOM, MENUBAR_RIGHT, MENUBAR_TOP);
 	drawingToolBar = new DrawingToolBar( TOOLBAR_LEFT, TOOLBAR_BOTTOM, TOOLBAR_RIGHT, TOOLBAR_TOP);
 }
+void DrawingBoard::handleKeyPress(unsigned char c, int x, int y)
+{
+	switch(c)
+	{
+	case ',':
+		drawingToolBar->IncreasePointSize();
+		break;
+	case '.':
+		drawingToolBar->DecreasePointSize();
+		break;
+	}
 
+}
 void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 {	
 	if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN)

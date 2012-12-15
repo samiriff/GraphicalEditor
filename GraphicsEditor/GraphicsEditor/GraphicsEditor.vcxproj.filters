@@ -50,5 +50,11 @@
     <ClInclude Include="Special_Tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Typewriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuOperator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

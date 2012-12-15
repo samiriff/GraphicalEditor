@@ -1,6 +1,6 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
-#define DEBUG 0
+#define DEBUG 1
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
 #else
@@ -58,6 +58,10 @@ enum ColorType
 #define MENUBAR_RIGHT COLOR_PANEL_RIGHT
 #define MENUBAR_TOP APPLICATION_WINDOW_HEIGHT
 #define MENUBAR_BOTTOM TOOLBAR_TOP
+#define MENUBAR_NUM_ROWS 1
+#define MENUBAR_NUM_COLS 7
+#define MENUBAR_BORDER_WIDTH 70
+#define MENUBAR_BORDER_HEIGHT (MENUBAR_TOP - MENUBAR_BOTTOM) / MENUBAR_NUM_ROWS
 
 #define GAP 4
 #define TOOLBAR_NUM_ROWS 2
@@ -72,10 +76,14 @@ enum ColorType
 #define POINT_INFO_X 10
 #define POINT_INFO_Y 20
 
-#define OP_NEW_X 20
-#define OP_OPEN_X 60
-#define OP_SAVE_X 100
-#define OP_EXIT_X 140
-#define OP_CUPASTE_X 170
-#define OP_COPY_X 230
+#define OP_NEW_X MENUBAR_LEFT + 10
+#define OP_OPEN_X OP_NEW_X + 30
+#define OP_SAVE_X OP_OPEN_X + 40
+#define OP_EXIT_X OP_SAVE_X + 45
+#define OP_CUPASTE_X OP_EXIT_X + 70
+#define OP_COPY_X OP_CUPASTE_X + 70
+#define OP_TYPEWRITER_X OP_COPY_X + 200
+
+#define OP_Y MENUBAR_TOP - 20
+
 #endif

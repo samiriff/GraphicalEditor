@@ -3,6 +3,7 @@
 #include "Coordinates.h"
 #include "Constants.h"
 #include "Tool.h"
+
 #include<string.h>
 #include "ColorPanel.h"
 #include<gl/glut.h>
@@ -13,7 +14,7 @@ class Canvas
 private:
 	Coordinates bottom_left;
 	Coordinates top_right;	
-	char *fileName;
+	
 	Coordinates firstPoint;			//The first point clicked by the user
 	bool isFirstEntry;
 	inline void readFileName();
@@ -24,16 +25,19 @@ public:
 	Canvas(float, float , float , float);
 	void drawBoard();
 	bool isClickInside(int , int);
-	void saveToFile();
+
+	bool saveToFile(const char *fileName);
+	bool LoadFromFile(const char *fileName);
+
 	void drawWithTool(Tool *tool, Color color, int x, int y);
 	Coordinates getFirstPoint();	
-	void LoadFromFile();
+	
 	~Canvas();
 	
 };
 Canvas::~Canvas()
 {
-	delete fileName;
+	//delete fileName;
 }
 
 Canvas::Canvas(float x1, float y1, float x2, float y2)
@@ -49,8 +53,8 @@ Canvas::Canvas(float x1, float y1, float x2, float y2)
 			imageData[i][j] = 1;
 
 	isFirstEntry = false;
-	fileName = new char[NAMSIZE];
-	fileName[0] = '\0';
+//	fileName = new char[NAMSIZE];
+//	fileName[0] = '\0';
 	//glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT, CANVAS_TOP, GL_RGB, GL_FLOAT, imageData);	
 }
 
@@ -93,29 +97,45 @@ Coordinates Canvas::getFirstPoint()
 void Canvas::readFileName()
 {
 	cout<<"Enter the file name"<<endl;
-	cin >> fileName;
+//	cin >> fileName;
 
 }
-void Canvas::LoadFromFile()
+bool Canvas::LoadFromFile(const char *fileName)
 {
 	ifstream ifile;
-	do
+	ifile.open(fileName, ios::in);
+	LOG(fileName);
+	if(ifile.is_open())
 	{
-		readFileName();
-		ifile.open(fileName, ios::in);
-		LOG(fileName);
-		if(ifile.is_open())
-			break;
-		else
-			cout<<"Unable to read the File"<<endl;
-	}while(1);
-	ifile.read((char *)imageData, sizeof(imageData));
-	drawBoard();
+		ifile.read((char *)imageData, sizeof(imageData));
+		drawBoard();
+		return true;
+	}
+	else
+	{
+		LOG("Unable to read the File");
+		return false;
+	}	
 }
-void Canvas::saveToFile()
+bool Canvas::saveToFile(const char *fileName)
 {
 	ofstream outFile;
-	if(strlen(fileName)==0)
+	outFile.open(fileName, ios::out | ios::trunc);
+	if(outFile.is_open())
+	{
+		if(!outFile.is_open())
+			outFile.open(fileName, ios::out | ios::trunc);
+		outFile.write((char *) imageData, sizeof(imageData));
+		drawBoard();
+		return true;
+	}
+	else
+	{
+		LOG("File Not Found :P ");
+		return false;
+	}
+
+	/*if(strlen(fileName)==0)
 	{
 		do
 		{
@@ -131,7 +151,7 @@ void Canvas::saveToFile()
 	if(!outFile.is_open())
 		outFile.open(fileName, ios::out | ios::trunc);
 	outFile.write((char *) imageData, sizeof(imageData));
-	drawBoard();
+	drawBoard();*/
 }
 
 #endif

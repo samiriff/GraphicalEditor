@@ -120,7 +120,7 @@ void Canvas::saveToFile()
 		do
 		{
 			readFileName();
-			outFile.open(fileName, ios::out);
+			outFile.open(fileName, ios::out | ios::trunc);
 			if(outFile.is_open())
 			{break;
 			}
@@ -128,7 +128,10 @@ void Canvas::saveToFile()
 			 cout<<"File Not Found :P "<<endl;
 		}while(1);
 	}
+	if(!outFile.is_open())
+		outFile.open(fileName, ios::out | ios::trunc);
 	outFile.write((char *) imageData, sizeof(imageData));
+	drawBoard();
 }
 
 #endif

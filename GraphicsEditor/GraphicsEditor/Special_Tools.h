@@ -62,26 +62,201 @@ void Teapot::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	drawText("Not Working", mouseX, mouseY);
 }
 
-//class Translate : public Tool
-//{
-//public:
-//	Translate(float x1, float y1, float x2, float y2);
-//	void render();
-//	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-//
-//
-//};
-//class Scale : public Tool
-//{
-//public:
-//	Scale(float x1, float y1, float x2, float y2);
-//	void render();
-//	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-//};
-//class Rotate : public Tool
-//{
-//public:
-//	Rotate(float x1, float y1, float x2, float y2);
-//	void render();
-//	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-//};
+
+class InsideClipper : public Tool
+{
+public:
+	InsideClipper(float x1, float y1, float x2, float y2);
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
+};
+InsideClipper:: InsideClipper(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+{}
+void InsideClipper::render()
+{
+	LOG("Render In Clipper");
+	glColor3f(0.5, 0, 1);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+	glColor3f(0, 0, 0);
+	drawText("In", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+}
+void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	LOG("Draw In Clipper");
+	glPointSize(pointSize);
+	glLineWidth(pointSize);
+	if(isFirstPointSelected)
+	{		
+		firstPoint.set(X_AXIS, mouseX);
+		firstPoint.set(Y_AXIS, mouseY);
+
+		isFirstPointSelected = false;
+		copyFromTo(img, imageDataBefore);				
+	}
+	else
+	{			
+		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+		glBegin(GL_LINE_LOOP);
+		glVertex2i(mouseX, mouseY);
+		glVertex2i(firstPoint.get(X_AXIS),mouseY);
+		glVertex2i(firstPoint.get(X_AXIS),firstPoint.get(Y_AXIS));
+		glVertex2i(firstPoint.get(X_AXIS),mouseY);
+		glEnd();
+		int incx=1, incy = -1;
+		if(mouseX < firstPoint.get(X_AXIS))
+		{
+			incx = -1;
+		}
+		if(mouseY < firstPoint.get(Y_AXIS))
+		{
+			incy = 1;
+		}
+		for(int i=0; i<mouseX;i++)
+		{
+			for(int j=0; j<mouseY;j++)
+			{
+				imageDataBefore[i][j] = 1;
+			}
+		}
+	}	
+}
+class OutClipper : public Tool
+{
+public:
+	OutClipper(float x1, float y1, float x2, float y2);
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
+};
+
+OutClipper:: OutClipper(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+{}
+void OutClipper::render()
+{
+	LOG("Render OutClipper");
+	glColor3f(0.5, 0, 1);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+	glColor3f(0, 0, 0);
+	drawText("Out", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+}
+void OutClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	LOG("Draw OutClipper");
+	glPointSize(pointSize);
+	glLineWidth(pointSize);
+	if(isFirstPointSelected)
+	{		
+		firstPoint.set(X_AXIS, mouseX);
+		firstPoint.set(Y_AXIS, mouseY);
+
+		isFirstPointSelected = false;
+		copyFromTo(img, imageDataBefore);				
+	}
+	else
+	{			
+		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+		glBegin(GL_LINE_LOOP);
+		glVertex2i(mouseX, mouseY);
+		glVertex2i(firstPoint.get(X_AXIS),mouseY);
+		glVertex2i(firstPoint.get(X_AXIS),firstPoint.get(Y_AXIS));
+		glVertex2i(firstPoint.get(X_AXIS),mouseY);
+		glEnd();
+	}	
+}
+class Translate : public Tool
+{
+public:
+	Translate(float x1, float y1, float x2, float y2);
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
+
+
+};
+
+Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+{}
+void Translate::render()
+{
+	LOG("Render Translate");
+	glColor3f(1, 0, 1);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+	glColor3f(1, 0, 0);
+	drawText("Tra", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(0, 0, 0);
+	glutWireTeapot(4);
+}
+void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	LOG("Draw Translate");
+	drawText("Translate", mouseX, mouseY);
+}
+class Scale : public Tool
+{
+public:
+	Scale(float x1, float y1, float x2, float y2);
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
+};
+Scale::Scale(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+{}
+void Scale::render()
+{
+	LOG("Render Scale");
+	glColor3f(1, 0, 1);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+	glColor3f(1, 0, 0);
+	drawText("Scale", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+}
+void Scale::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	LOG("Draw Scale");
+	drawText("Scale!", mouseX, mouseY);
+}
+
+class Rotate : public Tool
+{
+public:
+	Rotate(float x1, float y1, float x2, float y2);
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
+};
+
+Rotate::Rotate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+{}
+void Rotate::render()
+{
+	LOG("Render Rotate");
+	glColor3f(1, 0, 0);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+	glColor3f(1, 1, 1);
+	drawText("Rot", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+}
+void Rotate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	LOG("Draw Rotate");
+	drawText("Rotate!", mouseX, mouseY);
+}
+
+class FloodFiller : public Tool
+{
+public:
+	FloodFiller(float x1, float y1, float x2, float y2);
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
+};
+FloodFiller::FloodFiller(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+{}
+void FloodFiller::render()
+{
+	LOG("Render FloodFiller");
+	glColor3f(1, 0, 1);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+	glColor3f(1, 0, 0);
+	drawText("Fill", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+}
+void FloodFiller::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	LOG("Draw FloodFiller");
+	drawText("Fill it!", mouseX, mouseY);
+}

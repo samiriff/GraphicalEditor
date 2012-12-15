@@ -96,6 +96,7 @@
     <ClInclude Include="Special_Tools.h" />
     <ClInclude Include="Tool.h" />
     <ClInclude Include="Typewriter.h" />
+    <ClInclude Include="UndoRedo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

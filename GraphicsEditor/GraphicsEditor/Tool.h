@@ -158,8 +158,14 @@ void Tool::drawPointSizeInfo()
 }
 void Tool::select()
 {
-	glColor4f(0, 0, 0, 0.1);			//Using a tranlucent polygon
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
 	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
+
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
 }
 
 void Tool::drawText(const char *info, float x, float y)
@@ -167,7 +173,7 @@ void Tool::drawText(const char *info, float x, float y)
 	glRasterPos2f(x, y);
 	while(*info)
 	{
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,*info++);
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*info++);
 	}
 }
 
@@ -195,15 +201,17 @@ void Tool::stop()
 	isFirstPointSelected = false;
 }
 
+//**********************************************************************************************************************//
+
 Pencil::Pencil(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
 void Pencil::render()
 {
-	glColor3f(0, 1, 1);
+	glColor3f(0, 0.5, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
-	drawText("P", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(1, 1, 1);
+	drawText("Pencil", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
 void Pencil::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
@@ -218,15 +226,19 @@ void Pencil::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	glEnd();		
 }
 
+//**********************************************************************************************************************//
+
 Spray::Spray(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
-{}
+{
+	selectedSize = SMALL;
+}
 
 void Spray::render()
 {
 	glColor3f(0, 1, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
-	drawText("S", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Spray", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 5, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
 void Spray::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
@@ -247,6 +259,8 @@ void Spray::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][
 
 }
 
+//**********************************************************************************************************************//
+
 Line::Line(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
@@ -259,7 +273,7 @@ void Line::render()
 	glEnd();
 
 	glColor3f(0, 0, 0);
-	drawText("L", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Line", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
 void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
@@ -306,6 +320,8 @@ void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 	}
 }
 
+//**********************************************************************************************************************//
+
 Rect::Rect(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
@@ -313,8 +329,8 @@ void Rect::render()
 {	
 	glColor3f(1, 0, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
-	drawText("R", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(1, 1, 1);
+	drawText("Rect", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
 void Rect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
@@ -337,6 +353,8 @@ void Rect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 	}	
 }
 
+//**********************************************************************************************************************//
+
 Circle::Circle(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
@@ -345,7 +363,7 @@ void Circle::render()
 	glColor3f(1, 1, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
-	drawText("Circle", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 16, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Circle", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
 void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
@@ -382,25 +400,32 @@ void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	}	
 }
 
+//**********************************************************************************************************************//
+
 Eraser::Eraser(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
-{}
+{
+	selectedSize = SMALL;
+}
 
 void Eraser::render()
-{	
+{		
 	glColor3f(1, 1, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
-	drawText("Er", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Eraser", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
 void Eraser::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	float width = 25+selectedSize*10;
-	float height = 25+selectedSize*10;
+	float height = 25+selectedSize*10;	
+	LOG("Selected Size = " << selectedSize);
 	glColor3f(1,1,1);
 	glRectf(mouseX-width,mouseY-height,mouseX+width, mouseY+height);
 }
 
+
+//**********************************************************************************************************************//
 
 class WireCube :public Tool
 {
@@ -419,7 +444,7 @@ void WireCube::render()
 	glColor3f(0, 0, 0);
 	/*glRasterPos2f((top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0);
 	glutSolidCube(50);*/
-	drawText("Cube", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 30, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Cube", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 void WireCube::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {

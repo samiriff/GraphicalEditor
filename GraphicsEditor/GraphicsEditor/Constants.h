@@ -1,6 +1,6 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
-#define DEBUG 0
+#define DEBUG 1
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
 #else
@@ -76,6 +76,8 @@ enum ColorType
 #define TOOLBAR_NUM_COLS 8
 #define TOOL_BORDER_WIDTH 90
 #define TOOL_BORDER_HEIGHT 30
+#define BITMAP_CHARACTER_WIDTH 4
+#define BITMAP_CHARACTER_HEIGHT 6
 
 #define COLOR_SQUARE_SIDE 30
 #define COLOR_PANEL_NUM_ROWS 5
@@ -99,5 +101,6 @@ enum ColorType
 #define SIZ_SELECTOR_TOP (SIZ_SELECTOR_BOTTOM+COLOR_SQUARE_SIDE)
 #define SIZ_SELECTOR_RIGHT COLOR_PANEL_RIGHT
 
+#define NUM_PAST_ENTRIES 10
 
 #endif

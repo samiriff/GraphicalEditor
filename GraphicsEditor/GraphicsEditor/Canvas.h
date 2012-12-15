@@ -6,6 +6,7 @@
 
 #include<string.h>
 #include "ColorPanel.h"
+#include "UndoRedo.h"
 #include<gl/glut.h>
 
 //class Tool;
@@ -19,6 +20,10 @@ private:
 	bool isFirstEntry;
 	inline void readFileName();
 	GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR]; //An array to hold the drawn data same as our my_package.cpp
+
+	bool isCanvasModified;
+
+	History *recentHistory;
 public:
 	
 
@@ -31,6 +36,11 @@ public:
 
 	void drawWithTool(Tool *tool, Color color, int x, int y);
 	Coordinates getFirstPoint();	
+
+	bool hasCanvasChanged();			//This is a test-and-set method
+	void recordInHistory();
+	void restoreOld();
+	void restoreNew();
 	
 	~Canvas();
 	
@@ -53,9 +63,11 @@ Canvas::Canvas(float x1, float y1, float x2, float y2)
 			imageData[i][j] = 1;
 
 	isFirstEntry = false;
-//	fileName = new char[NAMSIZE];
-//	fileName[0] = '\0';
-	//glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT, CANVAS_TOP, GL_RGB, GL_FLOAT, imageData);	
+
+	recentHistory = new History(NUM_PAST_ENTRIES);
+	recentHistory->record(imageData);
+	LOG("Recorded BLANK");
+	isCanvasModified = false;
 }
 
 bool Canvas::isClickInside(int x, int y)
@@ -83,6 +95,7 @@ void Canvas::drawWithTool(Tool *tool, Color color, int x, int y)
 	tool->drawOnCanvas(this, imageData, x, y);			
 
 	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, imageData);	
+	isCanvasModified = true;
 }
 
 Coordinates Canvas::getFirstPoint()
@@ -90,16 +103,11 @@ Coordinates Canvas::getFirstPoint()
 	return firstPoint;
 }
 
-/*GLfloat Canvas::(*getImageData())[APPLICATION_WINDOW_WIDTH * 3]
-{
-	return imageData;
-}*/
 void Canvas::readFileName()
 {
 	cout<<"Enter the file name"<<endl;
-//	cin >> fileName;
-
 }
+
 bool Canvas::LoadFromFile(const char *fileName)
 {
 	ifstream ifile;
@@ -134,24 +142,28 @@ bool Canvas::saveToFile(const char *fileName)
 		LOG("File Not Found :P ");
 		return false;
 	}
+}
 
-	/*if(strlen(fileName)==0)
-	{
-		do
-		{
-			readFileName();
-			outFile.open(fileName, ios::out | ios::trunc);
-			if(outFile.is_open())
-			{break;
-			}
-			else
-			 cout<<"File Not Found :P "<<endl;
-		}while(1);
-	}
-	if(!outFile.is_open())
-		outFile.open(fileName, ios::out | ios::trunc);
-	outFile.write((char *) imageData, sizeof(imageData));
-	drawBoard();*/
+void Canvas::recordInHistory()
+{
+	recentHistory->record(imageData);
+}
+
+void Canvas::restoreOld()
+{
+	recentHistory->undo(imageData);
+}
+
+void Canvas::restoreNew()
+{
+	recentHistory->redo(imageData);
+}
+
+bool Canvas::hasCanvasChanged()
+{
+	bool flag = isCanvasModified;
+	isCanvasModified = false;
+	return flag;
 }
 
 #endif

@@ -13,21 +13,26 @@ public:
 
 Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {}
+
 void Translate::render()
 {
 	LOG("Render Translate");
-	glColor3f(1, 0, 1);
+	glColor3f(1, 1, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(1, 0, 0);
-	drawText("Tra", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(0, 0, 0);
+	drawText("Translate", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 9, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 	glColor3f(0, 0, 0);
 	glutWireTeapot(4);
 }
+
 void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Translate");
 	drawText("Translate", mouseX, mouseY);
 }
+
+//**********************************************************************************************************************//
+
 class Scale : public Tool
 {
 public:
@@ -40,16 +45,18 @@ Scale::Scale(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 void Scale::render()
 {
 	LOG("Render Scale");
-	glColor3f(1, 0, 1);
+	glColor3f(0, 0, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(1, 0, 0);
-	drawText("Scale", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(1, 1, 1);
+	drawText("Scale", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 5, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 void Scale::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Scale");
 	drawText("Scale!", mouseX, mouseY);
 }
+
+//**********************************************************************************************************************//
 
 class Rotate : public Tool
 {
@@ -67,13 +74,16 @@ void Rotate::render()
 	glColor3f(1, 0, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(1, 1, 1);
-	drawText("Rot", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	drawText("Rotate", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 6, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 void Rotate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Rotate");
 	drawText("Rotate!", mouseX, mouseY);
 }
+
+
+//**********************************************************************************************************************//
 
 class FloodFiller : public Tool
 {
@@ -88,10 +98,10 @@ FloodFiller::FloodFiller(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y
 void FloodFiller::render()
 {
 	LOG("Render FloodFiller");
-	glColor3f(1, 0, 1);
+	glColor3f(0, 0, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(1, 0, 0);
-	drawText("Fill", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(1, 1, 1);
+	drawText("Fill", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 void FloodFiller::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
@@ -119,6 +129,8 @@ void FloodFiller::Fill(int x, int y, Color &previousPixelColor,int depth)
 	return;
 }
 
+//**********************************************************************************************************************//
+
 class WireCone : public Tool
 {
 public:
@@ -136,8 +148,8 @@ void WireCone::render()
 	LOG("Render Wire Cone");
 	glColor3f(0.5, 0, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
-	drawText("Cone", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(1, 1, 1);
+	drawText("Cone", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 void WireCone::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
@@ -148,6 +160,7 @@ void WireCone::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGH
 	drawText("Not Working", mouseX, mouseY);
 }
 
+//**********************************************************************************************************************//
 
 /*
  *Teapot Tool
@@ -167,10 +180,10 @@ Teapot::Teapot(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 void Teapot::render()
 {
 	LOG("Render Teapot");
-	glColor3f(1, 0, 1);
+	glColor3f(1, 1, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(1, 0, 0);
-	drawText("T-pot", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(0, 0, 0);
+	drawText("T-pot", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 5, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 	glColor3f(0, 0, 0);
 	glutWireTeapot(4);
 }
@@ -179,6 +192,8 @@ void Teapot::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	LOG("Draw T-bag");
 	drawText("Not Working", mouseX, mouseY);
 }
+
+//**********************************************************************************************************************//
 
 
 class InsideClipper : public Tool
@@ -195,8 +210,8 @@ void InsideClipper::render()
 	LOG("Render In Clipper");
 	glColor3f(0.5, 0, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
-	drawText("In", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(1, 1, 1);
+	drawText("Clip-In", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 7, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
@@ -249,6 +264,9 @@ void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_
 		glEnd();
 	}	
 }
+
+//**********************************************************************************************************************//
+
 class OutClipper : public Tool
 {
 public:
@@ -264,8 +282,8 @@ void OutClipper::render()
 	LOG("Render OutClipper");
 	glColor3f(0.5, 0, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
-	drawText("Out", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 20, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
+	glColor3f(1, 1, 1);
+	drawText("Clip-Out", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 9, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 void OutClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
@@ -301,6 +319,7 @@ public:
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 };
 
+//**********************************************************************************************************************//
 
 RingDrawer::RingDrawer(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
@@ -346,3 +365,6 @@ void RingDrawer::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEI
 				
 	}	
 }
+
+
+//**********************************************************************************************************************//

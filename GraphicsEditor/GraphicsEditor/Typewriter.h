@@ -82,7 +82,7 @@ void TypeWriter::addChar(char c)
 
 void TypeWriter::drawString()
 {		
-	glColor4f(1, 0, 0, 1);
+	glColor4f(0, 0, 0.5, 1);
 	glRasterPos2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS));
 
 	for(int i=0; i<initialString.length(); i++)			

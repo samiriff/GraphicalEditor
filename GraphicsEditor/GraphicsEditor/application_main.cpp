@@ -20,6 +20,7 @@ void handleMouseEvent(int,int,int,int);
 void handleMouseClickMotion(int x, int y);
 void reshape(int, int);
 void handleKeyPress(unsigned char , int, int);
+void handleSpecialKeyPress(int, int, int);
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -30,15 +31,23 @@ int main(int argc, char **argv)
 	glutDisplayFunc(display);
 	//glutReshapeFunc(reshape);
 	glutKeyboardFunc(handleKeyPress);
+	glutSpecialFunc(handleSpecialKeyPress);
 	glutMouseFunc(handleMouseEvent);
 	glutMotionFunc(handleMouseClickMotion);
 	myinit();
 	glutMainLoop();
 }
+
 void handleKeyPress(unsigned char key, int x, int y)
 {
 	drawingBoard.handleKeyPress(key, x, y);
 }
+
+void handleSpecialKeyPress(int key, int x, int y)
+{
+	drawingBoard.handleSpecialKeyPress(key, x, y);
+}
+
 void myinit(void)
 {
 	glEnable(GL_BLEND); //Enable blending.

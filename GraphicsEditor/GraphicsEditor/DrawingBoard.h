@@ -28,6 +28,7 @@ public:
 	void handleMouseClick(int, int, int, int);
 	void handleMouseClickMotion(int, int);
 	void handleKeyPress(unsigned char, int, int);
+	void handleSpecialKeyPress(int, int, int);
 	~DrawingBoard();
 	
 	Canvas *getCanvas();
@@ -58,6 +59,26 @@ void DrawingBoard::handleKeyPress(unsigned char c, int x, int y)
 	glutPostRedisplay();
 
 }
+
+void DrawingBoard::handleSpecialKeyPress(int c, int x, int y)
+{
+	LOG("DrawingBoard Special Key Function");
+
+	switch(c)
+	{
+	case GLUT_KEY_F2:	
+		canvas_board->restoreOld();
+		break;
+	case GLUT_KEY_F3:
+		canvas_board->restoreNew();
+		break;
+	}
+
+	//menu_bar->getTypeWriter()->addChar(c);	
+	glutPostRedisplay();
+
+}
+
 void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 {	
 	if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN)
@@ -95,6 +116,12 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 	if(button==GLUT_LEFT_BUTTON && state==GLUT_UP)
 	{		
 		drawingToolBar->getSelectedTool()->stop();
+
+		if(canvas_board->hasCanvasChanged())	
+		{
+			LOG("Canvas Has Changed...Recording");
+			canvas_board->recordInHistory();		
+		}
 	}
 }
 

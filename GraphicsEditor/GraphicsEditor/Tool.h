@@ -25,6 +25,7 @@ protected:
 	Canvas *canvas;
 	Coordinates *bottom_left, *top_right;
 	GLfloat pointSize;
+	Size selectedSize;
 	//These variables are required for tools that render items as the user moves the mouse
 	Coordinates firstPoint;
 	bool isFirstPointSelected;
@@ -39,6 +40,7 @@ public:
 	void IncreasePointSize();
 	void DecreasePointSize();
 	void drawPointSizeInfo();
+	void setDrawingSize(Size );
 	virtual void render() = 0;
 	virtual void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY) = 0;	
 	virtual void start();
@@ -126,6 +128,11 @@ Tool::Tool(float x1, float y1, float x2, float y2)
 	pointSize = 0.95;
 	IncreasePointSize();
 }
+void Tool::setDrawingSize(Size size)
+{
+	selectedSize = size;
+}
+
 void Tool::IncreasePointSize()
 {
 

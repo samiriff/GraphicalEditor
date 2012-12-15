@@ -56,5 +56,8 @@
     <ClInclude Include="MenuOperator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SizeSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

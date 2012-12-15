@@ -6,6 +6,14 @@
 #else
 #define LOG(s) 
 #endif
+
+
+enum Size
+{
+	SMALL = 0,
+	MEDIUM,
+	LARGE
+};
 enum AxisType
 {
 	X_AXIS = 0,
@@ -85,5 +93,11 @@ enum ColorType
 #define OP_TYPEWRITER_X OP_COPY_X + 200
 
 #define OP_Y MENUBAR_TOP - 20
+
+#define SIZ_SELECTOR_LEFT COLOR_PANEL_LEFT
+#define SIZ_SELECTOR_BOTTOM 420
+#define SIZ_SELECTOR_TOP (SIZ_SELECTOR_BOTTOM+COLOR_SQUARE_SIDE)
+#define SIZ_SELECTOR_RIGHT COLOR_PANEL_RIGHT
+
 
 #endif

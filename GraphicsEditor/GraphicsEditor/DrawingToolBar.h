@@ -26,7 +26,7 @@ public:
 	bool isClickInside(int , int);
 	bool isClickInsideGrid(int x, int y);
 	void selectClickedToolFromGrid(int x, int y);
-
+	void setSize(Size);
 	Tool *getSelectedTool();
 };
 
@@ -37,7 +37,10 @@ bool DrawingToolBar::isClickInside(int x, int y)
 	else
 		return false;
 }
-
+void DrawingToolBar::setSize(Size size)
+{
+	selectedTool->setDrawingSize(size);
+}
 DrawingToolBar::DrawingToolBar(float x1, float y1, float x2, float y2)
 {
 	bottom_left = new Coordinates(x1,y1,0);

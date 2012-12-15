@@ -4,6 +4,7 @@
 #include "ColorPanel.h"
 #include "DrawingToolBar.h"
 #include "MenuBar.h"
+#include "SizeSelector.h"
 #include<gl/glut.h>
 #include<iostream>
 using namespace std;
@@ -20,6 +21,7 @@ private:
 	ColorPanel *color_panel;
 	MenuBar *menu_bar;
 	DrawingToolBar *drawingToolBar;
+	SizeSelector *sizeSelector;
 public:
 	DrawingBoard();
 	void initBoard();
@@ -38,6 +40,7 @@ DrawingBoard::DrawingBoard()
 	color_panel = new ColorPanel(COLOR_PANEL_LEFT, COLOR_PANEL_BOTTOM, COLOR_PANEL_RIGHT, COLOR_PANEL_TOP);
 	menu_bar = new MenuBar(MENUBAR_LEFT, MENUBAR_BOTTOM, MENUBAR_RIGHT, MENUBAR_TOP, canvas_board);
 	drawingToolBar = new DrawingToolBar( TOOLBAR_LEFT, TOOLBAR_BOTTOM, TOOLBAR_RIGHT, TOOLBAR_TOP);
+	sizeSelector = new SizeSelector(SIZ_SELECTOR_LEFT, SIZ_SELECTOR_BOTTOM, SIZ_SELECTOR_RIGHT, SIZ_SELECTOR_TOP);
 }
 void DrawingBoard::handleKeyPress(unsigned char c, int x, int y)
 {
@@ -71,7 +74,9 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 		{
 			LOG("  Inside Color Panel");
 			color_panel->selectClickedColorFromGrid(x, y);	
-			color_panel->selectClickedColorFromTriangle(x, y);		
+			color_panel->selectClickedColorFromTriangle(x, y);	
+			if(sizeSelector->isClickInsideSizeSelector(x,y))
+				drawingToolBar->setSize(sizeSelector->getSelectedSize());
 		}
 		if(drawingToolBar->isClickInside(x,y))
 		{
@@ -114,6 +119,7 @@ void DrawingBoard::initBoard()
 	color_panel->drawPanel();
 	menu_bar->addMenuBar();
 	drawingToolBar->drawToolBar();
+	sizeSelector->draw();
 }
 
 DrawingBoard::~DrawingBoard()

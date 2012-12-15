@@ -161,7 +161,7 @@ void DrawingToolBar::selectClickedToolFromGrid(int x, int y)
 	{
 		int row = (top_right->get(Y_AXIS) - y) / TOOL_BORDER_HEIGHT;
 		int col = (x - bottom_left->get(X_AXIS)) / (TOOL_BORDER_WIDTH + GAP);
-		cout << "Row = " << row << "\tCol = " << col << endl;		
+		LOG("Row = " << row << "\tCol = " << col);	
 		selectedTool = tools[row][col];		
 	}	
 }

@@ -97,28 +97,38 @@ void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_
 	{			
 		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
 		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
-		glBegin(GL_LINE_LOOP);
+		glColor3f(1,1,1);
+		//Clip the right part
+		glBegin(GL_POLYGON);
 		glVertex2i(mouseX, mouseY);
+		glVertex2i(mouseX,firstPoint.get(Y_AXIS));
+		glVertex2i(CANVAS_RIGHT, CANVAS_TOP);
+		glVertex2i(CANVAS_RIGHT, CANVAS_BOTTOM);
+		glEnd();
+		
+		//Clip the left part
+		glBegin(GL_POLYGON);
+		glVertex2i(CANVAS_LEFT, CANVAS_BOTTOM);
 		glVertex2i(firstPoint.get(X_AXIS),mouseY);
 		glVertex2i(firstPoint.get(X_AXIS),firstPoint.get(Y_AXIS));
-		glVertex2i(firstPoint.get(X_AXIS),mouseY);
+		glVertex2i(CANVAS_LEFT, CANVAS_TOP);
 		glEnd();
-		int incx=1, incy = -1;
-		if(mouseX < firstPoint.get(X_AXIS))
-		{
-			incx = -1;
-		}
-		if(mouseY < firstPoint.get(Y_AXIS))
-		{
-			incy = 1;
-		}
-		for(int i=0; i<mouseX;i++)
-		{
-			for(int j=0; j<mouseY;j++)
-			{
-				imageDataBefore[i][j] = 1;
-			}
-		}
+
+		//clip the top part
+		glBegin(GL_POLYGON);
+		glVertex2i(CANVAS_LEFT, CANVAS_TOP);
+		glVertex2i(firstPoint.get(X_AXIS),firstPoint.get(Y_AXIS));
+		glVertex2i(mouseX,firstPoint.get(Y_AXIS));
+		glVertex2i(CANVAS_RIGHT, CANVAS_TOP);
+		glEnd();
+		
+		//clip the bottom part
+		glBegin(GL_POLYGON);
+		glVertex2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glVertex2i(firstPoint.get(X_AXIS),mouseY);
+		glVertex2i(mouseX, mouseY);
+		glVertex2i(CANVAS_RIGHT, CANVAS_BOTTOM);
+		glEnd();
 	}	
 }
 class OutClipper : public Tool
@@ -156,9 +166,10 @@ void OutClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEI
 	{			
 		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
 		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
-		glBegin(GL_LINE_LOOP);
+		glColor3f(1,1,1);
+		glBegin(GL_POLYGON);
 		glVertex2i(mouseX, mouseY);
-		glVertex2i(firstPoint.get(X_AXIS),mouseY);
+		glVertex2i(mouseX,firstPoint.get(Y_AXIS));
 		glVertex2i(firstPoint.get(X_AXIS),firstPoint.get(Y_AXIS));
 		glVertex2i(firstPoint.get(X_AXIS),mouseY);
 		glEnd();

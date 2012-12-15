@@ -106,58 +106,85 @@ void FloodFiller::render()
 void FloodFiller::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw FloodFiller");
-	GLfloat rgbValues[3];
+	GLfloat rgbValues[3];	
 	glReadPixels(mouseX, mouseY, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
 	Color currentColor(rgbValues[0],rgbValues[1],rgbValues[2]);
-	//Fill(mouseX, mouseY, currentColor,10);
+	LOG("Current Colour = " << currentColor);	
+	glPointSize(1);
+	Fill(mouseX, mouseY, currentColor, 200);
 }
-void FloodFiller::Fill(int x, int y, Color &previousPixelColor,int depth)
-{
-	if(depth <=0 ) return;
+void FloodFiller::Fill(int x, int y, Color &previousPixelColor, int depth)
+{	
+	if(depth <=0 ) 
+		return;
+
 	GLfloat rgbValues[3];
 	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
 	Color currentColor(rgbValues[0],rgbValues[1],rgbValues[2]);
+
 	if (currentColor == previousPixelColor)
 	{
-		depth-=1;
-		glBegin(GL_POINT); glVertex2i(x,y); glEnd();
-		Fill(x-1,y,currentColor,depth);
-		Fill(x+1,y,currentColor,depth);
-		Fill(x,y-1,currentColor,depth);
-		Fill(x,y+1,currentColor,depth);
+		depth -= 1;		
+		glBegin(GL_POINTS); 
+			glVertex2i(x,y); 
+		glEnd();
+		Fill(x-1, y, currentColor,depth);
+		Fill(x+1, y, currentColor,depth);
+		Fill(x, y-1, currentColor,depth);
+		Fill(x, y+1, currentColor,depth);
 	}
 	return;
 }
 
 //**********************************************************************************************************************//
 
-class WireCone : public Tool
+class UnfilledRect : public Tool
 {
 public:
-	WireCone(float x1, float y1, float x2, float y2);
+	UnfilledRect(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 
 };
 
 
-WireCone::WireCone(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+UnfilledRect::UnfilledRect(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {}
-void WireCone::render()
+void UnfilledRect::render()
 {
-	LOG("Render Wire Cone");
+	LOG("Render UnfilledRect");
 	glColor3f(0.5, 0, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(1, 1, 1);
-	drawText("Cone", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
+	drawText("Loop", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
-void WireCone::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+void UnfilledRect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
-	LOG("Draw Wire Cone");
-	glRasterPos2i(mouseX,mouseY);
-	glColor3f(0, 0,0);
-	//glutWireCube(10);
-	drawText("Not Working", mouseX, mouseY);
+	LOG("Draw UnfilledRect");
+	glPointSize(pointSize);
+	glLineWidth(pointSize);
+	if(isFirstPointSelected)
+	{		
+		firstPoint.set(X_AXIS, mouseX);
+		firstPoint.set(Y_AXIS, mouseY);
+
+		isFirstPointSelected = false;
+		copyFromTo(img, imageDataBefore);				
+	}
+	else
+	{			
+		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+
+
+		glBegin(GL_LINE_LOOP);
+			glVertex2f(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
+			glVertex2f(firstPoint.get(X_AXIS), mouseY);
+			glVertex2f(mouseX, mouseY);
+			glVertex2f(mouseX, firstPoint.get(Y_AXIS));			
+		glEnd();		
+	}	
+	
 }
 
 //**********************************************************************************************************************//
@@ -352,17 +379,15 @@ void RingDrawer::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEI
 		float xc = (firstPoint.get(X_AXIS)+mouseX)/2, yc = (firstPoint.get(Y_AXIS) + mouseY)/2; 
 		float r = sqrt(dx*dx + dy*dy)/2;
 		float x=0,y=0;
+		glBegin(GL_LINE_STRIP);
 		while(theta <= 360)
 		{
 			x = r*cos(theta);
-			y = r*sin(theta);
-
-			glBegin(GL_POINTS);
-			glVertex2f(x+xc,y+yc);
-			glEnd();
+			y = r*sin(theta);			
+			glVertex2f(x+xc,y+yc);			
 			theta += 0.25;
 		}
-				
+		glEnd();	
 	}	
 }
 

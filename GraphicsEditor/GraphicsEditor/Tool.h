@@ -221,8 +221,8 @@ void Pencil::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	glBegin(GL_POLYGON);
 		glVertex2f(mouseX, mouseY);
 		glVertex2f(mouseX, mouseY + 1.8);
-		glVertex2f(mouseX + 1.8, mouseY + 1.8);
-		glVertex2f(mouseX + 1.8, mouseY);
+		glVertex2f(mouseX + 5, mouseY + 1.8);
+		glVertex2f(mouseX + 5, mouseY);
 	glEnd();		
 }
 
@@ -334,7 +334,8 @@ void Rect::render()
 }
 
 void Rect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{	glPointSize(pointSize);
+{	
+	glPointSize(pointSize);
 	glLineWidth(pointSize);
 	if(isFirstPointSelected)
 	{		
@@ -386,16 +387,16 @@ void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 		float xc = (firstPoint.get(X_AXIS)+mouseX)/2, yc = (firstPoint.get(Y_AXIS) + mouseY)/2; 
 		float r = sqrt(dx*dx + dy*dy)/2;
 		float x=0,y=0;
+		glBegin(GL_LINE_STRIP);
 		while(theta <= 360)
 		{
 			x = r*cos(theta);
-			y = r*sin(theta);
-
-			glBegin(GL_POINTS);
-			glVertex2f(x+xc,y+yc);
-			glEnd();
+			y = r*sin(theta);			
+			glVertex2f(x+xc,y+yc);			
 			theta += 0.25;
 		}
+		glVertex2f(x+xc,y+yc);			
+		glEnd();
 				
 	}	
 }

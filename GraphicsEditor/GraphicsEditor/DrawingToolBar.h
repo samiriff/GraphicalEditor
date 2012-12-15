@@ -63,7 +63,7 @@ void DrawingToolBar::initTools()
 	tools[0][3] = new WireCube(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[0][4] = new WireCone(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[0][4] = new UnfilledRect(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
 	tools[0][5] = new RingDrawer(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);

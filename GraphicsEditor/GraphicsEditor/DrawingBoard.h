@@ -56,6 +56,7 @@ void DrawingBoard::handleKeyPress(unsigned char c, int x, int y)
 	}
 	
 	menu_bar->getTypeWriter()->addChar(c);	
+	menu_bar->getTypeWriter()->setCanvasAndTool(canvas_board, drawingToolBar->getSelectedTool());
 	glutPostRedisplay();
 
 }

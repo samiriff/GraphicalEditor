@@ -171,6 +171,9 @@ void Scale::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][
 {
 	LOG("Draw Scale");
 	drawText("Scale!", mouseX, mouseY);
+	glPixelZoom(2,2);
+	glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+	//glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
 }
 
 //**********************************************************************************************************************//
@@ -368,33 +371,53 @@ void UnfilledRect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_H
  *Teapot Tool
  */
 
-class Teapot : public Tool
+//**********************************************************************************************************************//
+
+/*
+ *Text (TeaPot) Tool - First select this tool from the toolbar. Then, select the text option from the menu bar. Type the required
+ *		string using the TypeWriter. When done, press the Enter Key. Now, click and move the mouse around the canvas to see some
+ *		magic.
+ */
+
+class Text : public Tool
 {
+private:
+	string text;	
+
 public:
-	Teapot(float x1, float y1, float x2, float y2);
+	Text(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 
+	void setText(string str);
 };
 
-Teapot::Teapot(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
-{}
-void Teapot::render()
+Text::Text(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {
-	LOG("Render Teapot");
+	text = "Text Not Entered";
+}
+void Text::render()
+{
+	LOG("Render Text");
 	glColor3f(1, 1, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
-	drawText("T-pot", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 5, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
+	drawText("Text", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 	glColor3f(0, 0, 0);
-	glutWireTeapot(4);
-}
-void Teapot::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{
-	LOG("Draw T-bag");
-	drawText("Not Working", mouseX, mouseY);
+	//glutWireTeapot(4);
 }
 
+void Text::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{
+	LOG("Draw T-bag" << text);
+	drawText(text.c_str(), mouseX, mouseY);	
+}
+
+void Text::setText(string str)
+{	
+	text = str;
+	LOG("setText = " << text);
+}
 //**********************************************************************************************************************//
 
 

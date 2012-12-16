@@ -87,7 +87,7 @@ void DrawingToolBar::initTools()
 	tools[1][2] = new Eraser(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[1][3] = new Teapot(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[1][3] = new Text(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
 	tools[1][4] = new Scale(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);

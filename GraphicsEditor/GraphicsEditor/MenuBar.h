@@ -65,9 +65,11 @@ void MenuBar::initMenuOptions()
 	begin_x += MENUBAR_BORDER_WIDTH;
 	menuOps[0][3] = new ExitOp(begin_x, begin_y, begin_x + MENUBAR_BORDER_WIDTH, top_right->get(Y_AXIS));
 	begin_x += MENUBAR_BORDER_WIDTH;
+	menuOps[0][4] = new TextOp(begin_x, begin_y, begin_x + MENUBAR_BORDER_WIDTH, top_right->get(Y_AXIS));
+	begin_x += MENUBAR_BORDER_WIDTH;
 
 	//This is always the last operator - No Op
-	menuOps[0][4] = new NoOp(0, 0, 0, 0);		
+	menuOps[0][5] = new NoOp(0, 0, 0, 0);		
 	begin_x += MENUBAR_BORDER_WIDTH;
 
 	typeWriter = new TypeWriter(begin_x, begin_y, "Status:");

@@ -343,4 +343,48 @@ void CopypasteOp::performOperation(Canvas *&canvas)
 	deselect();
 }
 
+//*****************************************************************************************
+
+/**
+* This crazy class was added because header files do not support CYCLIC DEPENDENCIES!!! This is extremely frustrating....Java packages are so much better than these STUPID header files.
+* IMPORTANT: DO NOT USE THIS CLASS FOR ANYTHING ELSE...IT IS MEANT TO BE USED ONLY FOR OPERATIONS INVOLVING THE TEXT DRAWING TOOL.
+*/
+
+class TextOp: public MenuOp
+{
+public:
+	TextOp(float x1, float y1, float x2, float y2);
+
+	void render();
+	void performOperation(Canvas *&canvas);
+};
+
+TextOp::TextOp(float x1, float y1, float x2, float y2):MenuOp(x1, y1, x2, y2)
+{}
+
+void TextOp::render()
+{
+	glColor3f(0.0,0.0,0.0);
+	drawText("Text", bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS));
+}
+
+void TextOp::performOperation(Canvas *&canvas)
+{
+	LOG("Text OP");
+
+	if(isFirstClick)
+	{		
+		typeWriter->clear();
+		typeWriter->setInitialString("String: ");
+		typeWriter->setSelectedOperation(this);
+		typeWriter->start();		
+	}
+	else
+	{
+		LOG("I'm here...TypeWriter has buffered input, and I have to process it");
+		typeWriter->addTextToCanvasIfTextToolSelected();
+				
+	}
+}
+
 #endif

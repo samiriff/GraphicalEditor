@@ -19,6 +19,8 @@ private:
 	Coordinates *bottom_left;
 
 	MenuOp *selectedOperation;	
+	Canvas *canvas;
+	Tool *tool;
 
 public:
 	TypeWriter(float x, float y);
@@ -38,6 +40,9 @@ public:
 	string getBufferedInput();
 	void setBufferedContents(string str);
 	void setInitialString(string str);
+
+	void setCanvasAndTool(Canvas *c, Tool *t);
+	void addTextToCanvasIfTextToolSelected();
 };
 
 TypeWriter::TypeWriter(float x, float y)
@@ -146,5 +151,22 @@ void TypeWriter::setInitialString(string str)
 	initialString = str;
 }
 
+
+void TypeWriter::setCanvasAndTool(Canvas *c, Tool *t)
+{
+	canvas = c;
+	tool = t;
+}
+
+void TypeWriter::addTextToCanvasIfTextToolSelected()
+{
+	LOG("ADD TEXT TO CANVAS");
+	Text *textTool = dynamic_cast<Text *>(tool);
+
+	if(textTool != NULL)
+		textTool->setText(buffer);
+	else
+		return;
+}
 
 #endif

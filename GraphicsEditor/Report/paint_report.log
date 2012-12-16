@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.2.1)  16 DEC 2012 21:46
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.2.1)  16 DEC 2012 21:53
 entering extended mode
 **paint_report.tex
 (E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.tex
@@ -280,9 +280,6 @@ Package caption Info: listings package is loaded.
 LaTeX Warning: Label `fig:logo2' multiply defined.
 
 
-LaTeX Warning: Label `fig:logo2' multiply defined.
-
-
 LaTeX Warning: Label `t' multiply defined.
 
 
@@ -379,15 +376,15 @@ LaTeX Info: Redefining \nameref on input line 33.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
-Overfull \hbox (12.84547pt too wide) in paragraph at lines 85--87
+Overfull \hbox (16.10933pt too wide) in paragraph at lines 85--87
 \OT1/cmr/m/n/12 re-spec-tively, hereby de-clare that the dis-ser-ta-tion en-ti-
-tled ``\OT1/cmr/bx/n/12 Graphical Ed-i-tor in OpenGL\OT1/cmr/m/n/12 ''
+tled ``\OT1/cmr/bx/n/12 Graphical Ed-i-tor in OpenGL\OT1/cmr/m/n/12 '',
  []
 
 [1
 
 {C:/Users/samiriff/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<RVCE.png, id=166, 225.84375pt x 225.84375pt>
+<RVCE.png, id=134, 225.84375pt x 225.84375pt>
 File: RVCE.png Graphic file (type png)
  <use RVCE.png>
 Package pdftex.def Info: RVCE.png used on input line 108.
@@ -419,7 +416,7 @@ l.179 \newpage
 Chapter 1.
 [1
 
-] [2] <opengl_pipeline.png, id=237, 644.4075pt x 325.215pt>
+] [2] <opengl_pipeline.png, id=197, 644.4075pt x 325.215pt>
 File: opengl_pipeline.png Graphic file (type png)
 
 <use opengl_pipeline.png>
@@ -442,7 +439,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 279.
  [3] [4 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/opengl_pipelin
 e.png>]
-<opengl_lib.png, id=248, 154.5775pt x 102.3825pt>
+<opengl_lib.png, id=208, 154.5775pt x 102.3825pt>
 File: opengl_lib.png Graphic file (type png)
  <use opengl_lib.png>
 Package pdftex.def Info: opengl_lib.png used on input line 310.
@@ -454,7 +451,7 @@ Chapter 2.
 
 ] [8]
 Chapter 3.
-<./screenshots/screen_labeling.png, id=267, 614.295pt x 630.85687pt>
+<./screenshots/screen_labeling.png, id=227, 614.295pt x 630.85687pt>
 File: ./screenshots/screen_labeling.png Graphic file (type png)
 
 <use ./screenshots/screen_labeling.png>
@@ -465,7 +462,7 @@ Package pdftex.def Info: ./screenshots/screen_labeling.png used on input line 3
 
  <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/screen_la
 beling.png>]
-<classdesign.png, id=275, 1014.03844pt x 345.54094pt>
+<classdesign.png, id=235, 1014.03844pt x 345.54094pt>
 File: classdesign.png Graphic file (type png)
  <use classdesign.png>
 Package pdftex.def Info: classdesign.png used on input line 401.
@@ -479,7 +476,7 @@ Missing character: There is no ‚ in font cmr12!
 Missing character: There is no Ä in font cmr12!
 Missing character: There is no ô in font cmr12!
 
-<tool.png, id=282, 713.66624pt x 309.5565pt>
+<tool.png, id=242, 713.66624pt x 309.5565pt>
 File: tool.png Graphic file (type png)
  <use tool.png>
 Package pdftex.def Info: tool.png used on input line 438.
@@ -498,7 +495,7 @@ Missing character: There is no ‚ in font cmr12!
 Missing character: There is no Ä in font cmr12!
 Missing character: There is no ô in font cmr12!
 [11] [12 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/tool.png>]
-[13] <menuop.png, id=299, 383.18156pt x 190.46156pt>
+[13] <menuop.png, id=259, 383.18156pt x 190.46156pt>
 File: menuop.png Graphic file (type png)
  <use menuop.png>
 Package pdftex.def Info: menuop.png used on input line 491.
@@ -510,91 +507,40 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [14] [15 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/menuop.png>]
 [16]
 Chapter 4.
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ú in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ù in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ú in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ù in font cmr12!
 [17
 
-]
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ú in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ù in font cmr12!
- <color_pallete.png, id=318, 420.82219pt x 57.21375pt>
-File: color_pallete.png Graphic file (type png)
-
-<use color_pallete.png>
-Package pdftex.def Info: color_pallete.png used on input line 564.
-(pdftex.def)             Requested size: 420.82115pt x 57.2136pt.
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ú in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ù in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ú in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ù in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ú in font cmr12!
-Missing character: There is no ‚ in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ù in font cmr12!
- [18 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/color_pallete.png
->]
-Missing character: There is no √ in font cmr12!
-Missing character: There is no ó in font cmr12!
- [19]
-Chapter 5.
-[20
-
-] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 640--641
+] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 574--575
 []\OT1/cmr/m/n/12 Opengl Graph-ics Ed-i-tor in Google Code- []$\OT1/cmtt/m/n/12
  http : / / code . google . com / p /$
  []
 
-[22
+[19
 
 pdfTeX warning (ext4): destination with the same identifier (name{cite.t}) has 
 been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.647 \newpage
+l.581 \newpage
               pdfTeX warning (ext4): destination with the same identifier (name
 {cite.t}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.647 \newpage
+l.581 \newpage
               pdfTeX warning (ext4): destination with the same identifier (name
 {cite.t}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.647 \newpage
+l.581 \newpage
               pdfTeX warning (ext4): destination with the same identifier (name
 {cite.t}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.647 \newpage
+l.581 \newpage
               ]
 
 Package hyperref Warning: bookmark level for unknown section* defaults to 0.
@@ -609,7 +555,7 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 663.
+nput line 597.
 
 (E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\DrawingBoard.h
 LaTeX Font Info:    Try loading font information for OML+cmss on input line 6.
@@ -636,120 +582,120 @@ LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbraceleft' on input line 14.
 
-[23]
+[20]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 46.
- [24] [25]
+ [21] [22]
 
 LaTeX Font Warning: Font shape `OML/cmss/m/it' undefined
 (Font)              using `OML/cmm/m/it' instead
 (Font)              for symbol `textgreater' on input line 103.
 
-[26]) [27] <screenshots/init_screen.png, id=533, 614.295pt x 630.85687pt>
+[23]) [24] <screenshots/init_screen.png, id=476, 614.295pt x 630.85687pt>
 File: screenshots/init_screen.png Graphic file (type png)
 
 <use screenshots/init_screen.png>
-Package pdftex.def Info: screenshots/init_screen.png used on input line 699.
+Package pdftex.def Info: screenshots/init_screen.png used on input line 633.
 (pdftex.def)             Requested size: 221.7553pt x 227.734pt.
 
-<screenshots/translate_demo.png, id=534, 614.295pt x 630.85687pt>
+<screenshots/translate_demo.png, id=477, 614.295pt x 630.85687pt>
 File: screenshots/translate_demo.png Graphic file (type png)
 
 <use screenshots/translate_demo.png>
-Package pdftex.def Info: screenshots/translate_demo.png used on input line 706.
+Package pdftex.def Info: screenshots/translate_demo.png used on input line 640.
 
 (pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
 
-<screenshots/lines.png, id=535, 614.295pt x 630.85687pt>
+<screenshots/lines.png, id=478, 614.295pt x 630.85687pt>
 File: screenshots/lines.png Graphic file (type png)
 
 <use screenshots/lines.png>
-Package pdftex.def Info: screenshots/lines.png used on input line 713.
+Package pdftex.def Info: screenshots/lines.png used on input line 647.
 (pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/rectangle_spray.png, id=536, 614.295pt x 630.85687pt>
+<screenshots/rectangle_spray.png, id=479, 614.295pt x 630.85687pt>
 File: screenshots/rectangle_spray.png Graphic file (type png)
 
 <use screenshots/rectangle_spray.png>
-Package pdftex.def Info: screenshots/rectangle_spray.png used on input line 720
+Package pdftex.def Info: screenshots/rectangle_spray.png used on input line 654
 .
 (pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/eraser.png, id=537, 614.295pt x 630.85687pt>
+<screenshots/eraser.png, id=480, 614.295pt x 630.85687pt>
 File: screenshots/eraser.png Graphic file (type png)
 
 <use screenshots/eraser.png>
-Package pdftex.def Info: screenshots/eraser.png used on input line 726.
+Package pdftex.def Info: screenshots/eraser.png used on input line 660.
 (pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/ring_pattern.png, id=538, 614.295pt x 630.85687pt>
+<screenshots/ring_pattern.png, id=481, 614.295pt x 630.85687pt>
 File: screenshots/ring_pattern.png Graphic file (type png)
 
 <use screenshots/ring_pattern.png>
-Package pdftex.def Info: screenshots/ring_pattern.png used on input line 732.
+Package pdftex.def Info: screenshots/ring_pattern.png used on input line 666.
 (pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/inside_clip.png, id=539, 614.295pt x 630.85687pt>
+<screenshots/inside_clip.png, id=482, 614.295pt x 630.85687pt>
 File: screenshots/inside_clip.png Graphic file (type png)
 
 <use screenshots/inside_clip.png>
-Package pdftex.def Info: screenshots/inside_clip.png used on input line 739.
+Package pdftex.def Info: screenshots/inside_clip.png used on input line 673.
 (pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/out_side_clip.png, id=540, 614.295pt x 630.85687pt>
+<screenshots/out_side_clip.png, id=483, 614.295pt x 630.85687pt>
 File: screenshots/out_side_clip.png Graphic file (type png)
 
 <use screenshots/out_side_clip.png>
-Package pdftex.def Info: screenshots/out_side_clip.png used on input line 746.
+Package pdftex.def Info: screenshots/out_side_clip.png used on input line 680.
 (pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/CreatedBy.png, id=541, 490.2315pt x 509.5035pt>
+<screenshots/CreatedBy.png, id=484, 490.2315pt x 509.5035pt>
 File: screenshots/CreatedBy.png Graphic file (type png)
 
 <use screenshots/CreatedBy.png>
-Package pdftex.def Info: screenshots/CreatedBy.png used on input line 753.
+Package pdftex.def Info: screenshots/CreatedBy.png used on input line 687.
 (pdftex.def)             Requested size: 441.20427pt x 458.5489pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 758.
-[28 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/init_s
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 692.
+[25 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/init_s
 creen.png> <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots
-/translate_demo.png>] [29 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Rep
+/translate_demo.png>] [26 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Rep
 ort/screenshots/lines.png> <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Re
-port/screenshots/rectangle_spray.png>] [30 <E:/Project/GitHub/GraphicalEditor/G
+port/screenshots/rectangle_spray.png>] [27 <E:/Project/GitHub/GraphicalEditor/G
 raphicsEditor/Report/screenshots/eraser.png> <E:/Project/GitHub/GraphicalEditor
-/GraphicsEditor/Report/screenshots/ring_pattern.png>] [31 <E:/Project/GitHub/Gr
+/GraphicsEditor/Report/screenshots/ring_pattern.png>] [28 <E:/Project/GitHub/Gr
 aphicalEditor/GraphicsEditor/Report/screenshots/inside_clip.png> <E:/Project/Gi
 tHub/GraphicalEditor/GraphicsEditor/Report/screenshots/out_side_clip.png>]
-[32 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/Create
+[29 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/Create
 dBy.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 758.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 692.
 
 (E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 758.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 758.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 692.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 692.
 Package rerunfilecheck Info: File `paint_report.out' has not changed.
-(rerunfilecheck)             Checksum: 155F1DA1400DEE368D788449F4E52DC2;2525.
+(rerunfilecheck)             Checksum: D5458FF081DF5A2535F59A0A02FA04BB;2012.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -759,10 +705,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8736 strings out of 494045
- 131198 string characters out of 3149991
- 331286 words of memory out of 3000000
- 11692 multiletter control sequences out of 15000+200000
+ 8709 strings out of 494045
+ 130799 string characters out of 3149991
+ 331109 words of memory out of 3000000
+ 11679 multiletter control sequences out of 15000+200000
  10887 words of font info for 38 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  36i,12n,61p,730b,1849s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -777,9 +723,9 @@ ikTex/fonts/type1/public/amsfonts/cm/cmssi10.pfb><G:/Program Files/MikTex/fonts
 /type1/public/amsfonts/cm/cmsy10.pfb><G:/Program Files/MikTex/fonts/type1/publi
 c/amsfonts/cm/cmti12.pfb><G:/Program Files/MikTex/fonts/type1/public/amsfonts/c
 m/cmtt12.pfb>
-Output written on paint_report.pdf (38 pages, 1881146 bytes).
+Output written on paint_report.pdf (35 pages, 1862721 bytes).
 PDF statistics:
- 676 PDF objects out of 1000 (max. 8388607)
- 250 named destinations out of 1000 (max. 500000)
- 398 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 615 PDF objects out of 1000 (max. 8388607)
+ 237 named destinations out of 1000 (max. 500000)
+ 329 words of extra memory for PDF output out of 10000 (max. 10000000)
 

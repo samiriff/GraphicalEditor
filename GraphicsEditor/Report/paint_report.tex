@@ -82,7 +82,7 @@ showstringspaces=false
 \section*{DECLARATION}
 \end{center}
 
-\paragraph{}  We, Samir Sheriff and Satvik N bearing USN number 1RV09CS093 and 1RV09CS095 respectively, hereby declare that the dissertation entitled ``\textbf{Graphical Editor in OpenGL}'' completed and written by us, has not been previously formed the basis for the award of any degree or diploma or certificate of any other University.
+\paragraph{}  We, Samir Sheriff and Satvik N, bearing USN numbers 1RV09CS093 and 1RV09CS095 respectively, hereby declare that the dissertation entitled ``\textbf{Graphical Editor in OpenGL}'', completed and written by us, has not, previously, formed the basis for the award of any degree or diploma or certificate of any other University.
 \vspace{1in}
 
 \begin{flushright} {Bangalore \hspace{4.4in} Samir Sheriff } 
@@ -529,72 +529,6 @@ What happens if the user finds out that he/she has made a mistake and wants to r
 
 
 
-\pagestyle{fancy}
-\lhead{\scriptsize{Implementation Details}}
-\chead{}
-\rhead{\scriptsize{Graphical Editor in OpenGL}}
-\lfoot{\scriptsize{Dept. of CSE, RVCE, Bangalore.}}
-\rfoot{\small{\thepage}}
-\cfoot{\scriptsize{Sept 2012 - Jan 2013}}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
-\chapter{Implementation}
-
-\section{Structures used}
-There is only one  structure used for designing our editor which is used to store the screen co-ordinates  values. The objects of these basic structures are used in various part of the design. The following listing shows them.
-
-\subsection{Buffer}
-Color is a basic structure for color parameters such as red, green, blue. The fig 4.1 shows the color structure. These structures objects are used in other basic functions to store color values required for the objects.
- 
-Fig 4.1 Color structure
-
-\subsection{Text}
-The text is written on the drawing canvas using one of the library function available in Open Gl “glutBitmapCharacter()”.
-Before drawing the text, the pointer is set to proper position using the opengl function call “glRasterPos2i()”
-
-\subsection{Button}
-The buttons in this project are actually state-less objects. They do not graphically respond to the user input. But there input has been recognized by mouse callback function based on the position where user clicks the button.
-
-
-
-\subsection{Color palette}
-Color palette is designed using the number of color buttons. The Fig 4.7 shows the color palette.The colors are generated randomly by varying the values of floating point numbers in the function “glColor3f()”. The color chosen by the user is recognized by the mouse callback function based on the co-ordinate points of the mouse.
- \begin{figure}[h!]
-	\centering
-		\includegraphics[scale=1.0]{color_pallete.png}
-	\caption{Color Palette}
-	\label{fig:logo2}
-\end{figure}
-
-
-
-
-\subsection{File options}
-File menu have the options like New, Open, Save, and exit. The New option will create a new blank window for drawing.
-The Open option allows to open the file by accepting the filename in command prompt. The file is read by using the “fread” function to a buffer and the buffer is drawn to a screen by using “glDrawPixels” function.
-The save option will basically save the contents of the buffer to a file using the “fwrite” system call.
-The exit option is used to quit the editor.
-
-
-\section{OpenGL Geometric Drawing Primitives}
-Now that you\'ve seen how to specify vertices, you still need to know how to tell OpenGL to create a set of points, a line, or a polygon from those vertices. To do this, you bracket each set of vertices between a call to glBegin() and a call to glEnd(). The argument passed to glBegin() determines what sort of geometric primitive is constructed from the vertices.
-
-\paragraph{\textbf{Point Details} } 
-To control the size of a rendered point, use glPointSize() and supply the desired size in pixels as the argument.
-\begin{itemize}
-\item{}	\textbf{void glLoadMatrix{fd}(const TYPE *m);}
-Sets the sixteen values of the current matrix to those specified by m.
-
-\item{}	\textbf{void glMultMatrix{fd}(const TYPE *m);}
-Multiplies the matrix specified by the sixteen values pointed to by m by the current matrix and stores the result as the current matrix.
-
-\item{}	\textbf{void glLoadIdentity(void);}
-Sets the currently modifiable matrix to the 4 × 4 identity matrix.
-
-\item{}	\textbf{void glMatrixMode(GLenum mode);}
-Specifies whether the modelview, projection, or texture matrix will be modified, using the mode attribute. Projecton matrix is used for 2-D purposes whereas Modelview is used for 3-D.
-
-\end{itemize}
 
 \pagestyle{fancy}
 \lhead{\scriptsize{Conclusion}}

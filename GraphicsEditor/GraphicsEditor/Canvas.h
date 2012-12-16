@@ -150,7 +150,7 @@ void Canvas::recordInHistory()
 }
 
 void Canvas::restoreOld()
-{
+{	
 	recentHistory->undo(imageData);
 }
 

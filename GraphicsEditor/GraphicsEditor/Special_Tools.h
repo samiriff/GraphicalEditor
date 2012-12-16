@@ -5,22 +5,46 @@
 //The tool.h header file was very big to this one!
 class Translate : public Tool
 {
-private:
+protected:
 	Coordinates secondPoint;
 	bool isSecondPointSelected;
 	Coordinates thirdPoint;
 	bool isThirdPointSelected;
 	Coordinates fourthPoint;
 	bool isfourthPointSelected;
+
+	bool inMotion;
+
+	bool eraseSelection;
+
+	void fourthPointSelection(int mouseX, int mouseY);
 public:
 	Translate(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
+
+	void stop();
+	void convertToCutOperator();
 };
 
 Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {
 	isfourthPointSelected = isSecondPointSelected = isThirdPointSelected = false;
+	inMotion = false;
+
+	eraseSelection = false;
+}
+
+void Translate::stop()
+{	
+	inMotion = false;
+	
+	LOG("Motion Switched Off - STOP Function");			
+}
+
+void Translate::convertToCutOperator()
+{
+	eraseSelection = true;
 }
 
 void Translate::render()
@@ -29,14 +53,61 @@ void Translate::render()
 	glColor3f(1, 1, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
-	drawText("Translate", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 9, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
+
+	if(eraseSelection)
+		drawText("Cut", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 3, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
+	else
+		drawText("Copy", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 	glColor3f(0, 0, 0);	
+}
+
+void Translate::fourthPointSelection(int mouseX, int mouseY)
+{
+	if(!isfourthPointSelected)
+	{
+		LOG("Before motion check -- Fourth Point Selected");	
+		if(inMotion)
+		{
+			LOG("Fourth Point Selected");		
+		
+			secondPoint.setToBoundingBoxCoordinates(thirdPoint);	
+
+			glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+			glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+		
+			LOG("Bounding Box width = " << (thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS)) / 2.0);
+			LOG("Mouse X = " << mouseX << "\tMouseY = " << mouseY);
+
+			fourthPoint.set(X_AXIS, mouseX - (thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS)) / 2.0);
+			fourthPoint.set(Y_AXIS, mouseY - (thirdPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS)) / 2.0);
+
+			LOG("Fourth Point After = " << fourthPoint);
+
+			//Copies the contents of the bounding box of the selection to another part of the canvas, the bounding box of which has its bottom left coordinates at fourthPoint
+			glRasterPos2f(fourthPoint.get(X_AXIS), fourthPoint.get(Y_AXIS));
+			glCopyPixels(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS), thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS) - 1, thirdPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS) - 1, GL_COLOR);
+		
+
+			if(eraseSelection)
+			{
+				//Cut operation
+				glColor3f(1, 1, 1);
+				glRectf(secondPoint.get(X_AXIS) - 1, secondPoint.get(Y_AXIS) - 1, thirdPoint.get(X_AXIS), thirdPoint.get(Y_AXIS));	//Offsets of 1 are subtracted to prevent the bounding box border lines from interfering with results
+			}
+		}
+		else
+		{
+			LOG("Motion Switched Off - After 4th point is selected");	
+			isfourthPointSelected = isSecondPointSelected = false;
+			isThirdPointSelected = false;  inMotion = false;
+		}
+	}
 }
 
 void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Translate");
-	static bool inMotion = false;
+	
 	if(!isSecondPointSelected)
 	{
 		LOG("Second Point Selected");
@@ -50,39 +121,31 @@ void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIG
 	else if(!isThirdPointSelected)
 	{
 		LOG("Third Point Selected");
-		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
-		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+		if(inMotion)
+		{
+			glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+			glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
 		
-		glBegin(GL_LINE_LOOP);
-			glVertex2f(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
-			glVertex2f(secondPoint.get(X_AXIS), mouseY);
-			glVertex2f(mouseX, mouseY);
-			glVertex2f(mouseX, secondPoint.get(Y_AXIS));			
-		glEnd();
+			glBegin(GL_LINE_LOOP);
+				glVertex2f(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
+				glVertex2f(secondPoint.get(X_AXIS), mouseY);
+				glVertex2f(mouseX, mouseY);
+				glVertex2f(mouseX, secondPoint.get(Y_AXIS));			
+			glEnd();
+			thirdPoint.set(X_AXIS, mouseX);
+			thirdPoint.set(Y_AXIS, mouseY);
+		}
+		else
+		{
+			LOG("Motion Switched Off");	
+			isThirdPointSelected = true;
+			inMotion = true;
 
-		thirdPoint.set(X_AXIS, mouseX);
-		thirdPoint.set(Y_AXIS, mouseY);
-		isThirdPointSelected = true;
-		inMotion = false;
+			fourthPointSelection(mouseX, mouseY);
+		}
 	}
-	else if(!isfourthPointSelected)
-	{
-		cout<<"Fourth Point Selected"<<endl;
-		fourthPoint.set(X_AXIS, mouseX);
-		fourthPoint.set(Y_AXIS, mouseY);
-		
-		secondPoint.setToBoundingBoxCoordinates(thirdPoint);			
-		
-		//Copies the contents of the bounding box of the selection to another part of the canvas, the bounding box of which has its bottom left coordinates at fourthPoint
-		glRasterPos2f(fourthPoint.get(X_AXIS), fourthPoint.get(Y_AXIS));
-		glCopyPixels(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS), thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS) - 1, thirdPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS) - 1, GL_COLOR);
-		
-		glColor3f(1, 1, 1);
-		glRectf(secondPoint.get(X_AXIS) - 1, secondPoint.get(Y_AXIS) - 1, thirdPoint.get(X_AXIS), thirdPoint.get(Y_AXIS));	//Offsets of 1 are subtracted to prevent the bounding box border lines from interfering with results
-
-		isfourthPointSelected = isSecondPointSelected = false;
-		isThirdPointSelected = false;  inMotion = false;
-	}
+	else
+		fourthPointSelection(mouseX, mouseY);
 }
 
 //**********************************************************************************************************************//

@@ -93,7 +93,9 @@ void DrawingToolBar::initTools()
 	tools[1][4] = new Scale(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[1][5] = new Rotate(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[1][5] = new Translate(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	Translate *translateTool = (Translate *)tools[1][5];
+	translateTool->convertToCutOperator();	
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
 	tools[1][6] = new Translate(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);

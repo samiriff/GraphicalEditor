@@ -66,7 +66,7 @@ void DrawingBoard::handleSpecialKeyPress(int c, int x, int y)
 
 	switch(c)
 	{
-	case GLUT_KEY_F2:	
+	case GLUT_KEY_F2:			
 		canvas_board->restoreOld();
 		break;
 	case GLUT_KEY_F3:

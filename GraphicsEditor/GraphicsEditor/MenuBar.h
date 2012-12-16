@@ -65,19 +65,15 @@ void MenuBar::initMenuOptions()
 	begin_x += MENUBAR_BORDER_WIDTH;
 	menuOps[0][3] = new ExitOp(begin_x, begin_y, begin_x + MENUBAR_BORDER_WIDTH, top_right->get(Y_AXIS));
 	begin_x += MENUBAR_BORDER_WIDTH;
-	menuOps[0][4] = new CutpasteOp(begin_x, begin_y, begin_x + MENUBAR_BORDER_WIDTH, top_right->get(Y_AXIS));
-	begin_x += MENUBAR_BORDER_WIDTH;
-	menuOps[0][5] = new CopypasteOp(begin_x, begin_y, begin_x + MENUBAR_BORDER_WIDTH, top_right->get(Y_AXIS));
-	begin_x += MENUBAR_BORDER_WIDTH;
 
 	//This is always the last operator - No Op
-	menuOps[0][6] = new NoOp(0, 0, 0, 0);		
+	menuOps[0][4] = new NoOp(0, 0, 0, 0);		
 	begin_x += MENUBAR_BORDER_WIDTH;
 
 	typeWriter = new TypeWriter(begin_x, begin_y, "Status:");
 
 
-	selectedOp = menuOps[0][6];
+	selectedOp = menuOps[0][MENUBAR_NUM_COLS - 1];
 }
 
 void MenuBar::drawMenuOptions()

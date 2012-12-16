@@ -1,0 +1,782 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.2.1)  16 DEC 2012 21:30
+entering extended mode
+**paint_report.tex
+("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.tex"
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, lat
+vian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerm
+an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, 
+romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
+sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
+senglishmax, welsh, loaded.
+("G:\Program Files\MikTex\tex\latex\base\report.cls"
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+("G:\Program Files\MikTex\tex\latex\base\size12.clo"
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("G:\Program Files\MikTex\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("G:\Program Files\MikTex\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("G:\Program Files\MikTex\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("G:\Program Files\MikTex\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("G:\Program Files\MikTex\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("G:\Program Files\MikTex\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("G:\Program Files\MikTex\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+("G:\Program Files\MikTex\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count88
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+("G:\Program Files\MikTex\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2011/12/04 v6.82m Hypertext links for LaTeX
+
+("G:\Program Files\MikTex\tex\generic\oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2011/04/23 v1.4 Bundle oberdiek, subset hyperref (HO)
+
+("G:\Program Files\MikTex\tex\generic\oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2011/04/23 v1.4 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2011/04/23 v1.4 Subsetting bundle oberdiek (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+Package: etexcmds 2011/02/16 v1.5 Prefix for e-TeX command names (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2011/04/07 v1.13 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Defining keys (HO)
+Package: pdftexcmds 2011/04/22 v0.16 Utilities of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/04/04 v1.12 Provides string conversions (HO)
+Package: bigintcalc 2011/01/30 v1.2 Expandable big integer calculations (HO)
+Package: bitset 2011/01/30 v1.1 Data type bit set (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provides unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/01/30 v1.0 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/04/23 v1.7 Hooks at very end of document (HO)
+Package: atbegshi 2011/01/30 v1.15 At begin shipout hook (HO)
+Package: refcount 2010/12/01 v3.2 Data extraction from references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options of hyperref/bookmark (HO)
+)
+("G:\Program Files\MikTex\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("G:\Program Files\MikTex\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2010/12/23 v3.10 Keyval support for LaTeX options (HO)
+)
+\@linkdim=\dimen105
+\Hy@linkcounter=\count89
+\Hy@pagecounter=\count90
+
+("G:\Program Files\MikTex\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2011/12/04 v6.82m Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count91
+
+("G:\Program Files\MikTex\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4046.
+Package hyperref Info: Link nesting OFF on input line 4051.
+Package hyperref Info: Hyper index ON on input line 4054.
+Package hyperref Info: Plain pages OFF on input line 4061.
+Package hyperref Info: Backreferencing OFF on input line 4066.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4284.
+\c@Hy@tempcnt=\count92
+
+("G:\Program Files\MikTex\tex\latex\ltxmisc\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4637.
+\Fld@menulength=\count93
+\Field@Width=\dimen106
+\Fld@charsize=\dimen107
+Package hyperref Info: Hyper figures OFF on input line 5757.
+Package hyperref Info: Link nesting OFF on input line 5762.
+Package hyperref Info: Hyper index ON on input line 5765.
+Package hyperref Info: backreferencing OFF on input line 5772.
+Package hyperref Info: Link coloring OFF on input line 5777.
+Package hyperref Info: Link coloring with OCG OFF on input line 5782.
+Package hyperref Info: PDF/A mode OFF on input line 5787.
+LaTeX Info: Redefining \ref on input line 5827.
+LaTeX Info: Redefining \pageref on input line 5831.
+\Hy@abspage=\count94
+\c@Item=\count95
+\c@Hfootnote=\count96
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+("G:\Program Files\MikTex\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2011/12/04 v6.82m Hyperref driver for pdfTeX
+\Fld@listcount=\count97
+\c@bookmark@seq@number=\count98
+
+("G:\Program Files\MikTex\tex\latex\oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip43
+)
+("G:\Program Files\MikTex\tex\latex\geometry\geometry.sty"
+Package: geometry 2010/09/12 v5.6 Page Geometry
+\Gm@cnth=\count99
+\Gm@cntv=\count100
+\c@Gm@tempcnt=\count101
+\Gm@bindingoffset=\dimen108
+\Gm@wd@mp=\dimen109
+\Gm@odd@mp=\dimen110
+\Gm@even@mp=\dimen111
+\Gm@layoutwidth=\dimen112
+\Gm@layoutheight=\dimen113
+\Gm@layouthoffset=\dimen114
+\Gm@layoutvoffset=\dimen115
+\Gm@dimlist=\toks15
+
+("G:\Program Files\MikTex\tex\latex\geometry\geometry.cfg")
+
+Package geometry Warning: Over-specification in `h'-direction.
+    `width' (433.62pt) is ignored.
+
+
+Package geometry Warning: Over-specification in `v'-direction.
+    `height' (592.61377pt) is ignored.
+
+) ("G:\Program Files\MikTex\tex\latex\fancyhdr\fancyhdr.sty"
+\fancy@headwidth=\skip44
+\f@ncyO@elh=\skip45
+\f@ncyO@erh=\skip46
+\f@ncyO@olh=\skip47
+\f@ncyO@orh=\skip48
+\f@ncyO@elf=\skip49
+\f@ncyO@erf=\skip50
+\f@ncyO@olf=\skip51
+\f@ncyO@orf=\skip52
+)
+("G:\Program Files\MikTex\tex\latex\graphics\color.sty"
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+("G:\Program Files\MikTex\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+("G:\Program Files\MikTex\tex\latex\xcolor\xcolor.sty"
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+("G:\Program Files\MikTex\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+LaTeX Info: Redefining \color on input line 702.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+("G:\Program Files\MikTex\tex\latex\listings\listings.sty"
+\lst@mode=\count102
+\lst@gtempboxa=\box26
+\lst@token=\toks16
+\lst@length=\count103
+\lst@currlwidth=\dimen116
+\lst@column=\count104
+\lst@pos=\count105
+\lst@lostspace=\dimen117
+\lst@width=\dimen118
+\lst@newlines=\count106
+\lst@lineno=\count107
+\lst@maxwidth=\dimen119
+
+("G:\Program Files\MikTex\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count108
+\lst@skipnumbers=\count109
+\lst@framebox=\box27
+)
+("G:\Program Files\MikTex\tex\latex\listings\listings.cfg"
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+("G:\Program Files\MikTex\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+("G:\Program Files\MikTex\tex\latex\caption\caption.sty"
+Package: caption 2012/02/19 v3.2f Customizing captions (AR)
+
+("G:\Program Files\MikTex\tex\latex\caption\caption3.sty"
+Package: caption3 2012/01/12 v1.4b caption3 kernel (AR)
+\captionmargin=\dimen120
+\captionmargin@=\dimen121
+\captionwidth=\dimen122
+\caption@indent=\dimen123
+\caption@parindent=\dimen124
+\caption@hangindent=\dimen125
+)
+\c@ContinuedFloat=\count110
+Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
+)
+("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.aux"
+
+LaTeX Warning: Label `fig:logo2' multiply defined.
+
+
+LaTeX Warning: Label `fig:logo2' multiply defined.
+
+
+LaTeX Warning: Label `t' multiply defined.
+
+
+LaTeX Warning: Label `t' multiply defined.
+
+
+LaTeX Warning: Label `t' multiply defined.
+
+
+LaTeX Warning: Label `t' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+ ("G:\Program Files\MikTex\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count111
+\scratchdimen=\dimen126
+\scratchbox=\box28
+\nofMPsegments=\count112
+\nofMParguments=\count113
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count114
+\MPscratchDim=\dimen127
+\MPnumerator=\count115
+\makeMPintoPDFobject=\count116
+\everyMPtoPDFconversion=\toks18
+)
+\AtBeginShipoutBox=\box29
+Package hyperref Info: Link coloring OFF on input line 33.
+ ("G:\Program Files\MikTex\tex\latex\hyperref\nameref.sty"
+Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
+
+("G:\Program Files\MikTex\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count117
+)
+LaTeX Info: Redefining \ref on input line 33.
+LaTeX Info: Redefining \pageref on input line 33.
+LaTeX Info: Redefining \nameref on input line 33.
+
+("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.out")
+("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.out")
+\@outlinefile=\write3
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(90.3375pt, 451.68752pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=451.68752pt
+* \textheight=650.43001pt
+* \oddsidemargin=18.0675pt
+* \evensidemargin=18.0675pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\c@lstlisting=\count118
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+
+Overfull \hbox (12.84547pt too wide) in paragraph at lines 85--87
+\OT1/cmr/m/n/12 re-spec-tively, hereby de-clare that the dis-ser-ta-tion en-ti-
+tled ``\OT1/cmr/bx/n/12 Graphical Ed-i-tor in OpenGL\OT1/cmr/m/n/12 ''
+ []
+
+[1
+
+{C:/Users/samiriff/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+<RVCE.png, id=166, 225.84375pt x 225.84375pt>
+File: RVCE.png Graphic file (type png)
+ <use RVCE.png>
+Package pdftex.def Info: RVCE.png used on input line 108.
+(pdftex.def)             Requested size: 112.92159pt x 112.92159pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 115.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 115.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 115.
+pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.140 \end{titlepage}
+                      [1 <D:/Documents/7th Sem/OpenGL Editor Report/Report/RVCE
+.png>]pdfTeX warning (ext4): destination with the same identifier (name{page.i}
+) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.179 \newpage
+               [1] [2]
+("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.toc" [3
+
+])
+\tf@toc=\write4
+
+[4]
+Chapter 1.
+[1
+
+] [2] <opengl_pipeline.png, id=237, 644.4075pt x 325.215pt>
+File: opengl_pipeline.png Graphic file (type png)
+
+<use opengl_pipeline.png>
+Package pdftex.def Info: opengl_pipeline.png used on input line 262.
+(pdftex.def)             Requested size: 483.30444pt x 243.91064pt.
+
+Overfull \hbox (31.61693pt too wide) in paragraph at lines 262--263
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 279.
+
+("G:\Program Files\MikTex\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 279.
+ [3] [4 <D:/Documents/7th Sem/OpenGL Editor Report/Report/opengl_pipeline.png>]
+
+<opengl_lib.png, id=248, 154.5775pt x 102.3825pt>
+File: opengl_lib.png Graphic file (type png)
+ <use opengl_lib.png>
+Package pdftex.def Info: opengl_lib.png used on input line 310.
+(pdftex.def)             Requested size: 154.5771pt x 102.38225pt.
+ [5 <D:/Documents/7th Sem/OpenGL Editor Report/Report/opengl_lib.png>] [6]
+Chapter 2.
+[7
+
+] [8]
+Chapter 3.
+<./screenshots/screen_labeling.png, id=267, 614.295pt x 630.85687pt>
+File: ./screenshots/screen_labeling.png Graphic file (type png)
+
+<use ./screenshots/screen_labeling.png>
+Package pdftex.def Info: ./screenshots/screen_labeling.png used on input line 3
+77.
+(pdftex.def)             Requested size: 368.57983pt x 378.51704pt.
+ [9
+
+ <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/screen_labeling.
+png>]
+<classdesign.png, id=275, 1014.03844pt x 345.54094pt>
+File: classdesign.png Graphic file (type png)
+ <use classdesign.png>
+Package pdftex.def Info: classdesign.png used on input line 400.
+(pdftex.def)             Requested size: 405.60818pt x 138.21391pt.
+
+[10 <D:/Documents/7th Sem/OpenGL Editor Report/Report/classdesign.png>]
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ô in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ô in font cmr12!
+
+<tool.png, id=282, 713.66624pt x 309.5565pt>
+File: tool.png Graphic file (type png)
+ <use tool.png>
+Package pdftex.def Info: tool.png used on input line 437.
+(pdftex.def)             Requested size: 428.20305pt x 185.73532pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ô in font cmr12!
+[11] [12 <D:/Documents/7th Sem/OpenGL Editor Report/Report/tool.png>] [13]
+<menuop.png, id=299, 383.18156pt x 190.46156pt>
+File: menuop.png Graphic file (type png)
+ <use menuop.png>
+Package pdftex.def Info: menuop.png used on input line 490.
+(pdftex.def)             Requested size: 191.5903pt x 95.23053pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[14] [15 <D:/Documents/7th Sem/OpenGL Editor Report/Report/menuop.png>]
+[16]
+Chapter 4.
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+[17
+
+]
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+ <color_pallete.png, id=318, 420.82219pt x 57.21375pt>
+File: color_pallete.png Graphic file (type png)
+
+<use color_pallete.png>
+Package pdftex.def Info: color_pallete.png used on input line 563.
+(pdftex.def)             Requested size: 420.82115pt x 57.2136pt.
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+ [18 <D:/Documents/7th Sem/OpenGL Editor Report/Report/color_pallete.png>]
+Missing character: There is no √ in font cmr12!
+Missing character: There is no ó in font cmr12!
+ [19]
+Chapter 5.
+[20
+
+] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 640--641
+[]\OT1/cmr/m/n/12 Opengl Graph-ics Ed-i-tor in Google Code- []$\OT1/cmtt/m/n/12
+ http : / / code . google . com / p /$
+ []
+
+[22
+
+pdfTeX warning (ext4): destination with the same identifier (name{cite.t}) has 
+been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.647 \newpage
+              pdfTeX warning (ext4): destination with the same identifier (name
+{cite.t}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.647 \newpage
+              pdfTeX warning (ext4): destination with the same identifier (name
+{cite.t}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.647 \newpage
+              pdfTeX warning (ext4): destination with the same identifier (name
+{cite.t}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.647 \newpage
+              ]
+
+Package hyperref Warning: bookmark level for unknown section* defaults to 0.
+
+("G:\Program Files\MikTex\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+("G:\Program Files\MikTex\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+("G:\Program Files\MikTex\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+)
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 663.
+
+("D:\Documents\7th Sem\OpenGL Editor Report\Report\DrawingBoard.h"
+LaTeX Font Info:    Try loading font information for OML+cmss on input line 6.
+LaTeX Font Info:    No file OMLcmss.fd. on input line 6.
+
+
+LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 6.
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10.95> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 7.
+
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 7.
+LaTeX Font Info:    No file OMScmss.fd. on input line 7.
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/it' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textasteriskcentered' on input line 7.
+
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbraceleft' on input line 14.
+
+[23]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 46.
+ [24] [25]
+
+LaTeX Font Warning: Font shape `OML/cmss/m/it' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textgreater' on input line 103.
+
+[26]) [27] <screenshots/init_screen.png, id=533, 614.295pt x 630.85687pt>
+File: screenshots/init_screen.png Graphic file (type png)
+
+<use screenshots/init_screen.png>
+Package pdftex.def Info: screenshots/init_screen.png used on input line 699.
+(pdftex.def)             Requested size: 221.7553pt x 227.734pt.
+
+<screenshots/translate_demo.png, id=534, 614.295pt x 630.85687pt>
+File: screenshots/translate_demo.png Graphic file (type png)
+
+<use screenshots/translate_demo.png>
+Package pdftex.def Info: screenshots/translate_demo.png used on input line 706.
+
+(pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
+
+<screenshots/lines.png, id=535, 614.295pt x 630.85687pt>
+File: screenshots/lines.png Graphic file (type png)
+
+<use screenshots/lines.png>
+Package pdftex.def Info: screenshots/lines.png used on input line 713.
+(pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<screenshots/rectangle_spray.png, id=536, 614.295pt x 630.85687pt>
+File: screenshots/rectangle_spray.png Graphic file (type png)
+
+<use screenshots/rectangle_spray.png>
+Package pdftex.def Info: screenshots/rectangle_spray.png used on input line 720
+.
+(pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<screenshots/eraser.png, id=537, 614.295pt x 630.85687pt>
+File: screenshots/eraser.png Graphic file (type png)
+
+<use screenshots/eraser.png>
+Package pdftex.def Info: screenshots/eraser.png used on input line 726.
+(pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<screenshots/ring_pattern.png, id=538, 614.295pt x 630.85687pt>
+File: screenshots/ring_pattern.png Graphic file (type png)
+
+<use screenshots/ring_pattern.png>
+Package pdftex.def Info: screenshots/ring_pattern.png used on input line 732.
+(pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<screenshots/inside_clip.png, id=539, 614.295pt x 630.85687pt>
+File: screenshots/inside_clip.png Graphic file (type png)
+
+<use screenshots/inside_clip.png>
+Package pdftex.def Info: screenshots/inside_clip.png used on input line 739.
+(pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<screenshots/out_side_clip.png, id=540, 614.295pt x 630.85687pt>
+File: screenshots/out_side_clip.png Graphic file (type png)
+
+<use screenshots/out_side_clip.png>
+Package pdftex.def Info: screenshots/out_side_clip.png used on input line 746.
+(pdftex.def)             Requested size: 276.43019pt x 283.88297pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<screenshots/CreatedBy.png, id=541, 490.2315pt x 509.5035pt>
+File: screenshots/CreatedBy.png Graphic file (type png)
+
+<use screenshots/CreatedBy.png>
+Package pdftex.def Info: screenshots/CreatedBy.png used on input line 753.
+(pdftex.def)             Requested size: 441.20427pt x 458.5489pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 758.
+[28 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/init_screen.p
+ng> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/translate_dem
+o.png>] [29 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/lines
+.png> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/rectangle_s
+pray.png>] [30 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/er
+aser.png> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/ring_pa
+ttern.png>] [31 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/i
+nside_clip.png> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/o
+ut_side_clip.png>] [32 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screen
+shots/CreatedBy.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 758.
+
+("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 758.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 758.
+Package rerunfilecheck Info: File `paint_report.out' has not changed.
+(rerunfilecheck)             Checksum: 155F1DA1400DEE368D788449F4E52DC2;2525.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 8736 strings out of 494045
+ 131093 string characters out of 3149991
+ 331286 words of memory out of 3000000
+ 11692 multiletter control sequences out of 15000+200000
+ 10887 words of font info for 38 fonts, out of 3000000 for 9000
+ 715 hyphenation exceptions out of 8191
+ 36i,12n,61p,730b,1849s stack positions out of 5000i,500n,10000p,200000b,50000s
+<G:/Program Files/MikTex/fonts/type1/public/amsfonts/cm/cmbx12.pfb><G:/Progra
+m Files/MikTex/fonts/type1/public/amsfonts/cm/cmmi10.pfb><G:/Program Files/MikT
+ex/fonts/type1/public/amsfonts/cm/cmr10.pfb><G:/Program Files/MikTex/fonts/type
+1/public/amsfonts/cm/cmr12.pfb><G:/Program Files/MikTex/fonts/type1/public/amsf
+onts/cm/cmr6.pfb><G:/Program Files/MikTex/fonts/type1/public/amsfonts/cm/cmr8.p
+fb><G:/Program Files/MikTex/fonts/type1/public/amsfonts/cm/cmss10.pfb><G:/Progr
+am Files/MikTex/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><G:/Program Files/M
+ikTex/fonts/type1/public/amsfonts/cm/cmssi10.pfb><G:/Program Files/MikTex/fonts
+/type1/public/amsfonts/cm/cmsy10.pfb><G:/Program Files/MikTex/fonts/type1/publi
+c/amsfonts/cm/cmti12.pfb><G:/Program Files/MikTex/fonts/type1/public/amsfonts/c
+m/cmtt12.pfb>
+Output written on paint_report.pdf (38 pages, 1881161 bytes).
+PDF statistics:
+ 676 PDF objects out of 1000 (max. 8388607)
+ 250 named destinations out of 1000 (max. 500000)
+ 398 words of extra memory for PDF output out of 10000 (max. 10000000)
+

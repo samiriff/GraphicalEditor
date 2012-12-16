@@ -7,9 +7,11 @@ class SizeSelector
 	Size selectedSize;
 	Coordinates *bottom_left, *top_right;
 	void updateSelectionBox();
+	void drawText(const char *info, float x, float y);
 public:
 	SizeSelector(float, float, float, float);
 	void draw();
+	void updateXYInfo(int, int);
 	bool isClickInsideSizeSelector(int , int);
 	Size selectClickedSize(int , int);
 	Size getSelectedSize();
@@ -35,6 +37,25 @@ bool SizeSelector::isClickInsideSizeSelector(int x, int y)
 Size SizeSelector::getSelectedSize()
 {
 	return selectedSize;
+}
+void SizeSelector::drawText(const char *info, float x, float y)
+{
+	glRasterPos2f(x, y);
+	while(*info)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*info++);
+	}
+}
+
+void SizeSelector::updateXYInfo(int mouseX, int mouseY)
+{
+	glColor3f(1,1,1);
+	glRectf(XY_INFO_LEFT,XY_INFO_BOTTOM,XY_INFO_RIGHT,XY_INFO_TOP);
+	stringstream ss;
+	ss << mouseX<<","<<mouseY;
+    string valueString = "Mouse(" + ss.str()+")";
+	glColor3f(0,0,0);
+	drawText(valueString.c_str(),XY_INFO_LEFT,XY_INFO_BOTTOM);
 }
 void SizeSelector::updateSelectionBox()
 {

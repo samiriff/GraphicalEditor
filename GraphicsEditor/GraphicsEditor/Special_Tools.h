@@ -3,6 +3,13 @@
 //The tool.h header file was very big to this one!
 class Translate : public Tool
 {
+private:
+	Coordinates secondPoint;
+	bool isSecondPointSelected;
+	Coordinates thirdPoint;
+	bool isThirdPointSelected;
+	Coordinates fourthPoint;
+	bool isfourthPointSelected;
 public:
 	Translate(float x1, float y1, float x2, float y2);
 	void render();
@@ -12,7 +19,9 @@ public:
 };
 
 Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
-{}
+{
+	isfourthPointSelected = isSecondPointSelected = isThirdPointSelected = false;
+}
 
 void Translate::render()
 {
@@ -28,7 +37,60 @@ void Translate::render()
 void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Translate");
-	drawText("Translate", mouseX, mouseY);
+	static bool inMotion = false;
+	if(!isSecondPointSelected)
+	{
+		cout<<"Second Point Selected"<<endl;
+		secondPoint.set(X_AXIS, mouseX);
+		secondPoint.set(Y_AXIS, mouseY);
+
+		isSecondPointSelected = true;
+		copyFromTo(img, imageDataBefore);			
+		inMotion = true;
+	}
+	else if(!isThirdPointSelected)
+	{
+		cout<<"Third Point Selected"<<endl;
+		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+
+
+		glBegin(GL_LINE_LOOP);
+			glVertex2f(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
+			glVertex2f(secondPoint.get(X_AXIS), mouseY);
+			glVertex2f(mouseX, mouseY);
+			glVertex2f(mouseX, secondPoint.get(Y_AXIS));			
+		glEnd();
+		thirdPoint.set(X_AXIS, mouseX);
+		thirdPoint.set(Y_AXIS, mouseY);
+		isThirdPointSelected = true;
+		inMotion = false;
+	}
+	else if(!isfourthPointSelected)
+	{
+		cout<<"Fourth Point Selected"<<endl;
+		fourthPoint.set(X_AXIS, mouseX);
+		fourthPoint.set(Y_AXIS, mouseY);
+		glPushMatrix();
+		glColor3f(1,1,1);
+		glRectf(secondPoint.get(X_AXIS),secondPoint.get(Y_AXIS),thirdPoint.get(X_AXIS),thirdPoint.get(Y_AXIS));
+		secondPoint.arrangeAscending(thirdPoint); // make secondPoint < thirdPoint by swapping...
+		glPopMatrix();
+		int dx = secondPoint.get(X_AXIS) - thirdPoint.get(X_AXIS);
+		int dy = secondPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS);
+		for(int j=0; j<dy ;j++)
+		{
+
+			for(int i = 0;i<dx;i++)
+			{
+				img[(int)fourthPoint.get(X_AXIS)-CANVAS_LEFT+i][(int)fourthPoint.get(Y_AXIS)-CANVAS_BOTTOM-j] = 
+					imageDataBefore[(int)secondPoint.get(X_AXIS)-CANVAS_LEFT+i][(int)secondPoint.get(Y_AXIS)-CANVAS_BOTTOM-j];
+			}
+		}
+		
+		isfourthPointSelected = isSecondPointSelected = false;
+		isThirdPointSelected = false;  inMotion = false;
+	}
 }
 
 //**********************************************************************************************************************//
@@ -60,6 +122,14 @@ void Scale::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][
 
 class Rotate : public Tool
 {
+private:
+	Coordinates secondPoint;
+	bool isSecondPointSelected;
+	Coordinates thirdPoint;
+	bool isThirdPointSelected;
+	Coordinates fourthPoint;
+	bool isfourthPointSelected;
+	float rotationAngle;
 public:
 	Rotate(float x1, float y1, float x2, float y2);
 	void render();
@@ -67,7 +137,10 @@ public:
 };
 
 Rotate::Rotate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
-{}
+{
+	isSecondPointSelected = false;
+	rotationAngle = 0;
+}
 void Rotate::render()
 {
 	LOG("Render Rotate");
@@ -79,7 +152,54 @@ void Rotate::render()
 void Rotate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Rotate");
-	drawText("Rotate!", mouseX, mouseY);
+	static bool inMotion = false;
+	if(!isSecondPointSelected)
+	{
+		cout<<"Second Point Selected"<<endl;
+		secondPoint.set(X_AXIS, mouseX);
+		secondPoint.set(Y_AXIS, mouseY);
+
+		isSecondPointSelected = true;
+		copyFromTo(img, imageDataBefore);			
+	}
+	else if(!isThirdPointSelected)
+	{
+		cout<<"Third Point Selected"<<endl;
+		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+
+
+		glBegin(GL_LINE_LOOP);
+			glVertex2f(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
+			glVertex2f(secondPoint.get(X_AXIS), mouseY);
+			glVertex2f(mouseX, mouseY);
+			glVertex2f(mouseX, secondPoint.get(Y_AXIS));			
+		glEnd();
+		thirdPoint.set(X_AXIS, mouseX);
+		thirdPoint.set(Y_AXIS, mouseY);
+		isThirdPointSelected = true;
+		inMotion = false;
+		isfourthPointSelected = false;
+		isThirdPointSelected = true;  
+	}
+	rotationAngle += 5;
+	if(rotationAngle>360) rotationAngle -= 360;
+	glRotatef(rotationAngle,0,0,1);
+	glBegin(GL_LINE_LOOP);
+			glVertex2f(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
+			glVertex2f(secondPoint.get(X_AXIS), mouseY);
+			glVertex2f(mouseX, mouseY);
+			glVertex2f(mouseX, secondPoint.get(Y_AXIS));			
+	glEnd();
+	glRotatef(-rotationAngle,0,0,1);
+	/*for(int i = firstPoint.get(X_AXIS);i<secondPoint.get(X_AXIS);i++)
+	{
+		for(int j=firstPoint.get(Y_AXIS);j>secondPoint.get(Y_AXIS);j--)
+		{
+			glRasterPos2i(i, j);
+			glDrawPixels(1,1, GL_RGB,GL_FLOAT, img);
+		}
+	}*/
 }
 
 

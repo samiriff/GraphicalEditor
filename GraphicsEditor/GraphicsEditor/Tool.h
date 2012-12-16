@@ -147,6 +147,8 @@ void Tool::DecreasePointSize()
 }
 void Tool::drawPointSizeInfo()
 {
+	glColor3f(1,1,1);
+	glRectf(POINT_INFO_LEFT,POINT_INFO_BOTTOM,POINT_INFO_RIGHT,POINT_INFO_TOP);
 	stringstream ss;
     glPointSize(pointSize);
 	ss << pointSize;

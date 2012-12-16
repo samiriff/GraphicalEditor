@@ -128,11 +128,11 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 
 void DrawingBoard::handleMouseClickMotion(int x, int y)
 {	
+	sizeSelector->updateXYInfo(x,y);
 	if(color_panel->isClickInside(x,y))
 	{			
 		color_panel->selectClickedColorFromTriangle(x, y);			
 	}
-
 
 	if(canvas_board->isClickInside(x,y))
 	{

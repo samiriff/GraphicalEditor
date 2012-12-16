@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.2.1)  16 DEC 2012 21:30
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.2.1)  16 DEC 2012 21:46
 entering extended mode
 **paint_report.tex
-("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.tex"
+(E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -275,7 +275,7 @@ Package: caption3 2012/01/12 v1.4b caption3 kernel (AR)
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 )
-("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.aux"
+(E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.aux
 
 LaTeX Warning: Label `fig:logo2' multiply defined.
 
@@ -337,8 +337,8 @@ LaTeX Info: Redefining \ref on input line 33.
 LaTeX Info: Redefining \pageref on input line 33.
 LaTeX Info: Redefining \nameref on input line 33.
 
-("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.out")
-("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.out")
+(E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.out)
+(E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.out)
 \@outlinefile=\write3
 
 *geometry* driver: auto-detecting
@@ -403,19 +403,19 @@ been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.140 \end{titlepage}
-                      [1 <D:/Documents/7th Sem/OpenGL Editor Report/Report/RVCE
-.png>]pdfTeX warning (ext4): destination with the same identifier (name{page.i}
-) has been already used, duplicate ignored
+                      [1 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Repo
+rt/RVCE.png>]pdfTeX warning (ext4): destination with the same identifier (name{
+page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.179 \newpage
                [1] [2]
-("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.toc" [3
+(E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.toc
+[3
 
 ])
 \tf@toc=\write4
-
-[4]
+ [4]
 Chapter 1.
 [1
 
@@ -440,14 +440,15 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 279.
- [3] [4 <D:/Documents/7th Sem/OpenGL Editor Report/Report/opengl_pipeline.png>]
-
+ [3] [4 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/opengl_pipelin
+e.png>]
 <opengl_lib.png, id=248, 154.5775pt x 102.3825pt>
 File: opengl_lib.png Graphic file (type png)
  <use opengl_lib.png>
 Package pdftex.def Info: opengl_lib.png used on input line 310.
 (pdftex.def)             Requested size: 154.5771pt x 102.38225pt.
- [5 <D:/Documents/7th Sem/OpenGL Editor Report/Report/opengl_lib.png>] [6]
+ [5 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/opengl_lib.png>] [
+6]
 Chapter 2.
 [7
 
@@ -458,19 +459,19 @@ File: ./screenshots/screen_labeling.png Graphic file (type png)
 
 <use ./screenshots/screen_labeling.png>
 Package pdftex.def Info: ./screenshots/screen_labeling.png used on input line 3
-77.
+78.
 (pdftex.def)             Requested size: 368.57983pt x 378.51704pt.
  [9
 
- <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/screen_labeling.
-png>]
+ <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/screen_la
+beling.png>]
 <classdesign.png, id=275, 1014.03844pt x 345.54094pt>
 File: classdesign.png Graphic file (type png)
  <use classdesign.png>
-Package pdftex.def Info: classdesign.png used on input line 400.
+Package pdftex.def Info: classdesign.png used on input line 401.
 (pdftex.def)             Requested size: 405.60818pt x 138.21391pt.
 
-[10 <D:/Documents/7th Sem/OpenGL Editor Report/Report/classdesign.png>]
+[10 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/classdesign.png>]
 Missing character: There is no ‚ in font cmr12!
 Missing character: There is no Ä in font cmr12!
 Missing character: There is no ô in font cmr12!
@@ -481,7 +482,7 @@ Missing character: There is no ô in font cmr12!
 <tool.png, id=282, 713.66624pt x 309.5565pt>
 File: tool.png Graphic file (type png)
  <use tool.png>
-Package pdftex.def Info: tool.png used on input line 437.
+Package pdftex.def Info: tool.png used on input line 438.
 (pdftex.def)             Requested size: 428.20305pt x 185.73532pt.
 
 
@@ -496,17 +497,17 @@ Missing character: There is no ù in font cmr12!
 Missing character: There is no ‚ in font cmr12!
 Missing character: There is no Ä in font cmr12!
 Missing character: There is no ô in font cmr12!
-[11] [12 <D:/Documents/7th Sem/OpenGL Editor Report/Report/tool.png>] [13]
-<menuop.png, id=299, 383.18156pt x 190.46156pt>
+[11] [12 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/tool.png>]
+[13] <menuop.png, id=299, 383.18156pt x 190.46156pt>
 File: menuop.png Graphic file (type png)
  <use menuop.png>
-Package pdftex.def Info: menuop.png used on input line 490.
+Package pdftex.def Info: menuop.png used on input line 491.
 (pdftex.def)             Requested size: 191.5903pt x 95.23053pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[14] [15 <D:/Documents/7th Sem/OpenGL Editor Report/Report/menuop.png>]
+[14] [15 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/menuop.png>]
 [16]
 Chapter 4.
 Missing character: There is no ‚ in font cmr12!
@@ -534,7 +535,7 @@ Missing character: There is no ù in font cmr12!
 File: color_pallete.png Graphic file (type png)
 
 <use color_pallete.png>
-Package pdftex.def Info: color_pallete.png used on input line 563.
+Package pdftex.def Info: color_pallete.png used on input line 564.
 (pdftex.def)             Requested size: 420.82115pt x 57.2136pt.
 Missing character: There is no ‚ in font cmr12!
 Missing character: There is no Ä in font cmr12!
@@ -554,7 +555,8 @@ Missing character: There is no ú in font cmr12!
 Missing character: There is no ‚ in font cmr12!
 Missing character: There is no Ä in font cmr12!
 Missing character: There is no ù in font cmr12!
- [18 <D:/Documents/7th Sem/OpenGL Editor Report/Report/color_pallete.png>]
+ [18 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/color_pallete.png
+>]
 Missing character: There is no √ in font cmr12!
 Missing character: There is no ó in font cmr12!
  [19]
@@ -609,7 +611,7 @@ File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
 nput line 663.
 
-("D:\Documents\7th Sem\OpenGL Editor Report\Report\DrawingBoard.h"
+(E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\DrawingBoard.h
 LaTeX Font Info:    Try loading font information for OML+cmss on input line 6.
 LaTeX Font Info:    No file OMLcmss.fd. on input line 6.
 
@@ -730,19 +732,20 @@ Package pdftex.def Info: screenshots/CreatedBy.png used on input line 753.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 758.
-[28 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/init_screen.p
-ng> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/translate_dem
-o.png>] [29 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/lines
-.png> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/rectangle_s
-pray.png>] [30 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/er
-aser.png> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/ring_pa
-ttern.png>] [31 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/i
-nside_clip.png> <D:/Documents/7th Sem/OpenGL Editor Report/Report/screenshots/o
-ut_side_clip.png>] [32 <D:/Documents/7th Sem/OpenGL Editor Report/Report/screen
-shots/CreatedBy.png>]
+[28 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/init_s
+creen.png> <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots
+/translate_demo.png>] [29 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Rep
+ort/screenshots/lines.png> <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Re
+port/screenshots/rectangle_spray.png>] [30 <E:/Project/GitHub/GraphicalEditor/G
+raphicsEditor/Report/screenshots/eraser.png> <E:/Project/GitHub/GraphicalEditor
+/GraphicsEditor/Report/screenshots/ring_pattern.png>] [31 <E:/Project/GitHub/Gr
+aphicalEditor/GraphicsEditor/Report/screenshots/inside_clip.png> <E:/Project/Gi
+tHub/GraphicalEditor/GraphicsEditor/Report/screenshots/out_side_clip.png>]
+[32 <E:/Project/GitHub/GraphicalEditor/GraphicsEditor/Report/screenshots/Create
+dBy.png>]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 758.
 
-("D:\Documents\7th Sem\OpenGL Editor Report\Report\paint_report.aux")
+(E:\Project\GitHub\GraphicalEditor\GraphicsEditor\Report\paint_report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 758.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 758.
 Package rerunfilecheck Info: File `paint_report.out' has not changed.
@@ -757,7 +760,7 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
  8736 strings out of 494045
- 131093 string characters out of 3149991
+ 131198 string characters out of 3149991
  331286 words of memory out of 3000000
  11692 multiletter control sequences out of 15000+200000
  10887 words of font info for 38 fonts, out of 3000000 for 9000
@@ -774,7 +777,7 @@ ikTex/fonts/type1/public/amsfonts/cm/cmssi10.pfb><G:/Program Files/MikTex/fonts
 /type1/public/amsfonts/cm/cmsy10.pfb><G:/Program Files/MikTex/fonts/type1/publi
 c/amsfonts/cm/cmti12.pfb><G:/Program Files/MikTex/fonts/type1/public/amsfonts/c
 m/cmtt12.pfb>
-Output written on paint_report.pdf (38 pages, 1881161 bytes).
+Output written on paint_report.pdf (38 pages, 1881146 bytes).
 PDF statistics:
  676 PDF objects out of 1000 (max. 8388607)
  250 named destinations out of 1000 (max. 500000)

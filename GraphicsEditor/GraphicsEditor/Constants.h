@@ -1,6 +1,6 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
-#define DEBUG 1
+#define DEBUG 0
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
 #else

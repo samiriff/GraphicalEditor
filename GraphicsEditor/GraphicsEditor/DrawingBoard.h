@@ -103,6 +103,7 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 		{
 			LOG("  Inside Drawing Toolbar");	
 			drawingToolBar->selectClickedToolFromGrid(x, y);
+			drawingToolBar->setSize(sizeSelector->getSelectedSize());
 		}
 		if(menu_bar->isClickInsideMenu(x,y))
 		{

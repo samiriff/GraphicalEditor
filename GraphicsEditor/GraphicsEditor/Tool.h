@@ -428,32 +428,35 @@ void Eraser::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 
 //**********************************************************************************************************************//
 
-class WireCube :public Tool
+class PaintBrush :public Tool
 {
 public:
-	WireCube(float x1, float y1, float x2, float y2);
+	PaintBrush(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
 
-WireCube::WireCube(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
+PaintBrush::PaintBrush(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {}
-void WireCube::render()
+void PaintBrush::render()
 {
 	glColor3f(1, 1, 1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
 	/*glRasterPos2f((top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0);
 	glutSolidCube(50);*/
-	drawText("Cube", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
+	drawText("Brush", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 30, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
 }
-void WireCube::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+void PaintBrush::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
-	//glRasterPos2i(mouseX,mouseY);
-	//glutWireCube(10);
-	glBegin(GL_LINES);
-	glVertex2i(mouseX, mouseY);
-	glVertex2i(mouseY, mouseX);
+	float dist = 5 + selectedSize*10;
+
+	glLineWidth(1+selectedSize);
+	glBegin(GL_POLYGON);
+	glVertex2i(mouseX-dist, mouseY+dist);
+	glVertex2i(mouseX+dist, mouseY-dist);
+	glVertex2i(mouseX+dist-(1+selectedSize)*2, mouseY-dist);
+	glVertex2i(mouseX-dist-(1+selectedSize)*2, mouseY+dist);
 	glEnd();
 }
 

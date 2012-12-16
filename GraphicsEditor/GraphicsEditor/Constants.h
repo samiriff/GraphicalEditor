@@ -1,6 +1,6 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
-#define DEBUG 0
+#define DEBUG 1
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
 #else
@@ -111,6 +111,6 @@ enum ColorType
 #define XY_INFO_BOTTOM CANVAS_BOTTOM
 #define XY_INFO_TOP CANVAS_BOTTOM + 20
 
-#define NUM_PAST_ENTRIES 10
+#define NUM_PAST_ENTRIES 30
 
 #endif

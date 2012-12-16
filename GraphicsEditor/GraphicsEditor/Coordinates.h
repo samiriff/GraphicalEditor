@@ -2,6 +2,7 @@
 #define _COORDINATES_H
 
 #include <iostream>
+#include <cmath>
 #include "Constants.h"
 
 using namespace std;
@@ -21,7 +22,12 @@ public:
 	float get(AxisType axisType);
 
 	void set(AxisType axisType, float value);
-	void arrangeAscending(Coordinates &); // Takes to points and makes p1 < p2
+
+	/* Takes two points (p1 and p2, where p1 is the object on which the method is called, and p2 is the object passed as a parameter to this method
+	 *		Sets p1 to the bottom left coordinate of the bounding box of p1 and p2
+	 *		Sets p2 to the top right coordinates of the bounding box of p1 and p2
+	*/
+	void setToBoundingBoxCoordinates(Coordinates &); 
 	friend ostream& operator<<(ostream& out, Coordinates &coord);
 };
 
@@ -43,35 +49,18 @@ void Coordinates::swap(Coordinates &c2, AxisType axis)
 		c2.set(axis,temp);
 
 }
-void Coordinates::arrangeAscending(Coordinates &c2)
+void Coordinates::setToBoundingBoxCoordinates(Coordinates &c2)
 {
-	if(coords[0]>c2.coords[0])
-	{
-		swap(c2, X_AXIS);
-		swap(c2, Y_AXIS);
-		swap(c2, Z_AXIS);
-	}
-	else
-	{
-		if(coords[1]>c2.coords[1])
-		{
-			swap(c2,X_AXIS);
-			swap(c2,Y_AXIS);
-			swap(c2,Z_AXIS);
-		}
-		else
-		{
-			if(coords[2]>c2.coords[2])
-			{
-				swap(c2,X_AXIS);
-				swap(c2,Y_AXIS);
-				swap(c2,Z_AXIS);
-			}
+	Coordinates temp(*this);			//Required because this's values are being changed
 
-		}
-	}
+	this->coords[X_AXIS] = min(coords[X_AXIS], c2.coords[X_AXIS]);
+	this->coords[Y_AXIS] = min(coords[Y_AXIS], c2.coords[Y_AXIS]);
 
+	c2.coords[X_AXIS] = max(temp.coords[X_AXIS], c2.coords[X_AXIS]);
+	c2.coords[Y_AXIS] = max(temp.coords[Y_AXIS], c2.coords[Y_AXIS]);		
+	
 }
+
 Coordinates::Coordinates(const Coordinates &coord)
 {
 	coords[X_AXIS] = coord.coords[X_AXIS];

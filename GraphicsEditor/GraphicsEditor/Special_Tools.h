@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Tool.h"
 #include "Color.h"
 //The tool.h header file was very big to this one!
@@ -14,8 +16,6 @@ public:
 	Translate(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-
-
 };
 
 Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
@@ -30,8 +30,7 @@ void Translate::render()
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
 	glColor3f(0, 0, 0);
 	drawText("Translate", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 9, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
-	glColor3f(0, 0, 0);
-	glutWireTeapot(4);
+	glColor3f(0, 0, 0);	
 }
 
 void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
@@ -40,7 +39,7 @@ void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIG
 	static bool inMotion = false;
 	if(!isSecondPointSelected)
 	{
-		cout<<"Second Point Selected"<<endl;
+		LOG("Second Point Selected");
 		secondPoint.set(X_AXIS, mouseX);
 		secondPoint.set(Y_AXIS, mouseY);
 
@@ -50,17 +49,17 @@ void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIG
 	}
 	else if(!isThirdPointSelected)
 	{
-		cout<<"Third Point Selected"<<endl;
+		LOG("Third Point Selected");
 		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
 		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
-
-
+		
 		glBegin(GL_LINE_LOOP);
 			glVertex2f(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
 			glVertex2f(secondPoint.get(X_AXIS), mouseY);
 			glVertex2f(mouseX, mouseY);
 			glVertex2f(mouseX, secondPoint.get(Y_AXIS));			
 		glEnd();
+
 		thirdPoint.set(X_AXIS, mouseX);
 		thirdPoint.set(Y_AXIS, mouseY);
 		isThirdPointSelected = true;
@@ -71,23 +70,16 @@ void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIG
 		cout<<"Fourth Point Selected"<<endl;
 		fourthPoint.set(X_AXIS, mouseX);
 		fourthPoint.set(Y_AXIS, mouseY);
-		glPushMatrix();
-		glColor3f(1,1,1);
-		glRectf(secondPoint.get(X_AXIS),secondPoint.get(Y_AXIS),thirdPoint.get(X_AXIS),thirdPoint.get(Y_AXIS));
-		secondPoint.arrangeAscending(thirdPoint); // make secondPoint < thirdPoint by swapping...
-		glPopMatrix();
-		int dx = secondPoint.get(X_AXIS) - thirdPoint.get(X_AXIS);
-		int dy = secondPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS);
-		for(int j=0; j<dy ;j++)
-		{
-
-			for(int i = 0;i<dx;i++)
-			{
-				img[(int)fourthPoint.get(X_AXIS)-CANVAS_LEFT+i][(int)fourthPoint.get(Y_AXIS)-CANVAS_BOTTOM-j] = 
-					imageDataBefore[(int)secondPoint.get(X_AXIS)-CANVAS_LEFT+i][(int)secondPoint.get(Y_AXIS)-CANVAS_BOTTOM-j];
-			}
-		}
 		
+		secondPoint.setToBoundingBoxCoordinates(thirdPoint);			
+		
+		//Copies the contents of the bounding box of the selection to another part of the canvas, the bounding box of which has its bottom left coordinates at fourthPoint
+		glRasterPos2f(fourthPoint.get(X_AXIS), fourthPoint.get(Y_AXIS));
+		glCopyPixels(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS), thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS) - 1, thirdPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS) - 1, GL_COLOR);
+		
+		glColor3f(1, 1, 1);
+		glRectf(secondPoint.get(X_AXIS) - 1, secondPoint.get(Y_AXIS) - 1, thirdPoint.get(X_AXIS), thirdPoint.get(Y_AXIS));	//Offsets of 1 are subtracted to prevent the bounding box border lines from interfering with results
+
 		isfourthPointSelected = isSecondPointSelected = false;
 		isThirdPointSelected = false;  inMotion = false;
 	}

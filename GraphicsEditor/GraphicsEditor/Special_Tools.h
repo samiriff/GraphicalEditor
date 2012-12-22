@@ -314,56 +314,7 @@ void FloodFiller::Fill(int x, int y, Color &previousPixelColor, int depth)
 	return;
 }
 
-//**********************************************************************************************************************//
 
-class UnfilledRect : public Tool
-{
-public:
-	UnfilledRect(float x1, float y1, float x2, float y2);
-	void render();
-	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
-
-};
-
-
-UnfilledRect::UnfilledRect(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
-{}
-void UnfilledRect::render()
-{
-	LOG("Render UnfilledRect");
-	glColor3f(0.5, 0, 1);
-	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(1, 1, 1);
-	drawText("Loop", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
-}
-void UnfilledRect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{
-	LOG("Draw UnfilledRect");
-	glPointSize(pointSize);
-	glLineWidth(pointSize);
-	if(isFirstPointSelected)
-	{		
-		firstPoint.set(X_AXIS, mouseX);
-		firstPoint.set(Y_AXIS, mouseY);
-
-		isFirstPointSelected = false;
-		copyFromTo(img, imageDataBefore);				
-	}
-	else
-	{			
-		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
-		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
-
-
-		glBegin(GL_LINE_LOOP);
-			glVertex2f(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
-			glVertex2f(firstPoint.get(X_AXIS), mouseY);
-			glVertex2f(mouseX, mouseY);
-			glVertex2f(mouseX, firstPoint.get(Y_AXIS));			
-		glEnd();		
-	}	
-	
-}
 
 //**********************************************************************************************************************//
 

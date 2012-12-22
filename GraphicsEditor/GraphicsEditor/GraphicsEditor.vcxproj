@@ -80,9 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="application_main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="ColorPanel.h" />
@@ -92,11 +89,15 @@
     <ClInclude Include="DrawingToolBar.h" />
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="MenuOperator.h" />
+    <ClInclude Include="Rubberband_Tools.h" />
     <ClInclude Include="SizeSelector.h" />
     <ClInclude Include="Special_Tools.h" />
     <ClInclude Include="Tool.h" />
     <ClInclude Include="Typewriter.h" />
     <ClInclude Include="UndoRedo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="application_main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

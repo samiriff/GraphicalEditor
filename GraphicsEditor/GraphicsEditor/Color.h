@@ -14,6 +14,7 @@ public:
 	Color();
 	Color(float r, float g, float b);
 	void setGLColor();	
+	void setInvertedGLColor();
 	bool operator == (Color &);
 	friend ostream& operator<<(ostream& out, Color &color);
 	float getGreen();
@@ -52,6 +53,11 @@ float Color::getBlue()
 void Color::setGLColor()
 {
 	glColor3f(red, green, blue);
+}
+
+void Color::setInvertedGLColor()
+{
+	glColor3f(1 - red, 1 - green, 1 - blue);
 }
 
 ostream & operator<<(ostream& out, Color &color)

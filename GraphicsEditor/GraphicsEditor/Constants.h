@@ -1,5 +1,8 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
+
+#define FULL_SCREEN 0
+
 #define DEBUG 1
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
@@ -41,9 +44,9 @@ enum ColorType
 	WHITE
 };
 
-
-#define APPLICATION_WINDOW_HEIGHT 800
-#define APPLICATION_WINDOW_WIDTH 800
+#define FULL_SCREEN_RESOLUTION "1920x1080:32@75"
+#define APPLICATION_WINDOW_HEIGHT ((FULL_SCREEN)? 1080 : 800)
+#define APPLICATION_WINDOW_WIDTH ((FULL_SCREEN) ? 1920 : 800)
 #define MULT_FACTOR 3
 #define NAMSIZE 25
 

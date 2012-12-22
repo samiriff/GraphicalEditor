@@ -117,7 +117,8 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 
 	if(button==GLUT_LEFT_BUTTON && state==GLUT_UP)
 	{		
-		drawingToolBar->getSelectedTool()->stop();
+		color_panel->getSelectedColor().setGLColor();
+		drawingToolBar->getSelectedTool()->stop();		
 
 		if(canvas_board->hasCanvasChanged())	
 		{

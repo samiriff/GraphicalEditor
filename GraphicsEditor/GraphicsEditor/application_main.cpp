@@ -25,9 +25,18 @@ int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(APPLICATION_WINDOW_WIDTH, APPLICATION_WINDOW_HEIGHT);
-	glutInitWindowPosition(700,100);
-	glutCreateWindow("Jinkchak Paint Package");
+
+	if(FULL_SCREEN)
+	{
+		glutGameModeString(FULL_SCREEN_RESOLUTION); //the settings for fullscreen mode
+		glutEnterGameMode(); //set glut to fullscreen using the settings in the line above
+	}
+	else
+	{
+		glutInitWindowSize(APPLICATION_WINDOW_WIDTH, APPLICATION_WINDOW_HEIGHT);
+		glutInitWindowPosition(700,100);
+		glutCreateWindow("Jinkchak Paint Package");
+	}	
 	glutDisplayFunc(display);
 	//glutReshapeFunc(reshape);
 	glutKeyboardFunc(handleKeyPress);
@@ -95,6 +104,8 @@ void display(void)
 
 	drawingBoard.initBoard();	
 	glFlush();
+
+	//glutSwapBuffers();
 }
 
 void reshape(int w, int h)

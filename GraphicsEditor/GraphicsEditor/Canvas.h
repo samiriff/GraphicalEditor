@@ -12,6 +12,12 @@
 //class Tool;
 class Canvas
 {
+	//A list of friend classes - VERY IMPORTANT...BE EXTREMELY CAREFUL...DOUBLE CHECK.
+	friend class Line;
+	friend class Rect;
+	friend class Circle;
+	friend class UnfilledRect;
+
 private:
 	Coordinates bottom_left;
 	Coordinates top_right;	
@@ -91,8 +97,8 @@ void Canvas::drawWithTool(Tool *tool, Color color, int x, int y)
 	firstPoint.set(X_AXIS, x);
 	firstPoint.set(Y_AXIS, y);
 
-	color.setGLColor();	
-	tool->drawOnCanvas(this, imageData, x, y);			
+	color.setGLColor();		
+	tool->drawOnCanvas(this, imageData, x, y);		
 
 	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, imageData);	
 	isCanvasModified = true;

@@ -529,7 +529,7 @@ void FloodFiller::Fill(int x, int y, Color *&previousPixelColor, int depth)
 
 	GLfloat rgbValues[3];
 	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
-	Color currentColor(rgbValues[0],rgbValues[1],rgbValues[2]);
+	/*Color currentColor(rgbValues[0],rgbValues[1],rgbValues[2]);
 
 	if (currentColor == previousPixelColor)
 	{
@@ -542,7 +542,7 @@ void FloodFiller::Fill(int x, int y, Color *&previousPixelColor, int depth)
 		Fill(x, y-1, currentColor,depth);
 		Fill(x, y+1, currentColor,depth);
 	}
-	return;
+	return;*/
 }
 
 

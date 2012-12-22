@@ -16,6 +16,7 @@ private:
 	Coordinates *bottom_left, *top_right;
 	Tool *tools[TOOLBAR_NUM_ROWS][TOOLBAR_NUM_COLS];
 	Tool *selectedTool;
+	Tool *selectedPassiveTool;
 
 	void initTools();
 	void drawTools();
@@ -27,6 +28,7 @@ public:
 	bool isClickInside(int , int);
 	bool isClickInsideGrid(int x, int y);
 	void selectClickedToolFromGrid(int x, int y);
+	void selectPassivelyToolFromGrid(int x, int y);
 	void setSize(Size);
 	Tool *getSelectedTool();
 };
@@ -107,6 +109,7 @@ void DrawingToolBar::initTools()
 
 
 	selectedTool = tools[0][0];
+	selectedPassiveTool = tools[0][0];
 }
 
 void DrawingToolBar::drawToolBar()
@@ -131,9 +134,13 @@ void DrawingToolBar::drawTools()
 			tools[i][j]->render();
 		}
 	}
-	
+		
 	selectedTool->select();	
 	selectedTool->drawPointSizeInfo();
+
+	if(selectedPassiveTool != NULL)
+		selectedPassiveTool->select();
+	
 }
 void DrawingToolBar::IncreasePointSize()
 {
@@ -167,6 +174,21 @@ void DrawingToolBar::selectClickedToolFromGrid(int x, int y)
 		LOG("Row = " << row << "\tCol = " << col);	
 		selectedTool = tools[row][col];		
 	}	
+}
+
+void DrawingToolBar::selectPassivelyToolFromGrid(int x, int y)
+{
+	if(isClickInsideGrid(x, y))
+	{
+		int row = (top_right->get(Y_AXIS) - y) / TOOL_BORDER_HEIGHT;
+		int col = (x - bottom_left->get(X_AXIS)) / (TOOL_BORDER_WIDTH + GAP);
+		LOG("Row = " << row << "\tCol = " << col);	
+		selectedPassiveTool = tools[row][col];		
+	}	
+	else
+	{
+		selectedPassiveTool = NULL;
+	}
 }
 
 Tool *DrawingToolBar::getSelectedTool()

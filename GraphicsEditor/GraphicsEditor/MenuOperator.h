@@ -53,7 +53,7 @@ void MenuOp::drawText(char *info , float i, float j)
 void MenuOp::select()
 {
 	glColor4f(0, 0, 0, 0.1);			//Using a tranlucent polygon
-	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) - 10, top_right->get(X_AXIS), top_right->get(Y_AXIS));
 }
 
 void MenuOp::deselect()

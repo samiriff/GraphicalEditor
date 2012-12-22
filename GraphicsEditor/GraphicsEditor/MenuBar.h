@@ -19,6 +19,8 @@ private:
 	MenuOp *selectedOp;
 	Canvas *canvas;
 
+	MenuOp *selectedPassiveOp;
+
 	void initMenuOptions();
 	void drawMenuOptions();
 	void drawText(char *info, float x, float y);
@@ -37,6 +39,7 @@ public:
 	void performMenuOperation(Canvas *);
 
 	void selectClickedOpFromGrid(int x, int y);
+	void selectPassivelyOpFromGrid(int x, int y);
 
 	TypeWriter *getTypeWriter();
 
@@ -76,6 +79,7 @@ void MenuBar::initMenuOptions()
 
 
 	selectedOp = menuOps[0][MENUBAR_NUM_COLS - 1];
+	selectedPassiveOp = menuOps[0][MENUBAR_NUM_COLS - 1];
 }
 
 void MenuBar::drawMenuOptions()
@@ -115,6 +119,9 @@ void MenuBar::drawMenuOptions()
 		selectedOp->performOperation(canvas);	
 
 		selectedOp = menuOps[0][MENUBAR_NUM_COLS - 1];				//Go back to No Op
+
+		if(selectedPassiveOp != NULL)
+			selectedPassiveOp->select();
 	}	
 
 	typeWriter->drawString();	
@@ -149,6 +156,25 @@ void MenuBar::selectClickedOpFromGrid(int x, int y)
 		cout << "Row = " << row << "\tCol = " << col << endl;		
 		selectedOp = menuOps[row][col];		
 	}	
+}
+
+void MenuBar::selectPassivelyOpFromGrid(int x, int y)
+{
+	if(isClickInsideMenu(x, y))
+	{
+		int row = (top_right->get(Y_AXIS) - y) / MENUBAR_BORDER_HEIGHT;
+		int col = (x - bottom_left->get(X_AXIS)) / (MENUBAR_BORDER_WIDTH);
+
+		if(col >= MENUBAR_NUM_COLS)					//Added this because isClickInsideMenu() isn't working properly
+			return;
+
+		cout << "Row = " << row << "\tCol = " << col << endl;		
+		selectedPassiveOp = menuOps[row][col];		
+	}	
+	else
+	{
+		selectedPassiveOp = NULL;
+	}
 }
 
 void MenuBar::addMenuBar()

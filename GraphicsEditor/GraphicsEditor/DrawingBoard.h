@@ -29,6 +29,7 @@ public:
 	void handleMouseClickMotion(int, int);
 	void handleKeyPress(unsigned char, int, int);
 	void handleSpecialKeyPress(int, int, int);
+	void handleMousePassiveMotion(int, int);
 	~DrawingBoard();
 	
 	Canvas *getCanvas();
@@ -140,6 +141,21 @@ void DrawingBoard::handleMouseClickMotion(int x, int y)
 	{
 		LOG("  Inside CanvasBoard");		
 		canvas_board->drawWithTool(drawingToolBar->getSelectedTool(), color_panel->getSelectedColor(), x, y);
+	}
+}
+
+void DrawingBoard::handleMousePassiveMotion(int x, int y)
+{
+	if(drawingToolBar->isClickInside(x,y))
+	{
+		LOG("  Inside Drawing Toolbar");	
+		drawingToolBar->selectPassivelyToolFromGrid(x, y);		
+	}
+
+	if(menu_bar->isClickInsideMenu(x,y))
+	{
+		LOG("Inside Menu Bar");		
+		menu_bar->selectPassivelyOpFromGrid(x, y);
 	}
 }
 

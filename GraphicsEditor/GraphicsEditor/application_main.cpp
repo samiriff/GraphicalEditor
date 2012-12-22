@@ -18,6 +18,7 @@ void display(void);
 void myinit(void);
 void handleMouseEvent(int,int,int,int);
 void handleMouseClickMotion(int x, int y);
+void handleMousePassiveMotion(int x, int y);
 void reshape(int, int);
 void handleKeyPress(unsigned char , int, int);
 void handleSpecialKeyPress(int, int, int);
@@ -43,6 +44,7 @@ int main(int argc, char **argv)
 	glutSpecialFunc(handleSpecialKeyPress);
 	glutMouseFunc(handleMouseEvent);
 	glutMotionFunc(handleMouseClickMotion);
+	glutPassiveMotionFunc(handleMousePassiveMotion);
 	myinit();
 	glutMainLoop();
 }
@@ -90,6 +92,15 @@ void handleMouseClickMotion(int x, int y)
 	y = APPLICATION_WINDOW_HEIGHT - y;
 	
 	drawingBoard.handleMouseClickMotion(x, y);
+
+	glutPostRedisplay();
+}
+
+void handleMousePassiveMotion(int x, int y)
+{
+	y = APPLICATION_WINDOW_HEIGHT - y;
+
+	drawingBoard.handleMousePassiveMotion(x, y);
 
 	glutPostRedisplay();
 }

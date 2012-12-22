@@ -15,6 +15,8 @@ private:
 	Coordinates *bottom_left, *top_right;
 	Color *gridColors[COLOR_PANEL_NUM_ROWS][COLOR_PANEL_NUM_COLS];	
 	Color *selectedColor;
+
+	float transparencyValue;
 	
 	void initGridColors();				//Initializes a 2-D matrix of possible colors that can be selected from the grid, using objects of the Color class
 	void addColorSquares();				//Draws color squares using values from the grid of colors	
@@ -32,6 +34,9 @@ public:
 	void selectClickedColorFromGrid(int x, int y);
 	void selectClickedColorFromTriangle(int x, int y);
 		
+	void increaseTransparencyValue();
+	void decreaseTransparencyValue();
+		
 	Color getSelectedColor();
 	~ColorPanel();
 };
@@ -48,6 +53,8 @@ ColorPanel::ColorPanel(float x1, float y1, float x2, float y2)
 	top_right = new Coordinates(x2,y2,0);
 
 	selectedColor = new Color();
+
+	transparencyValue = 1;
 
 	initGridColors();
 }
@@ -118,7 +125,8 @@ void ColorPanel::addColorSquares()
 	begin_x = bottom_left->get(X_AXIS) + 15;	
 	begin_y -= (COLOR_SQUARE_SIDE+GAP);  	
 
-	selectedColor->setGLColor();	
+	selectedColor->setTransparencyValue(transparencyValue);
+	selectedColor->setGLColor();
 	glRectf(begin_x, begin_y-50, begin_x+50, begin_y);
 
 	glPushMatrix();
@@ -198,6 +206,20 @@ void ColorPanel::selectClickedColorFromTriangle(int x, int y)
 Color ColorPanel::getSelectedColor()
 {
 	return *selectedColor;
+}
+
+void ColorPanel::increaseTransparencyValue()
+{
+	transparencyValue += TRANSPARENCY_STEP;
+	if(transparencyValue >= 1)
+		transparencyValue = 1;
+}
+
+void ColorPanel::decreaseTransparencyValue()
+{
+	transparencyValue -= TRANSPARENCY_STEP;
+	if(transparencyValue <= 0)
+		transparencyValue = 0;
 }
 
 //For easy management of glColor3f

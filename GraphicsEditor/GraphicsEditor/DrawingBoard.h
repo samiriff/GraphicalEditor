@@ -74,9 +74,13 @@ void DrawingBoard::handleSpecialKeyPress(int c, int x, int y)
 	case GLUT_KEY_F3:
 		canvas_board->restoreNew();
 		break;
+	case GLUT_KEY_F4:
+		color_panel->decreaseTransparencyValue();
+		break;
+	case GLUT_KEY_F5:
+		color_panel->increaseTransparencyValue();
+		break;
 	}
-
-	//menu_bar->getTypeWriter()->addChar(c);	
 	glutPostRedisplay();
 
 }

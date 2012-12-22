@@ -42,7 +42,7 @@ public:
 	void selectPassivelyOpFromGrid(int x, int y);
 
 	TypeWriter *getTypeWriter();
-
+	void drawString(float x, float y, string buffer);
 };
 
 MenuBar::MenuBar(float x1, float y1, float x2, float y2, Canvas *c)
@@ -187,6 +187,23 @@ void MenuBar::addMenuBar()
 		glVertex2f(bottom_left->get(X_AXIS),top_right->get(Y_AXIS));
 	glEnd();
 	addMenuItems();
+
+	//Repeated for BOLD effect
+	drawString(top_right->get(X_AXIS) - 137, top_right->get(Y_AXIS) - 15, "F2/F3 = Undo/Redo");	
+	drawString(top_right->get(X_AXIS) - 137, top_right->get(Y_AXIS) - 16, "F2/F3 = Undo/Redo");	
+	drawString(top_right->get(X_AXIS) - 136, top_right->get(Y_AXIS) - 16, "F2/F3 = Undo/Redo");	
+	drawString(top_right->get(X_AXIS) - 137, top_right->get(Y_AXIS) - 30, "F4/F5 = +/- Alpha");
+	drawString(top_right->get(X_AXIS) - 137, top_right->get(Y_AXIS) - 31, "F4/F5 = +/- Alpha");
+	drawString(top_right->get(X_AXIS) - 136, top_right->get(Y_AXIS) - 31, "F4/F5 = +/- Alpha");
+}
+
+void MenuBar::drawString(float x, float y, string buffer)
+{		
+	glColor4f(1, 0, 0.5, 1);
+	
+	glRasterPos2f(x, y);
+	for(int i=0; i<buffer.length(); i++)
+		glutBitmapCharacter(GLUT_BITMAP_8_BY_13, buffer[i]);
 }
 
 TypeWriter *MenuBar::getTypeWriter()

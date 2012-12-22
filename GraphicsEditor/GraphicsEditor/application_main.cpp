@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 		glutCreateWindow("Jinkchak Paint Package");
 	}	
 	glutDisplayFunc(display);
-	//glutReshapeFunc(reshape);
+	glutReshapeFunc(reshape);
 	glutKeyboardFunc(handleKeyPress);
 	glutSpecialFunc(handleSpecialKeyPress);
 	glutMouseFunc(handleMouseEvent);
@@ -123,4 +123,10 @@ void reshape(int w, int h)
 {
 	reshapeWidth = w;
 	reshapeHeight = h;
+
+	glViewport(0, 0, w, h);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0,APPLICATION_WINDOW_WIDTH,0,APPLICATION_WINDOW_HEIGHT);
 }

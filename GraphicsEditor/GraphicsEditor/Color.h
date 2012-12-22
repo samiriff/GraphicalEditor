@@ -9,6 +9,8 @@ private:
 	float red;
 	float green;
 	float blue;
+		
+	float transparencyValue;
 
 public:
 	Color();
@@ -21,17 +23,21 @@ public:
 	float getGreen();
 	float getRed();
 	float getBlue();
+
+	void setTransparencyValue(float value);
 };
 
 Color::Color()
-{
+{	
 	red = green = blue = 0;
+	transparencyValue = 1;
 }
 Color::Color(const Color &c)
 {
 	red = c.red;
 	green = c.green;
 	blue = c.blue;
+	transparencyValue = c.transparencyValue;
 }
 bool Color::operator == (Color &c)
 {
@@ -42,6 +48,8 @@ Color::Color(float r, float g, float b)
 	red = r;
 	green = g;
 	blue = b;
+
+	transparencyValue = 1;
 }
 float Color::getRed()
 {
@@ -58,8 +66,8 @@ float Color::getBlue()
 	return blue;
 }
 void Color::setGLColor()
-{
-	glColor3f(red, green, blue);
+{	
+	glColor4f(red, green, blue, transparencyValue);
 }
 
 void Color::setInvertedGLColor()
@@ -72,5 +80,11 @@ ostream & operator<<(ostream& out, Color &color)
     out << "(" << color.red << ", " << color.green << ", " << color.blue << ")";
     return out;
 }
+
+void Color::setTransparencyValue(float value)
+{
+	transparencyValue = value;
+}
+
 
 #endif

@@ -1,5 +1,5 @@
 #include <cmath>
-
+#include <vector>
 #include "Tool.h"
 #include "Color.h"
 #include "Callback.h"
@@ -376,14 +376,59 @@ void Rotate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 
 class FloodFiller : public Tool
 {
+private:
+	class Node
+	{	
+	
+		int x;
+		int y;
+		Color color;
+
+	public:
+		Node(int x, int y)
+		{
+			this->x = x;
+			this->y = y;			
+		}
+
+		Color getColor(GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3])
+		{
+			if(x < 0 || x >= CANVAS_RIGHT - CANVAS_LEFT)
+				return color;
+			if(y < 0 || y >= CANVAS_TOP - CANVAS_BOTTOM)
+				return color;
+			Color color(img[y][x][0], img[y][x][1], img[y][x][2]);
+			this->color = color;
+			return color;
+		}
+
+		void setColor(GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3], Color replacementColor)
+		{
+			img[y][x][0] = replacementColor.getRed();
+			img[y][x][1] = replacementColor.getGreen();
+			img[y][x][2] = replacementColor.getBlue();			
+		}
+
+		int getX(){return x;}
+		int getY(){return y;}
+	};
+
+	Color *fillColor;
+	GLfloat buffer[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3];
+
+	void fill(int x, int y, Color *targetColor, Color *replacementColor, GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3]);
+	void queueFill(int x, int y, Color *targetColor, Color *replacementColor, GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3]);
+
 public:
 	FloodFiller(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-	void Fill(int, int, Color &, int depth);
+	void Fill(int, int, Color *&, int depth);
 };
+
 FloodFiller::FloodFiller(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {}
+
 void FloodFiller::render()
 {
 	LOG("Render FloodFiller");
@@ -392,17 +437,92 @@ void FloodFiller::render()
 	glColor3f(1, 1, 1);
 	drawText("Fill", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
+
 void FloodFiller::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw FloodFiller");
+		
+	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, buffer);	
+	
 	GLfloat rgbValues[3];	
-	glReadPixels(mouseX, mouseY, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
-	Color currentColor(rgbValues[0],rgbValues[1],rgbValues[2]);
-	LOG("Current Colour = " << currentColor);	
-	glPointSize(1);
-	Fill(mouseX, mouseY, currentColor, 200);
+	glReadPixels(mouseX - CANVAS_LEFT, mouseY - CANVAS_BOTTOM, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
+	Color *targetColor = new Color(rgbValues[0],rgbValues[1],rgbValues[2]);	
+	Color *replacementColor = new Color(1, 0, 0);
+	Tool::getCurrentColor(*replacementColor);	
+
+	LOG("Target Colour = " << *targetColor);	
+	LOG("Replacement Colour = " << *replacementColor);	
+	glPointSize(1);	
+
+	//fill(mouseX, mouseY, targetColor, replacementColor, buffer);
+	queueFill(mouseX - CANVAS_LEFT, mouseY - CANVAS_BOTTOM, targetColor, replacementColor, buffer);
+
+	glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+	glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, buffer);
+}	
+
+void FloodFiller::queueFill(int x, int y, Color *targetColor, Color *replacementColor, GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3])
+{
+	LOG("QUEUE FILL");
+
+	vector<Node> queue;
+	Node startNode(x, y);
+	queue.push_back(startNode);
+
+	while(!queue.empty())
+	{
+		Node n = queue[queue.size() - 1];
+		queue.pop_back();
+		
+		if(n.getColor(img) == *targetColor)
+		{
+			LOG("I'm here...GET OUT FROM DEBUG MODE, OTHERWISE I WON'T END");
+			n.setColor(img, *replacementColor);
+			if(n.getX() - 1 >= 0)
+				queue.push_back(Node(n.getX() - 1, n.getY()));
+			if(n.getX() + 1 < CANVAS_RIGHT - CANVAS_LEFT)
+				queue.push_back(Node(n.getX() + 1, n.getY()));
+			if(n.getY() - 1 >= 0)
+				queue.push_back(Node(n.getX(), n.getY() - 1));
+			if(n.getY() + 1 < CANVAS_TOP - CANVAS_BOTTOM)
+				queue.push_back(Node(n.getX(), n.getY() + 1));
+		}
+	}
 }
-void FloodFiller::Fill(int x, int y, Color &previousPixelColor, int depth)
+
+void FloodFiller::fill(int x, int y, Color *targetColor, Color *replacementColor, GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3])
+{
+	//Color node(img[y][3 * x], img[y][3 * x + 1], img[y][3 * x + 2]);
+	Color *node = new Color(img[y][x][0], img[y][x][1], img[y][x][2]);
+
+	if(!(*node == *targetColor))
+	{
+		LOG("TERMINATING FILL");
+		return;
+	}
+
+	LOG("CHECKING");
+
+	LOG("Color of node before = " << img[y][x][0] << "\t" << img[y][x][1] << "\t" << img[y][x][2]);
+
+	img[y][x][0] = replacementColor->getRed();
+	img[y][x][1] = replacementColor->getGreen();
+	img[y][x][2] = replacementColor->getBlue();
+
+	LOG("Color of node after = " << img[y][x][0] << "\t" << img[y][x][1] << "\t" << img[y][x][2]);
+	if(x - 1 >= 0)
+		fill(x - 1, y, targetColor, replacementColor, img);
+	if(x + 1 < CANVAS_RIGHT - CANVAS_LEFT)
+		fill(x + 1, y, targetColor, replacementColor, img);
+	if(y - 1 >= 0)
+		fill(x, y - 1, targetColor, replacementColor, img);
+	if(y + 1 < CANVAS_TOP - CANVAS_BOTTOM)
+		fill(x, y + 1, targetColor, replacementColor, img);	
+}
+
+
+
+void FloodFiller::Fill(int x, int y, Color *&previousPixelColor, int depth)
 {	
 	if(depth <=0 ) 
 		return;

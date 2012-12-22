@@ -3,7 +3,7 @@
 
 #define FULL_SCREEN 0
 
-#define DEBUG 1
+#define DEBUG 0
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
 #else

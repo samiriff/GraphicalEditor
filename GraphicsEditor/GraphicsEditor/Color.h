@@ -13,6 +13,7 @@ private:
 public:
 	Color();
 	Color(float r, float g, float b);
+	Color(const Color &c);
 	void setGLColor();	
 	void setInvertedGLColor();
 	bool operator == (Color &);
@@ -25,6 +26,12 @@ public:
 Color::Color()
 {
 	red = green = blue = 0;
+}
+Color::Color(const Color &c)
+{
+	red = c.red;
+	green = c.green;
+	blue = c.blue;
 }
 bool Color::operator == (Color &c)
 {

@@ -60,6 +60,9 @@
     <ClInclude Include="Rubberband_Tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application_main.cpp">

@@ -2,26 +2,28 @@
 
 #include "Tool.h"
 #include "Color.h"
+#include "Callback.h"
 //The tool.h header file was very big to this one!
 class Translate : public Tool
 {
 private:
-	Color selectedColor;
+	Coordinates pastePoint;
+	bool ispastePointSelected;
 
 protected:
+	Color selectedColor;
 	Coordinates selectionBoxFirstPoint;
 	bool isselectionBoxFirstPointSelected;
 	Coordinates selectionBoxSecondPoint;
-	bool isselectionBoxSecondPointSelected;
-	Coordinates pastePoint;
-	bool ispastePointSelected;
+	bool isselectionBoxSecondPointSelected;	
 
 	bool inMotion;
 
 	bool eraseSelection;
-
-	void fourthPointSelection(int mouseX, int mouseY);
+	
 	void drawDashedLineLoop(float x1, float y1, float x2, float y2);
+	virtual void selectionBoxLogic(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY, Coordinates &point, SingularCallBack<Translate, void, int, int>* callback);
+
 public:
 	Translate(float x1, float y1, float x2, float y2);
 	void render();
@@ -29,6 +31,8 @@ public:
 
 	void stop();
 	void convertToCutOperator();
+
+	virtual void mouseDragPointSelection(int mouseX, int mouseY);	//After the selection box has been defined by the user...
 };
 
 Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
@@ -83,7 +87,67 @@ void Translate::render()
 	glColor3f(0, 0, 0);	
 }
 
-void Translate::fourthPointSelection(int mouseX, int mouseY)
+void Translate::selectionBoxLogic(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY, Coordinates &point, SingularCallBack<Translate, void, int, int>* callback)
+{
+	if(!isselectionBoxFirstPointSelected)
+	{
+		LOG("Second Point Selected");
+		selectionBoxFirstPoint.set(X_AXIS, mouseX);
+		selectionBoxFirstPoint.set(Y_AXIS, mouseY);
+
+		isselectionBoxFirstPointSelected = true;
+		copyFromTo(img, imageDataBefore);			
+		inMotion = true;
+
+		selectionBoxSecondPoint = selectionBoxFirstPoint;
+
+		//Tracking the color
+		Tool::getCurrentColor(selectedColor);	
+
+		return;
+	}
+	
+	
+	if(!isselectionBoxSecondPointSelected)
+	{
+		LOG("Third Point Selected");
+		if(inMotion)
+		{
+			glEnable(GL_COLOR_LOGIC_OP);
+			glLogicOp(GL_XOR);
+
+			//Removing old rectangle by xoring again				
+			selectedColor.setInvertedGLColor();	
+			drawDashedLineLoop(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS));				
+			glFlush();
+
+			//Drawing new rectangle
+			drawDashedLineLoop(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), mouseX, mouseY);			
+			glFlush();
+
+			glDisable(GL_COLOR_LOGIC_OP);
+
+			selectionBoxSecondPoint.set(X_AXIS, mouseX);
+			selectionBoxSecondPoint.set(Y_AXIS, mouseY);		
+		}
+		else
+		{
+			LOG("Motion Switched Off");	
+			isselectionBoxSecondPointSelected = true;
+			inMotion = true;
+			
+			//Recording Original End point of bounding box
+			selectionBoxFirstPoint.setToBoundingBoxCoordinates(selectionBoxSecondPoint);	
+			point = selectionBoxSecondPoint;				
+			callback->execute(mouseX, mouseY);			
+		}
+
+		return;
+	}
+	callback->execute(mouseX, mouseY);	
+}
+
+void Translate::mouseDragPointSelection(int mouseX, int mouseY)
 {
 	if(!ispastePointSelected)
 	{
@@ -131,67 +195,35 @@ void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIG
 	LOG("Draw Translate");
 	this->canvas = canvas;
 
-	if(!isselectionBoxFirstPointSelected)
-	{
-		LOG("Second Point Selected");
-		selectionBoxFirstPoint.set(X_AXIS, mouseX);
-		selectionBoxFirstPoint.set(Y_AXIS, mouseY);
-
-		isselectionBoxFirstPointSelected = true;
-		copyFromTo(img, imageDataBefore);			
-		inMotion = true;
-
-		selectionBoxSecondPoint = selectionBoxFirstPoint;
-
-		//Tracking the color
-		Tool::getCurrentColor(selectedColor);	
-	}
-	else if(!isselectionBoxSecondPointSelected)
-	{
-		LOG("Third Point Selected");
-		if(inMotion)
-		{
-			glEnable(GL_COLOR_LOGIC_OP);
-			glLogicOp(GL_XOR);
-
-			//Removing old rectangle by xoring again				
-			selectedColor.setInvertedGLColor();	
-			drawDashedLineLoop(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS));				
-			glFlush();
-
-			//Drawing new rectangle
-			drawDashedLineLoop(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), mouseX, mouseY);			
-			glFlush();
-
-			glDisable(GL_COLOR_LOGIC_OP);
-
-			selectionBoxSecondPoint.set(X_AXIS, mouseX);
-			selectionBoxSecondPoint.set(Y_AXIS, mouseY);
-		}
-		else
-		{
-			LOG("Motion Switched Off");	
-			isselectionBoxSecondPointSelected = true;
-			inMotion = true;
-			
-			fourthPointSelection(mouseX, mouseY);
-		}
-	}
-	else
-		fourthPointSelection(mouseX, mouseY);
+	selectionBoxLogic(canvas, img, mouseX, mouseY, pastePoint, new SingularCallBack<Translate, void, int, int>(this, &Translate::mouseDragPointSelection));	
 }
 
 //**********************************************************************************************************************//
 
-class Scale : public Tool
+
+class Scale : public Translate		//Inherited from Translate because of the similar selection logic
 {
+private:
+	Coordinates zoomPoint;
+	bool iszoomPointSelected;
+
+	GLfloat buffer[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR];
+
+protected:
+	virtual void mouseDragPointSelection(int mouseX, int mouseY);
+
 public:
 	Scale(float x1, float y1, float x2, float y2);
+
 	void render();
-	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 };
-Scale::Scale(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
-{}
+
+Scale::Scale(float x1, float y1, float x2, float y2):Translate(x1,y1,x2,y2)
+{
+	iszoomPointSelected = false;
+}
+
 void Scale::render()
 {
 	LOG("Render Scale");
@@ -200,17 +232,62 @@ void Scale::render()
 	glColor3f(1, 1, 1);
 	drawText("Scale", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 5, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
+
+void Scale::mouseDragPointSelection(int mouseX, int mouseY)
+{
+	LOG("ZOOM POINT SELECTION");
+
+	if(!iszoomPointSelected)
+	{
+		LOG("Before motion check -- Zoom Point Selected");	
+		if(inMotion)
+		{
+			LOG("Zoom Point Selected IN MOTION");
+
+			//Changing the zoom box dimensions, and hence, the scale factor, as the mouse moves
+			selectionBoxSecondPoint.set(X_AXIS, mouseX);
+			selectionBoxSecondPoint.set(Y_AXIS, mouseY);
+
+			selectionBoxFirstPoint.setToBoundingBoxCoordinates(selectionBoxSecondPoint);	
+		
+			//Erase selection box and return to state before any zoom operation was performed
+			glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+			glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+
+			//Read the pixels inside the selection box
+			glReadPixels(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS)- selectionBoxFirstPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS)- selectionBoxFirstPoint.get(Y_AXIS), GL_RGB, GL_FLOAT, buffer);		
+
+			double scaleFactorX = (selectionBoxSecondPoint.get(X_AXIS)- selectionBoxFirstPoint.get(X_AXIS)) / (zoomPoint.get(X_AXIS) - selectionBoxFirstPoint.get(X_AXIS));
+			double scaleFactorY	= (selectionBoxSecondPoint.get(Y_AXIS)- selectionBoxFirstPoint.get(Y_AXIS)) / (zoomPoint.get(Y_AXIS) - selectionBoxFirstPoint.get(Y_AXIS));
+
+			LOG("SCALE FACTORS = " << scaleFactorX << "\t" << scaleFactorY);		
+
+			//Draw a scaled version of the selection with origin at the first point of the selection box
+			glPixelZoom(scaleFactorX, scaleFactorY);
+			glRasterPos2i(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS));			
+			glDrawPixels(selectionBoxSecondPoint.get(X_AXIS)- selectionBoxFirstPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS)- selectionBoxFirstPoint.get(Y_AXIS), GL_RGB,GL_FLOAT, buffer);
+			glPixelZoom(1, 1);		//Return to normal			
+		}
+		else
+		{
+			LOG("Motion Switched Off - After zoom point is selected");	
+			iszoomPointSelected = isselectionBoxFirstPointSelected = false;
+			isselectionBoxSecondPointSelected = false;  inMotion = false;
+		}
+	}	
+}
+
+
+
 void Scale::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Scale");
-	drawText("Scale!", mouseX, mouseY);
-	glPixelZoom(0.5, 0.5);
-	glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
-	glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, img);
-	glPixelZoom(1, 1);
+	this->canvas = canvas;
+
+	selectionBoxLogic(canvas, img, mouseX, mouseY, zoomPoint, new SingularCallBack<Translate, void, int, int>(this, &Translate::mouseDragPointSelection));	
 }
 
-//**********************************************************************************************************************//
+//**********************************************************************************************************************/
 
 class Rotate : public Tool
 {

@@ -5,19 +5,23 @@
 //The tool.h header file was very big to this one!
 class Translate : public Tool
 {
+private:
+	Color selectedColor;
+
 protected:
-	Coordinates secondPoint;
-	bool isSecondPointSelected;
-	Coordinates thirdPoint;
-	bool isThirdPointSelected;
-	Coordinates fourthPoint;
-	bool isfourthPointSelected;
+	Coordinates selectionBoxFirstPoint;
+	bool isselectionBoxFirstPointSelected;
+	Coordinates selectionBoxSecondPoint;
+	bool isselectionBoxSecondPointSelected;
+	Coordinates pastePoint;
+	bool ispastePointSelected;
 
 	bool inMotion;
 
 	bool eraseSelection;
 
 	void fourthPointSelection(int mouseX, int mouseY);
+	void drawDashedLineLoop(float x1, float y1, float x2, float y2);
 public:
 	Translate(float x1, float y1, float x2, float y2);
 	void render();
@@ -29,7 +33,7 @@ public:
 
 Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {
-	isfourthPointSelected = isSecondPointSelected = isThirdPointSelected = false;
+	ispastePointSelected = isselectionBoxFirstPointSelected = isselectionBoxSecondPointSelected = false;
 	inMotion = false;
 
 	eraseSelection = false;
@@ -45,6 +49,24 @@ void Translate::stop()
 void Translate::convertToCutOperator()
 {
 	eraseSelection = true;
+}
+
+void Translate::drawDashedLineLoop(float x1, float y1, float x2, float y2)
+{
+	glPushAttrib(GL_ENABLE_BIT); 
+	glPushAttrib(GL_COLOR_BUFFER_BIT);
+		glColor3f(1, 1, 1);
+		glLineStipple(1, 0x0C0F); 
+		glEnable(GL_LINE_STIPPLE);
+
+		glBegin(GL_LINE_LOOP);
+			glVertex2f(x1, y1);
+			glVertex2f(x1, y2);
+			glVertex2f(x2, y2);
+			glVertex2f(x2, y1);			
+		glEnd();
+	glPopAttrib();
+	glPopAttrib();	
 }
 
 void Translate::render()
@@ -63,43 +85,43 @@ void Translate::render()
 
 void Translate::fourthPointSelection(int mouseX, int mouseY)
 {
-	if(!isfourthPointSelected)
+	if(!ispastePointSelected)
 	{
 		LOG("Before motion check -- Fourth Point Selected");	
 		if(inMotion)
 		{
 			LOG("Fourth Point Selected");		
 		
-			secondPoint.setToBoundingBoxCoordinates(thirdPoint);	
+			selectionBoxFirstPoint.setToBoundingBoxCoordinates(selectionBoxSecondPoint);	
 
 			glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
 			glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
 		
-			LOG("Bounding Box width = " << (thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS)) / 2.0);
+			LOG("Bounding Box width = " << (selectionBoxSecondPoint.get(X_AXIS) - selectionBoxFirstPoint.get(X_AXIS)) / 2.0);
 			LOG("Mouse X = " << mouseX << "\tMouseY = " << mouseY);
 
-			fourthPoint.set(X_AXIS, mouseX - (thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS)) / 2.0);
-			fourthPoint.set(Y_AXIS, mouseY - (thirdPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS)) / 2.0);
+			pastePoint.set(X_AXIS, mouseX - (selectionBoxSecondPoint.get(X_AXIS) - selectionBoxFirstPoint.get(X_AXIS)) / 2.0);
+			pastePoint.set(Y_AXIS, mouseY - (selectionBoxSecondPoint.get(Y_AXIS) - selectionBoxFirstPoint.get(Y_AXIS)) / 2.0);
 
-			LOG("Fourth Point After = " << fourthPoint);
+			LOG("Fourth Point After = " << pastePoint);
 
 			//Copies the contents of the bounding box of the selection to another part of the canvas, the bounding box of which has its bottom left coordinates at fourthPoint
-			glRasterPos2f(fourthPoint.get(X_AXIS), fourthPoint.get(Y_AXIS));
-			glCopyPixels(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS), thirdPoint.get(X_AXIS) - secondPoint.get(X_AXIS) - 1, thirdPoint.get(Y_AXIS) - secondPoint.get(Y_AXIS) - 1, GL_COLOR);
+			glRasterPos2f(pastePoint.get(X_AXIS), pastePoint.get(Y_AXIS));
+			glCopyPixels(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS) - selectionBoxFirstPoint.get(X_AXIS) - 1, selectionBoxSecondPoint.get(Y_AXIS) - selectionBoxFirstPoint.get(Y_AXIS) - 1, GL_COLOR);
 		
 
 			if(eraseSelection)
 			{
 				//Cut operation
 				glColor3f(1, 1, 1);
-				glRectf(secondPoint.get(X_AXIS) - 1, secondPoint.get(Y_AXIS) - 1, thirdPoint.get(X_AXIS), thirdPoint.get(Y_AXIS));	//Offsets of 1 are subtracted to prevent the bounding box border lines from interfering with results
+				glRectf(selectionBoxFirstPoint.get(X_AXIS) - 1, selectionBoxFirstPoint.get(Y_AXIS) - 1, selectionBoxSecondPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS));	//Offsets of 1 are subtracted to prevent the bounding box border lines from interfering with results
 			}
 		}
 		else
 		{
 			LOG("Motion Switched Off - After 4th point is selected");	
-			isfourthPointSelected = isSecondPointSelected = false;
-			isThirdPointSelected = false;  inMotion = false;
+			ispastePointSelected = isselectionBoxFirstPointSelected = false;
+			isselectionBoxSecondPointSelected = false;  inMotion = false;
 		}
 	}
 }
@@ -107,40 +129,51 @@ void Translate::fourthPointSelection(int mouseX, int mouseY)
 void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw Translate");
-	
-	if(!isSecondPointSelected)
+	this->canvas = canvas;
+
+	if(!isselectionBoxFirstPointSelected)
 	{
 		LOG("Second Point Selected");
-		secondPoint.set(X_AXIS, mouseX);
-		secondPoint.set(Y_AXIS, mouseY);
+		selectionBoxFirstPoint.set(X_AXIS, mouseX);
+		selectionBoxFirstPoint.set(Y_AXIS, mouseY);
 
-		isSecondPointSelected = true;
+		isselectionBoxFirstPointSelected = true;
 		copyFromTo(img, imageDataBefore);			
 		inMotion = true;
+
+		selectionBoxSecondPoint = selectionBoxFirstPoint;
+
+		//Tracking the color
+		Tool::getCurrentColor(selectedColor);	
 	}
-	else if(!isThirdPointSelected)
+	else if(!isselectionBoxSecondPointSelected)
 	{
 		LOG("Third Point Selected");
 		if(inMotion)
 		{
-			glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
-			glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
-		
-			glBegin(GL_LINE_LOOP);
-				glVertex2f(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
-				glVertex2f(secondPoint.get(X_AXIS), mouseY);
-				glVertex2f(mouseX, mouseY);
-				glVertex2f(mouseX, secondPoint.get(Y_AXIS));			
-			glEnd();
-			thirdPoint.set(X_AXIS, mouseX);
-			thirdPoint.set(Y_AXIS, mouseY);
+			glEnable(GL_COLOR_LOGIC_OP);
+			glLogicOp(GL_XOR);
+
+			//Removing old rectangle by xoring again				
+			selectedColor.setInvertedGLColor();	
+			drawDashedLineLoop(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS));				
+			glFlush();
+
+			//Drawing new rectangle
+			drawDashedLineLoop(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), mouseX, mouseY);			
+			glFlush();
+
+			glDisable(GL_COLOR_LOGIC_OP);
+
+			selectionBoxSecondPoint.set(X_AXIS, mouseX);
+			selectionBoxSecondPoint.set(Y_AXIS, mouseY);
 		}
 		else
 		{
 			LOG("Motion Switched Off");	
-			isThirdPointSelected = true;
+			isselectionBoxSecondPointSelected = true;
 			inMotion = true;
-
+			
 			fourthPointSelection(mouseX, mouseY);
 		}
 	}
@@ -171,9 +204,10 @@ void Scale::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][
 {
 	LOG("Draw Scale");
 	drawText("Scale!", mouseX, mouseY);
-	glPixelZoom(2,2);
+	glPixelZoom(0.5, 0.5);
 	glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
-	//glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
+	glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, img);
+	glPixelZoom(1, 1);
 }
 
 //**********************************************************************************************************************//

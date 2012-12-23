@@ -21,6 +21,8 @@ class Canvas
 	friend class FilledPolygon;
 
 private:
+	GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR]; //An array to hold the drawn data same as our my_package.cpp
+
 	Coordinates bottom_left;
 	Coordinates top_right;	
 	
@@ -34,7 +36,7 @@ private:
 	History *recentHistory;
 public:
 	
-	GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR]; //An array to hold the drawn data same as our my_package.cpp
+	
 	Canvas(float, float , float , float);
 	void drawBoard();
 	bool isClickInside(int , int);

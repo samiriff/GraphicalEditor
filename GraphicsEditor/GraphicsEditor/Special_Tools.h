@@ -420,9 +420,9 @@ private:
 				return color;
 			if(y < 0 || y >= CANVAS_TOP - CANVAS_BOTTOM - 1)
 				return color;
-			LOG("RIGHT - LEFT = " << CANVAS_RIGHT - CANVAS_LEFT);
+			/*LOG("RIGHT - LEFT = " << CANVAS_RIGHT - CANVAS_LEFT);
 			LOG("TOP - BOTTOM = " << CANVAS_TOP - CANVAS_BOTTOM);
-			LOG("x = " << x << "\ty = " << y << "\t" << img[y][x][0] << "\t" << img[y][x][1] << "\t" << img[y][x][2]);
+			LOG("x = " << x << "\ty = " << y << "\t" << img[y][x][0] << "\t" << img[y][x][1] << "\t" << img[y][x][2]);*/
 			Color color(img[y][x][0], img[y][x][1], img[y][x][2]);
 			this->color = color;
 			return color;
@@ -441,6 +441,7 @@ private:
 
 	Color *fillColor;
 	GLfloat buffer[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3];
+	bool fillingInProgress;
 
 	void fill(int x, int y, Color *targetColor, Color *replacementColor, GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3]);
 	void queueFill(int x, int y, Color *targetColor, Color *replacementColor, GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3]);
@@ -454,7 +455,9 @@ public:
 };
 
 FloodFiller::FloodFiller(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
-{}
+{
+	fillingInProgress = false;
+}
 
 void FloodFiller::render()
 {
@@ -468,29 +471,35 @@ void FloodFiller::render()
 void FloodFiller::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Draw FloodFiller");
-		
-	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, buffer);	
 	
-	GLfloat rgbValues[3];	
-	glReadPixels(mouseX - CANVAS_LEFT, mouseY - CANVAS_BOTTOM, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
-	Color *targetColor = new Color(rgbValues[0],rgbValues[1],rgbValues[2]);	
-	Color *replacementColor = new Color(1, 0, 0);
-	Tool::getCurrentColor(*replacementColor);	
+	if(!fillingInProgress)
+	{
+		fillingInProgress = true;
+		glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, buffer);	
+	
+		GLfloat rgbValues[3];	
+		glReadPixels(mouseX - CANVAS_LEFT, mouseY - CANVAS_BOTTOM, 1, 1, GL_RGB, GL_FLOAT, rgbValues);
+		Color *targetColor = new Color(rgbValues[0],rgbValues[1],rgbValues[2]);	
+		Color *replacementColor = new Color(1, 0, 0);
+		Tool::getCurrentColor(*replacementColor);	
 
-	LOG("Target Colour = " << *targetColor);	
-	LOG("Replacement Colour = " << *replacementColor);	
-	glPointSize(1);	
+		LOG("Target Colour = " << *targetColor);	
+		LOG("Replacement Colour = " << *replacementColor);	
+		glPointSize(1);	
 
-	//fill(mouseX, mouseY, targetColor, replacementColor, buffer);
-	queueFill(mouseX - CANVAS_LEFT, mouseY - CANVAS_BOTTOM, targetColor, replacementColor, buffer);
+		//fill(mouseX, mouseY, targetColor, replacementColor, buffer);
+		queueFill(mouseX - CANVAS_LEFT, mouseY - CANVAS_BOTTOM, targetColor, replacementColor, buffer);
 
-	glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
-	glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, buffer);
+		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
+		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, buffer);
+
+		fillingInProgress = false;
+	}
 }	
 
 void FloodFiller::queueFill(int x, int y, Color *targetColor, Color *replacementColor, GLfloat img[(int)(CANVAS_TOP - CANVAS_BOTTOM)][(int)(CANVAS_RIGHT - CANVAS_LEFT)][3])
 {
-	LOG("QUEUE FILL");
+	//LOG("QUEUE FILL");
 
 	vector<Node> queue;
 	Node startNode(x, y);
@@ -503,7 +512,7 @@ void FloodFiller::queueFill(int x, int y, Color *targetColor, Color *replacement
 		
 		if(n.getColor(img) == *targetColor)
 		{
-			LOG("I'm here...GET OUT FROM DEBUG MODE, OTHERWISE I WON'T END");
+			//LOG("I'm here...GET OUT FROM DEBUG MODE, OTHERWISE I WON'T END");
 			n.setColor(img, *replacementColor);
 			if(n.getX() - 1 >= 0)
 				queue.push_back(Node(n.getX() - 1, n.getY()));
@@ -617,12 +626,10 @@ Text::Text(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 void Text::render()
 {
 	LOG("Render Text");
-	glColor3f(1, 1, 1);
+	glColor3f(0.8, 0.4, 0.2);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
-	drawText("Text", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
-	glColor3f(0, 0, 0);
-	//glutWireTeapot(4);
+	glColor3f(1, 1, 1);
+	drawText("Text", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);	
 }
 
 void Text::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
@@ -695,15 +702,18 @@ void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_
 		copyFromTo(img, imageDataBefore);				
 	}
 	else
-	{			
+	{		
+		Coordinates secondPoint(mouseX, mouseY, 0);
+		firstPoint.setToBoundingBoxCoordinates(secondPoint);
+
 		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
 		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
 		glColor3f(1,1,1);
 		glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);		
 		//Clip the right part
 		glBegin(GL_POLYGON);
-		glVertex2i(mouseX, mouseY);
-		glVertex2i(mouseX,firstPoint.get(Y_AXIS));
+		glVertex2i(secondPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
+		glVertex2i(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
 		glVertex2i(CANVAS_RIGHT, CANVAS_TOP);
 		glVertex2i(CANVAS_RIGHT, CANVAS_BOTTOM);
 		glEnd();
@@ -711,24 +721,24 @@ void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_
 		//Clip the left part
 		glBegin(GL_POLYGON);
 		glVertex2i(CANVAS_LEFT, CANVAS_BOTTOM);
-		glVertex2i(firstPoint.get(X_AXIS),mouseY);
-		glVertex2i(firstPoint.get(X_AXIS),firstPoint.get(Y_AXIS));
+		glVertex2i(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
+		glVertex2i(firstPoint.get(X_AXIS), secondPoint.get(Y_AXIS));		
 		glVertex2i(CANVAS_LEFT, CANVAS_TOP);
 		glEnd();
 
 		//clip the top part
 		glBegin(GL_POLYGON);
 		glVertex2i(CANVAS_LEFT, CANVAS_TOP);
-		glVertex2i(firstPoint.get(X_AXIS),firstPoint.get(Y_AXIS));
-		glVertex2i(mouseX,firstPoint.get(Y_AXIS));
+		glVertex2i(firstPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
+		glVertex2i(secondPoint.get(X_AXIS), secondPoint.get(Y_AXIS));
 		glVertex2i(CANVAS_RIGHT, CANVAS_TOP);
 		glEnd();
 		
 		//clip the bottom part
 		glBegin(GL_POLYGON);
 		glVertex2i(CANVAS_LEFT, CANVAS_BOTTOM);
-		glVertex2i(firstPoint.get(X_AXIS),mouseY);
-		glVertex2i(mouseX, mouseY);
+		glVertex2i(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
+		glVertex2i(secondPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
 		glVertex2i(CANVAS_RIGHT, CANVAS_BOTTOM);
 		glEnd();
 		
@@ -822,9 +832,9 @@ RingDrawer::RingDrawer(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, 
 
 void RingDrawer::render()
 {	
-	glColor3f(1, 1, 0);
+	glColor3f(0.2, 0.5, 0.1);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
+	glColor3f(1, 1, 1);
 	drawText("Ring", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 16, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);
 }
 

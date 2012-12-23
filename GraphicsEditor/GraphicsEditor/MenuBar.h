@@ -161,12 +161,15 @@ void MenuBar::selectClickedOpFromGrid(int x, int y)
 void MenuBar::selectPassivelyOpFromGrid(int x, int y)
 {
 	if(isClickInsideMenu(x, y))
-	{
+	{	
 		int row = (top_right->get(Y_AXIS) - y) / MENUBAR_BORDER_HEIGHT;
 		int col = (x - bottom_left->get(X_AXIS)) / (MENUBAR_BORDER_WIDTH);
 
 		if(col >= MENUBAR_NUM_COLS)					//Added this because isClickInsideMenu() isn't working properly
 			return;
+		if(row >= MENUBAR_NUM_ROWS)
+			return;
+
 
 		cout << "Row = " << row << "\tCol = " << col << endl;		
 		selectedPassiveOp = menuOps[row][col];		

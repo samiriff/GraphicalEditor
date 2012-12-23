@@ -1,15 +1,18 @@
 #include <cmath>
-
+#include <vector>
 #include "Tool.h"
 #include "Color.h"
 
+using namespace std;
+
 class Line : public Tool
 {
-private:
+protected:
 	Coordinates previous;	
 	Color selectedColor;
 
 	void drawLine(float x1, float y1, float x2, float y2);
+	void rubberband(int mouseX, int mouseY, bool &checkingConditionForPolygon);
 
 public:
 	Line(float x1, float y1, float x2, float y2);
@@ -44,13 +47,9 @@ void Line::render()
 	drawText("Line", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 4, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
-void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
-{	
-	glLineWidth(pointSize);
-
-	this->canvas = canvas;
-
-	if(isFirstPointSelected)
+void Line::rubberband(int mouseX, int mouseY, bool &checkingConditionForPolygon)
+{
+	if(isFirstPointSelected && checkingConditionForPolygon == false)
 	{
 		firstPoint.set(X_AXIS, mouseX);
 		firstPoint.set(Y_AXIS, mouseY);
@@ -82,6 +81,16 @@ void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 	}
 }
 
+void Line::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{	
+	glLineWidth(pointSize);
+
+	this->canvas = canvas;
+
+	bool dummyVariable = false;
+	rubberband(mouseX, mouseY, dummyVariable);
+}
+
 void Line::stop()
 {
 	if(canvas == NULL)
@@ -104,6 +113,156 @@ void Line::select()
 	glEnd();
 	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 }
+//**********************************************************************************************************************//
+
+
+class Polygon : public Line
+{
+protected:
+	Coordinates startingPoint;		
+	bool isChoosing;		
+
+public:
+	Polygon(float x1, float y1, float x2, float y2);
+		
+	void stop();
+	void reset();
+
+	void render();
+	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);		
+};
+
+Polygon::Polygon(float x1, float y1, float x2, float y2):Line(x1, y1, x2, y2)
+{
+	isChoosing = false;
+}
+
+void Polygon::render()
+{
+	glColor3f(1, 0, 0);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+
+	glColor3f(1, 1, 1);
+	drawText("Polygon", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 7, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
+}
+
+void Polygon::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+{	
+	LOG("DRAWING ON CANVAS");
+
+	glLineWidth(pointSize);
+	this->canvas = canvas;
+
+	bool doIhaveToChoose = false;
+	if(isFirstPointSelected && !isChoosing)
+		doIhaveToChoose = true;
+	
+	rubberband(mouseX, mouseY, isChoosing);
+
+	if(doIhaveToChoose)
+	{
+		LOG("I HAVE TO CHOOSE");
+		isChoosing = false;
+		startingPoint = firstPoint;
+	}	
+}
+
+void Polygon::stop()
+{
+	if(canvas == NULL)
+		return;
+
+	drawLine(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS), previous.get(X_AXIS), previous.get(Y_AXIS));			
+	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, canvas->imageData);	
+	
+	isChoosing = true;
+	firstPoint = previous;
+}
+
+void Polygon::reset()
+{
+	LOG("RESET");
+
+	if(canvas == NULL)
+		return;
+
+	isChoosing = false;
+	selectedColor.setGLColor();
+	drawLine(startingPoint.get(X_AXIS), startingPoint.get(Y_AXIS), firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS));	
+	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, canvas->imageData);	
+
+	canvas = NULL;
+}
+
+
+//**********************************************************************************************************************//
+
+class FilledPolygon : public Polygon
+{
+private:
+	vector<Coordinates> pointsQueue;
+
+	void drawFilledPolygon();
+
+public:
+	FilledPolygon(float x1, float y1, float x2, float y2);
+
+	void render();
+
+	void stop();
+	void reset();
+};
+
+FilledPolygon::FilledPolygon(float x1, float y1, float x2, float y2):Polygon(x1, y1, x2, y2)
+{
+	pointsQueue.clear();
+}
+
+void FilledPolygon::render()
+{
+	glColor3f(1, 1, 1);
+	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
+
+	glColor3f(1, 0, 0);
+	drawText("FPolygon", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 9, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
+}
+
+void FilledPolygon::stop()
+{
+	Polygon::stop();
+		
+	LOG("FILLED POLYGON STOP");
+	LOG("FIRST POINT = " << firstPoint);
+	pointsQueue.push_back(firstPoint);	
+}
+
+void FilledPolygon::drawFilledPolygon()
+{
+	LOG("NUMBER OF POINTS = " << pointsQueue.size());
+	glBegin(GL_POLYGON);
+	for(int i=0; i<pointsQueue.size(); i++)
+		glVertex2f(pointsQueue[i].get(X_AXIS), pointsQueue[i].get(Y_AXIS));
+	glEnd();
+}
+
+void FilledPolygon::reset()
+{
+	LOG("RESET");
+
+	if(canvas == NULL)
+		return;
+
+	isChoosing = false;
+	pointsQueue.insert(pointsQueue.begin(), startingPoint);
+
+	selectedColor.setGLColor();
+	drawFilledPolygon();	
+	glReadPixels(CANVAS_LEFT, CANVAS_BOTTOM, CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB, GL_FLOAT, canvas->imageData);	
+
+	pointsQueue.clear();
+	canvas = NULL;
+}
+
 //**********************************************************************************************************************//
 
 class Rect : public Tool

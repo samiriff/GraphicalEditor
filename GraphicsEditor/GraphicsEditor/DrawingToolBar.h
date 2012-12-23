@@ -66,17 +66,22 @@ void DrawingToolBar::initTools()
 	tools[0][3] = new PaintBrush(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[0][4] = new UnfilledRect(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[0][4] = new Polygon(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[0][5] = new RingDrawer(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[0][5] = new UnfilledRect(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[0][6] = new FloodFiller(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[0][6] = new RingDrawer(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[0][7] = new OutClipper(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[0][7] = new FloodFiller(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[0][8] = new OutClipper(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	
 
 	begin_x = bottom_left->get(X_AXIS)+GAP;
 	begin_y -= (TOOL_BORDER_HEIGHT+GAP);
@@ -93,19 +98,24 @@ void DrawingToolBar::initTools()
 	tools[1][3] = new Text(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[1][4] = new Scale(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[1][4] = new FilledPolygon(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[1][5] = new Translate(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
-	Translate *translateTool = (Translate *)tools[1][5];
-	translateTool->convertToCutOperator();	
+	tools[1][5] = new Scale(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
 	tools[1][6] = new Translate(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	Translate *translateTool = (Translate *)tools[1][6];
+	translateTool->convertToCutOperator();	
 	begin_x += TOOL_BORDER_WIDTH+GAP;
 
-	tools[1][7] = new InsideClipper(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	tools[1][7] = new Translate(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
 	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+	tools[1][8] = new InsideClipper(begin_x,begin_y-TOOL_BORDER_HEIGHT, begin_x+TOOL_BORDER_WIDTH, begin_y);
+	begin_x += TOOL_BORDER_WIDTH+GAP;
+
+
 
 
 	selectedTool = tools[0][0];

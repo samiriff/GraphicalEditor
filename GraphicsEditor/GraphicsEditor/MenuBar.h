@@ -171,7 +171,7 @@ void MenuBar::selectPassivelyOpFromGrid(int x, int y)
 			return;
 
 
-		cout << "Row = " << row << "\tCol = " << col << endl;		
+		LOG("Row = " << row << "\tCol = " << col);
 		selectedPassiveOp = menuOps[row][col];		
 	}	
 	else

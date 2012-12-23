@@ -116,14 +116,14 @@ void Line::select()
 //**********************************************************************************************************************//
 
 
-class Polygon : public Line
+class Polygo : public Line
 {
 protected:
 	Coordinates startingPoint;		
 	bool isChoosing;		
 
 public:
-	Polygon(float x1, float y1, float x2, float y2);
+	Polygo(float x1, float y1, float x2, float y2);
 		
 	void stop();
 	void reset();
@@ -132,12 +132,12 @@ public:
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);		
 };
 
-Polygon::Polygon(float x1, float y1, float x2, float y2):Line(x1, y1, x2, y2)
+Polygo::Polygo(float x1, float y1, float x2, float y2):Line(x1, y1, x2, y2)
 {
 	isChoosing = false;
 }
 
-void Polygon::render()
+void Polygo::render()
 {
 	glColor3f(1, 0, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
@@ -146,7 +146,7 @@ void Polygon::render()
 	drawText("Polygon", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - BITMAP_CHARACTER_WIDTH * 7, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - BITMAP_CHARACTER_HEIGHT);
 }
 
-void Polygon::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
+void Polygo::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {	
 	LOG("DRAWING ON CANVAS");
 
@@ -167,7 +167,7 @@ void Polygon::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT
 	}	
 }
 
-void Polygon::stop()
+void Polygo::stop()
 {
 	if(canvas == NULL)
 		return;
@@ -179,7 +179,7 @@ void Polygon::stop()
 	firstPoint = previous;
 }
 
-void Polygon::reset()
+void Polygo::reset()
 {
 	LOG("RESET");
 
@@ -197,7 +197,7 @@ void Polygon::reset()
 
 //**********************************************************************************************************************//
 
-class FilledPolygon : public Polygon
+class FilledPolygon : public Polygo
 {
 private:
 	vector<Coordinates> pointsQueue;
@@ -213,7 +213,7 @@ public:
 	void reset();
 };
 
-FilledPolygon::FilledPolygon(float x1, float y1, float x2, float y2):Polygon(x1, y1, x2, y2)
+FilledPolygon::FilledPolygon(float x1, float y1, float x2, float y2):Polygo(x1, y1, x2, y2)
 {
 	pointsQueue.clear();
 }
@@ -229,7 +229,7 @@ void FilledPolygon::render()
 
 void FilledPolygon::stop()
 {
-	Polygon::stop();
+	Polygo::stop();
 		
 	LOG("FILLED POLYGON STOP");
 	LOG("FIRST POINT = " << firstPoint);

@@ -27,14 +27,14 @@ private:
 	Coordinates firstPoint;			//The first point clicked by the user
 	bool isFirstEntry;
 	inline void readFileName();
-	GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR]; //An array to hold the drawn data same as our my_package.cpp
+	
 
 	bool isCanvasModified;
 
 	History *recentHistory;
 public:
 	
-
+	GLfloat imageData[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR]; //An array to hold the drawn data same as our my_package.cpp
 	Canvas(float, float , float , float);
 	void drawBoard();
 	bool isClickInside(int , int);

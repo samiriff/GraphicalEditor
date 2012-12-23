@@ -395,8 +395,11 @@ private:
 		{
 			if(x < 0 || x >= CANVAS_RIGHT - CANVAS_LEFT)
 				return color;
-			if(y < 0 || y >= CANVAS_TOP - CANVAS_BOTTOM)
+			if(y < 0 || y >= CANVAS_TOP - CANVAS_BOTTOM - 1)
 				return color;
+			LOG("RIGHT - LEFT = " << CANVAS_RIGHT - CANVAS_LEFT);
+			LOG("TOP - BOTTOM = " << CANVAS_TOP - CANVAS_BOTTOM);
+			LOG("x = " << x << "\ty = " << y << "\t" << img[y][x][0] << "\t" << img[y][x][1] << "\t" << img[y][x][2]);
 			Color color(img[y][x][0], img[y][x][1], img[y][x][2]);
 			this->color = color;
 			return color;

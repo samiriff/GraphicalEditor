@@ -53,9 +53,15 @@ void SizeSelector::updateXYInfo(int mouseX, int mouseY)
 	glRectf(XY_INFO_LEFT,XY_INFO_BOTTOM,XY_INFO_RIGHT,XY_INFO_TOP);
 	stringstream ss;
 	ss << mouseX<<","<<mouseY;
-    string valueString = "Mouse(" + ss.str()+")";
+    string valueString = "(" + ss.str()+")";
 	glColor3f(0,0,0);
-	drawText(valueString.c_str(),XY_INFO_LEFT,XY_INFO_BOTTOM);
+	const char *info = valueString.c_str();
+	//drawText(valueString.c_str(),XY_INFO_LEFT,XY_INFO_BOTTOM);		
+	glRasterPos2f(XY_INFO_LEFT, XY_INFO_BOTTOM);
+	while(*info)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_8_BY_13,*info++);
+	}	
 }
 void SizeSelector::updateSelectionBox()
 {

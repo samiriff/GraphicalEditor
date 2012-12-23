@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 
 #include "Coordinates.h"
@@ -115,16 +116,20 @@ void Tool::DecreasePointSize()
 }
 void Tool::drawPointSizeInfo()
 {
-	glColor3f(1,1,1);
+	glColor4f(1,1,1, 0.1);
 	glRectf(POINT_INFO_LEFT,POINT_INFO_BOTTOM,POINT_INFO_RIGHT,POINT_INFO_TOP);
 	stringstream ss;
     glPointSize(pointSize);
-	ss << pointSize;
-    string valueString = "Point Size " + ss.str();
-	glColor3f(0,0,0);
-	/*for(int i=0; i<valueString.length(); i++)
-	   glutStrokeCharacter(GLUT_STROKE_ROMAN, valueString[i]);*/
-	drawText(valueString.c_str(),POINT_INFO_X,POINT_INFO_Y);
+	ss << setprecision(2) << pointSize;
+    string valueString = "" + ss.str();
+	const char *info = valueString.c_str();
+	glColor4f(0,0,0, 0.5);	
+	//drawText(valueString.c_str(),POINT_INFO_X,POINT_INFO_Y);	
+	glRasterPos2f(POINT_INFO_X, POINT_INFO_Y);
+	while(*info)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_8_BY_13,*info++);
+	}
 }
 void Tool::select()
 {

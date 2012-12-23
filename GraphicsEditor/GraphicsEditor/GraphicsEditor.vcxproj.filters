@@ -39,9 +39,6 @@
     <ClInclude Include="Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Special_Tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -61,6 +58,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

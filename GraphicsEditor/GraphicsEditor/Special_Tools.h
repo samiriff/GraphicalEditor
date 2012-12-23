@@ -9,6 +9,7 @@ class Translate : public Tool
 private:
 	Coordinates pastePoint;
 	bool ispastePointSelected;
+	GLfloat buffer[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR];			//For copying selection
 
 protected:
 	Color selectedColor;
@@ -170,10 +171,11 @@ void Translate::mouseDragPointSelection(int mouseX, int mouseY)
 
 			LOG("Fourth Point After = " << pastePoint);
 
+			glReadPixels(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS)- selectionBoxFirstPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS)- selectionBoxFirstPoint.get(Y_AXIS), GL_RGB, GL_FLOAT, buffer);		
+
 			//Copies the contents of the bounding box of the selection to another part of the canvas, the bounding box of which has its bottom left coordinates at fourthPoint
-			glRasterPos2f(pastePoint.get(X_AXIS), pastePoint.get(Y_AXIS));
-			glCopyPixels(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS) - selectionBoxFirstPoint.get(X_AXIS) - 1, selectionBoxSecondPoint.get(Y_AXIS) - selectionBoxFirstPoint.get(Y_AXIS) - 1, GL_COLOR);
-		
+			//glRasterPos2f(pastePoint.get(X_AXIS), pastePoint.get(Y_AXIS));
+			//glCopyPixels(selectionBoxFirstPoint.get(X_AXIS), selectionBoxFirstPoint.get(Y_AXIS), selectionBoxSecondPoint.get(X_AXIS) - selectionBoxFirstPoint.get(X_AXIS) - 1, selectionBoxSecondPoint.get(Y_AXIS) - selectionBoxFirstPoint.get(Y_AXIS) - 1, GL_COLOR);			
 
 			if(eraseSelection)
 			{
@@ -181,6 +183,10 @@ void Translate::mouseDragPointSelection(int mouseX, int mouseY)
 				glColor3f(1, 1, 1);
 				glRectf(selectionBoxFirstPoint.get(X_AXIS) - 1, selectionBoxFirstPoint.get(Y_AXIS) - 1, selectionBoxSecondPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS));	//Offsets of 1 are subtracted to prevent the bounding box border lines from interfering with results
 			}
+
+			//Copies the contents of the bounding box of the selection to another part of the canvas, the bounding box of which has its bottom left coordinates at fourthPoint
+			glRasterPos2f(pastePoint.get(X_AXIS), pastePoint.get(Y_AXIS));
+			glDrawPixels(selectionBoxSecondPoint.get(X_AXIS)- selectionBoxFirstPoint.get(X_AXIS), selectionBoxSecondPoint.get(Y_AXIS)- selectionBoxFirstPoint.get(Y_AXIS), GL_RGB,GL_FLOAT, buffer);
 		}
 		else
 		{

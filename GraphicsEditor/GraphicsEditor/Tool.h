@@ -58,7 +58,7 @@ class Pencil : public Tool
 {
 public:
 	Pencil(float x1, float y1, float x2, float y2);
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
@@ -69,7 +69,7 @@ class Spray : public Tool
 {
 public:
 	Spray(float x1, float y1, float x2, float y2);
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
@@ -80,7 +80,7 @@ class Eraser : public Tool
 {
 public:
 	Eraser(float x1, float y1, float x2, float y2);
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
@@ -141,6 +141,7 @@ void Tool::select()
 		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
 		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
 	glEnd();
+	glutSetCursor(GLUT_CURSOR_INHERIT);
 }
 
 void Tool::drawText(const char *info, float x, float y)
@@ -200,15 +201,33 @@ void Pencil::render()
 void Pencil::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	LOG("Pencil Drawing");
-
+	//glPointSize(2+selectedSize);
+	float r = selectedSize+2;
+	float x, y;
+	float theta = 0;
 	glBegin(GL_POLYGON);
-		glVertex2f(mouseX, mouseY);
-		glVertex2f(mouseX, mouseY + 1);
-		glVertex2f(mouseX + 5, mouseY + 1);
-		glVertex2f(mouseX + 5, mouseY);
+	while(theta <= 360)
+	{
+		x = r*cos(theta);
+		y = r*sin(theta);			
+		glVertex2f(x+mouseX,y+mouseY);			
+		theta += 0.25;
+	}
 	glEnd();		
 }
 
+void Pencil::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
+
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_HELP);
+}
 //**********************************************************************************************************************//
 
 Spray::Spray(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
@@ -227,7 +246,6 @@ void Spray::render()
 void Spray::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
 	glPointSize(pointSize);
-	glLineWidth(pointSize);
 	float theta = 0.0;
 	float x = 0, y=0;
 	int rmax = 5 + selectedSize*10;
@@ -241,7 +259,18 @@ void Spray::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][
 	glEnd();
 
 }
+void Spray::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_SPRAY);
+}
 //**********************************************************************************************************************//
 
 Eraser::Eraser(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
@@ -265,7 +294,18 @@ void Eraser::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	glColor3f(1,1,1);
 	glRectf(mouseX-width,mouseY-height,mouseX+width, mouseY+height);
 }
+void Eraser::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 
 //**********************************************************************************************************************//
 

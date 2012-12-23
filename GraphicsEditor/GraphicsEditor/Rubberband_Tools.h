@@ -15,7 +15,7 @@ public:
 	Line(float x1, float y1, float x2, float y2);
 	
 	void stop();
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);		
 };
@@ -92,7 +92,18 @@ void Line::stop()
 
 	canvas = NULL;			//To reset
 }
+void Line::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 //**********************************************************************************************************************//
 
 class Rect : public Tool
@@ -105,7 +116,7 @@ public:
 	Rect(float x1, float y1, float x2, float y2);
 
 	void stop();
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
@@ -133,12 +144,12 @@ void Rect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][A
 		
 		isFirstPointSelected = false;
 		previous = firstPoint;
-
+		glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		//Tracking the color
 		Tool::getCurrentColor(selectedColor);		
 	}
 	else
-	{	
+	{	glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);
 		glEnable(GL_COLOR_LOGIC_OP);
 		glLogicOp(GL_XOR);
 
@@ -168,7 +179,18 @@ void Rect::stop()
 
 	canvas = NULL;			//To reset
 }
+void Rect::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 //**********************************************************************************************************************//
 
 class UnfilledRect : public Tool
@@ -183,7 +205,7 @@ public:
 	UnfilledRect(float x1, float y1, float x2, float y2);
 
 	void stop();
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 };
@@ -222,15 +244,15 @@ void UnfilledRect::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_H
 		
 		isFirstPointSelected = false;
 		previous = firstPoint;
-
+		glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		//Tracking the color
 		Tool::getCurrentColor(selectedColor);		
 	}
 	else
-	{	
+	{	glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);
 		glEnable(GL_COLOR_LOGIC_OP);
 		glLogicOp(GL_XOR);
-
+		
 		//Removing old rectangle by xoring again				
 		selectedColor.setInvertedGLColor();		
 		drawLineLoop(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS), previous.get(X_AXIS), previous.get(Y_AXIS));				
@@ -257,7 +279,18 @@ void UnfilledRect::stop()
 
 	canvas = NULL;			//To reset
 }
+void UnfilledRect::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 //**********************************************************************************************************************//
 
 class Circle : public Tool
@@ -272,7 +305,7 @@ public:
 	Circle(float x1, float y1, float x2, float y2);
 
 	void stop();
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
 };
@@ -319,7 +352,7 @@ void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 		
 		isFirstPointSelected = false;
 		previous = firstPoint;
-
+		glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		//Tracking the color
 		Tool::getCurrentColor(selectedColor);		
 	}
@@ -327,7 +360,7 @@ void Circle::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT]
 	{	
 		glEnable(GL_COLOR_LOGIC_OP);
 		glLogicOp(GL_XOR);
-
+		glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);
 		//Removing old circle by xoring again				
 		selectedColor.setInvertedGLColor();		
 		drawCircle(firstPoint.get(X_AXIS), firstPoint.get(Y_AXIS), previous.get(X_AXIS), previous.get(Y_AXIS));				
@@ -354,5 +387,16 @@ void Circle::stop()
 
 	canvas = NULL;			//To reset
 }
+void Circle::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 

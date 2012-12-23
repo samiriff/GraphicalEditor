@@ -158,7 +158,7 @@ void DrawingBoard::handleMouseClickMotion(int x, int y)
 void DrawingBoard::handleMousePassiveMotion(int x, int y)
 {
 	drawingToolBar->selectPassivelyToolFromGrid(x, y);			
-	//menu_bar->selectPassivelyOpFromGrid(x, y);
+	menu_bar->selectPassivelyOpFromGrid(x, y);
 }
 
 void DrawingBoard::initBoard()

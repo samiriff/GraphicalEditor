@@ -17,6 +17,8 @@ class Canvas
 	friend class Rect;
 	friend class Circle;
 	friend class UnfilledRect;
+	friend class Polygon;
+	friend class FilledPolygon;
 
 private:
 	Coordinates bottom_left;

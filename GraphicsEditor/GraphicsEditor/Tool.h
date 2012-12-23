@@ -50,6 +50,7 @@ public:
 	virtual void start();
 	virtual void stop();
 	virtual void select();
+	virtual void reset(){}
 };
 
 //**********************************************************************************************************************//
@@ -281,9 +282,9 @@ PaintBrush::PaintBrush(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {}
 void PaintBrush::render()
 {
-	glColor3f(1, 1, 1);
+	glColor3f(0.5, 0.2, 0);
 	glRectf(bottom_left->get(X_AXIS) + 2, bottom_left->get(Y_AXIS) + 1, top_right->get(X_AXIS) - 2, top_right->get(Y_AXIS) - 2);
-	glColor3f(0, 0, 0);
+	glColor3f(1, 1, 1);
 	/*glRasterPos2f((top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0);
 	glutSolidCube(50);*/
 	drawText("Brush", (top_right->get(X_AXIS) + bottom_left->get(X_AXIS)) / 2.0 - 30, (top_right->get(Y_AXIS) + bottom_left->get(Y_AXIS)) / 2.0 - 8);

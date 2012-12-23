@@ -3,7 +3,7 @@
 
 #define FULL_SCREEN 0
 
-#define DEBUG 0
+#define DEBUG 1
 #if DEBUG
 #define LOG(s) cout<<s<<endl;
 #else
@@ -76,7 +76,7 @@ enum ColorType
 
 #define GAP 4
 #define TOOLBAR_NUM_ROWS 2
-#define TOOLBAR_NUM_COLS 8
+#define TOOLBAR_NUM_COLS 9
 #define TOOL_BORDER_WIDTH (TOOLBAR_RIGHT - TOOLBAR_LEFT) / (TOOLBAR_NUM_COLS + 1)
 #define TOOL_BORDER_HEIGHT 30
 #define BITMAP_CHARACTER_WIDTH 4

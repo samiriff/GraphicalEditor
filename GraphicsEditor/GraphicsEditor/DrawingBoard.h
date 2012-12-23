@@ -123,13 +123,20 @@ void DrawingBoard::handleMouseClick(int button, int state, int x, int y)
 	if(button==GLUT_LEFT_BUTTON && state==GLUT_UP)
 	{		
 		color_panel->getSelectedColor().setGLColor();
-		drawingToolBar->getSelectedTool()->stop();		
+
+		if(canvas_board->isClickInside(x, y))
+			drawingToolBar->getSelectedTool()->stop();		
 
 		if(canvas_board->hasCanvasChanged())	
 		{
 			LOG("Canvas Has Changed...Recording");
 			canvas_board->recordInHistory();		
 		}
+	}
+
+	if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	{
+		drawingToolBar->getSelectedTool()->reset();
 	}
 }
 
@@ -151,7 +158,7 @@ void DrawingBoard::handleMouseClickMotion(int x, int y)
 void DrawingBoard::handleMousePassiveMotion(int x, int y)
 {
 	drawingToolBar->selectPassivelyToolFromGrid(x, y);			
-	menu_bar->selectPassivelyOpFromGrid(x, y);
+	//menu_bar->selectPassivelyOpFromGrid(x, y);
 }
 
 void DrawingBoard::initBoard()

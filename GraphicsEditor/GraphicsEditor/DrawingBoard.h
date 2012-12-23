@@ -159,6 +159,7 @@ void DrawingBoard::handleMousePassiveMotion(int x, int y)
 {
 	drawingToolBar->selectPassivelyToolFromGrid(x, y);			
 	menu_bar->selectPassivelyOpFromGrid(x, y);
+	sizeSelector->updateXYInfo(x,y);
 }
 
 void DrawingBoard::initBoard()

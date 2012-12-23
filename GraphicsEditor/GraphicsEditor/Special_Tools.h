@@ -28,7 +28,7 @@ public:
 	Translate(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-
+	void select();
 	void stop();
 	void convertToCutOperator();
 
@@ -46,7 +46,7 @@ Translate::Translate(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 void Translate::stop()
 {	
 	inMotion = false;
-	
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 	LOG("Motion Switched Off - STOP Function");			
 }
 
@@ -126,7 +126,7 @@ void Translate::selectionBoxLogic(Canvas *canvas, GLfloat img[APPLICATION_WINDOW
 			glFlush();
 
 			glDisable(GL_COLOR_LOGIC_OP);
-
+			glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);
 			selectionBoxSecondPoint.set(X_AXIS, mouseX);
 			selectionBoxSecondPoint.set(Y_AXIS, mouseY);		
 		}
@@ -140,6 +140,7 @@ void Translate::selectionBoxLogic(Canvas *canvas, GLfloat img[APPLICATION_WINDOW
 			selectionBoxFirstPoint.setToBoundingBoxCoordinates(selectionBoxSecondPoint);	
 			point = selectionBoxSecondPoint;				
 			callback->execute(mouseX, mouseY);			
+			glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		}
 
 		return;
@@ -197,7 +198,18 @@ void Translate::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIG
 
 	selectionBoxLogic(canvas, img, mouseX, mouseY, pastePoint, new SingularCallBack<Translate, void, int, int>(this, &Translate::mouseDragPointSelection));	
 }
+void Translate::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 //**********************************************************************************************************************//
 
 
@@ -214,7 +226,7 @@ protected:
 
 public:
 	Scale(float x1, float y1, float x2, float y2);
-
+	void select();
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 };
@@ -277,7 +289,18 @@ void Scale::mouseDragPointSelection(int mouseX, int mouseY)
 	}	
 }
 
+void Scale::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 
 void Scale::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY)
 {
@@ -426,8 +449,9 @@ private:
 public:
 	FloodFiller(float x1, float y1, float x2, float y2);
 	void render();
+	void select();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);	
-	void Fill(int, int, Color *&, int depth);
+	void Fill(int, int, Color &, int depth);
 };
 
 FloodFiller::FloodFiller(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
@@ -534,7 +558,7 @@ void FloodFiller::fill(int x, int y, Color *targetColor, Color *replacementColor
 
 
 
-void FloodFiller::Fill(int x, int y, Color *&previousPixelColor, int depth)
+void FloodFiller::Fill(int x, int y, Color &previousPixelColor, int depth)
 {	
 	if(depth <=0 ) 
 		return;
@@ -556,14 +580,23 @@ void FloodFiller::Fill(int x, int y, Color *&previousPixelColor, int depth)
 	}
 	return;*/
 }
+void FloodFiller::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_HELP);
+}
 
 
 //**********************************************************************************************************************//
 
-/*
- *Teapot Tool
- */
+
 
 //**********************************************************************************************************************//
 
@@ -582,7 +615,7 @@ public:
 	Text(float x1, float y1, float x2, float y2);
 	void render();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
-
+	void select();
 	void setText(string str);
 };
 
@@ -610,6 +643,18 @@ void Text::setText(string str)
 	text = str;
 	LOG("setText = " << text);
 }
+void Text::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
+
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_TEXT);
+}
 //**********************************************************************************************************************//
 
 
@@ -618,10 +663,23 @@ class InsideClipper : public Tool
 public:
 	InsideClipper(float x1, float y1, float x2, float y2);
 	void render();
+	void select();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 };
 InsideClipper:: InsideClipper(float x1, float y1, float x2, float y2):Tool(x1,y1,x2,y2)
 {}
+void InsideClipper::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
+
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 void InsideClipper::render()
 {
 	LOG("Render In Clipper");
@@ -639,7 +697,7 @@ void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_
 	{		
 		firstPoint.set(X_AXIS, mouseX);
 		firstPoint.set(Y_AXIS, mouseY);
-
+		glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		isFirstPointSelected = false;
 		copyFromTo(img, imageDataBefore);				
 	}
@@ -651,6 +709,7 @@ void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_
 		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
 		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
 		glColor3f(1,1,1);
+		glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);		
 		//Clip the right part
 		glBegin(GL_POLYGON);
 		glVertex2i(secondPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
@@ -682,6 +741,7 @@ void InsideClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_
 		glVertex2i(secondPoint.get(X_AXIS), firstPoint.get(Y_AXIS));
 		glVertex2i(CANVAS_RIGHT, CANVAS_BOTTOM);
 		glEnd();
+		
 	}	
 }
 
@@ -692,6 +752,7 @@ class OutClipper : public Tool
 public:
 	OutClipper(float x1, float y1, float x2, float y2);
 	void render();
+	void select();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 };
 
@@ -714,12 +775,13 @@ void OutClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEI
 	{		
 		firstPoint.set(X_AXIS, mouseX);
 		firstPoint.set(Y_AXIS, mouseY);
-
+		glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		isFirstPointSelected = false;
 		copyFromTo(img, imageDataBefore);				
 	}
 	else
-	{			
+	{	
+		glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);
 		glRasterPos2i(CANVAS_LEFT, CANVAS_BOTTOM);
 		glDrawPixels(CANVAS_RIGHT - CANVAS_LEFT, CANVAS_TOP - CANVAS_BOTTOM, GL_RGB,GL_FLOAT, imageDataBefore);
 		glColor3f(1,1,1);
@@ -731,16 +793,40 @@ void OutClipper::drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEI
 		glEnd();
 	}	
 }
+void OutClipper::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
+
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 class RingDrawer : public Tool
 {
 public:
 	RingDrawer(float x1, float y1, float x2, float y2);
 	void render();
+	void select();
 	void drawOnCanvas(Canvas *canvas, GLfloat img[APPLICATION_WINDOW_HEIGHT][APPLICATION_WINDOW_WIDTH * MULT_FACTOR], int mouseX, int mouseY);
 };
 
 //**********************************************************************************************************************//
+void RingDrawer::select()
+{
+	glColor4f(0, 0, 0, 0.5);			//Using a tranlucent polygon
+	glRectf(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS), top_right->get(X_AXIS), top_right->get(Y_AXIS));
 
+	glColor4f(1, 1, 1, 0.5);			//Using a tranlucent line
+	glBegin(GL_LINES);
+		glVertex2f(bottom_left->get(X_AXIS), bottom_left->get(Y_AXIS) );
+		glVertex2f(top_right->get(X_AXIS), top_right->get(Y_AXIS));
+	glEnd();
+	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+}
 RingDrawer::RingDrawer(float x1, float y1, float x2, float y2):Tool(x1, y1, x2, y2)
 {}
 
